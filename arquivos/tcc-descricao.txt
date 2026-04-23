@@ -1,0 +1,10 @@
+TCC - UFMS
+Tema: Ensino de Programação para Pessoas com Deficiências Visuais 
+Objetivo: Sintetizar o que já foi amplamente estudado e disponibilizado sobre o assunto abordando 
+tanto pesquisas, protocolos, ferramentas, testes empíricos e qualquer conteúdo que agregue valor ao tema investigado 
+nos estudos primarios, secudarios e revisões sistemáticas sobre o ensino de programação para pessoas com deficiência visual (PcDV),
+ identificando métodos de ensino, tecnologias assistivas, desafios, lacunas e oportunidades para futuras pesquisas. 
+
+Apos reunir tudo, criar um repositorio para servir de referencia para quem tiver interesse na area(Professores, alunos, publico alvo). 
+
+Tambem criar um bom embasamento para usar como tema de TCC.
