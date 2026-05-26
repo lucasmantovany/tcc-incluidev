@@ -74,6 +74,27 @@ select:focus-visible {
   border-radius: 4px;
 }
 
+/* Skip Link Accessibility */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 2rem;
+  background-color: var(--accent-color);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0 0 0.5rem 0.5rem;
+  font-weight: 600;
+  z-index: 9999;
+  transition: top 0.2s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
 /* Layout Utilities */
 .container {
   max-width: 1200px;

@@ -5,6 +5,7 @@ const {
   PageBreak
 } = require('docx');
 const fs = require('fs');
+const path = require('path');
 
 const BLUE = "1F4E79";
 const BLUE_LIGHT = "2E75B6";
@@ -321,7 +322,12 @@ const doc = new Document({
             alignment: AlignmentType.RIGHT,
             children: [
               new TextRun({ text: "Página ", size: 18, color: "888888", font: "Arial" }),
-              new PageNumber()
+              new TextRun({
+                children: [PageNumber.CURRENT],
+                size: 18,
+                color: "888888",
+                font: "Arial"
+              })
             ]
           })]
         })
@@ -606,8 +612,9 @@ const doc = new Document({
 });
 
 Packer.toBuffer(doc).then(buffer => {
-  fs.writeFileSync('/home/claude/repositorio_tcc_deficiencia_visual.docx', buffer);
-  console.log('Documento criado com sucesso!');
+  const outputPath = path.join(__dirname, 'repositorio_tcc_deficiencia_visual.docx');
+  fs.writeFileSync(outputPath, buffer);
+  console.log(`Documento criado com sucesso em: ${outputPath}`);
 }).catch(err => {
   console.error('Erro:', err);
   process.exit(1);

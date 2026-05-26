@@ -45,8 +45,9 @@ function Footer() {
 function App() {
   return (
     <Router>
+      <a href="#main-content" className="skip-link">Pular para o conteúdo principal</a>
       <Navigation />
-      <main id="main-content">
+      <main id="main-content" tabIndex="-1">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/repositorio" element={<Repositorio />} />

@@ -108,5 +108,49 @@ export const conteudos = [
     link: "https://scholar.google.com/scholar?q=A+Systematic+Review+on+Developing+Computer+Programming+Skills+for+Visually+Impaired+Students+2024",
     referencia: "Journal of Disability Research (2024)",
     data: "2024-01-10"
+  },
+  {
+    id: 11,
+    titulo: "Assistive Technologies for Teaching Programming to Visually Impaired Learners: A Systematic Review",
+    descricao: "Revisão sistemática detalhando o estado da arte e a eficácia das tecnologias assistivas utilizadas no ensino de programação para alunos com deficiência visual.",
+    nivel: ["Técnico", "Superior"],
+    publico: ["Professores", "Público Específico"],
+    tipo: "Revisão Sistemática",
+    link: "https://scholar.google.com/scholar?q=Assistive+Technologies+for+Teaching+Programming+to+Visually+Impaired+Learners+A+Systematic+Review+Mendes+2025",
+    referencia: "Mendes et al. (UFG, 2025)",
+    data: "2025-02-10"
+  },
+  {
+    id: 12,
+    titulo: "Teaching Programming for Blinds: A Review",
+    descricao: "Revisão sistemática histórica de estudos entre 1975 e 2013, analisando os primeiros desafios de linguagens textuais e de blocos para estudantes cegos.",
+    nivel: ["Superior"],
+    publico: ["Professores", "Público Geral"],
+    tipo: "Revisão Sistemática",
+    link: "https://scholar.google.com/scholar?q=Teaching+Programming+for+Blinds+A+Review+Al-Ratta+Al-Khalifa+2013",
+    referencia: "Al-Ratta & Al-Khalifa (King Saud University, 2013)",
+    data: "2013-06-15"
+  },
+  {
+    id: 13,
+    titulo: "Teaching Programming Logic for People with Blindness or Visual Impairments: a Systematic Mapping Study",
+    descricao: "Mapeamento sistemático de literatura focado nas abordagens pedagógicas e ferramentas voltadas para o ensino de lógica de programação e algoritmos de forma inclusiva.",
+    nivel: ["Básico", "Superior"],
+    publico: ["Professores", "Público Específico"],
+    tipo: "Mapeamento Sistemático",
+    link: "https://scholar.google.com/scholar?q=Teaching+Programming+Logic+for+People+with+Blindness+or+Visual+Impairments+a+Systematic+Mapping+Study+Santos+2025",
+    referencia: "Santos, Shibata, Pinto (UFPA, 2025)",
+    data: "2025-01-20"
+  },
+  {
+    id: 14,
+    titulo: "Diretrizes de Acessibilidade em Ambientes de Desenvolvimento Integrado (IDEs) para Estudantes Cegos",
+    descricao: "Tese de doutorado que propõe e valida um conjunto de diretrizes de acessibilidade para o design de IDEs visando melhorar a experiência de programadores cegos.",
+    nivel: ["Técnico", "Superior"],
+    publico: ["Professores", "Público Específico"],
+    tipo: "Tese de Doutorado",
+    link: "https://scholar.google.com/scholar?q=Diretrizes+de+Acessibilidade+em+Ambientes+de+Desenvolvimento+Integrado+para+Estudantes+Cegos+Zen+Tavares+2025",
+    referencia: "Zen & Tavares (IFFar & UFPEL, 2025)",
+    data: "2025-03-01"
   }
 ];

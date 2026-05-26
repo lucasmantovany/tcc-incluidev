@@ -1,0 +1,16 @@
+# Dependency directories
+node_modules/
+arquivos/node_modules/
+
+# Generated files
+arquivos/repositorio_tcc_deficiencia_visual.docx
+*.docx
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
