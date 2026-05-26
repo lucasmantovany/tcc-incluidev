@@ -152,5 +152,115 @@ export const conteudos = [
     link: "https://scholar.google.com/scholar?q=Diretrizes+de+Acessibilidade+em+Ambientes+de+Desenvolvimento+Integrado+para+Estudantes+Cegos+Zen+Tavares+2025",
     referencia: "Zen & Tavares (IFFar & UFPEL, 2025)",
     data: "2025-03-01"
+  },
+  {
+    id: 15,
+    titulo: "APL: Audio Programming Language",
+    descricao: "Interface e linguagem de programação baseada em áudio para ajudar estudantes cegos a dominar o pensamento algorítmico sem a complexidade visual e de sintaxe de caracteres especiais.",
+    nivel: ["Básico"],
+    publico: ["Alunos", "Professores"],
+    tipo: "Linguagem / Ferramenta",
+    link: "https://scholar.google.com/scholar?q=APL+Audio+Programming+Language+for+Blind+Learners+Sanchez+2006",
+    referencia: "Sánchez & Aguayo (2006)",
+    data: "2006-07-15"
+  },
+  {
+    id: 16,
+    titulo: "JavaSpeak",
+    descricao: "Ferramenta projetada para ajudar estudantes universitários cegos a aprender a programar em Java, permitindo que naveguem e ouçam o código em diferentes níveis de granularidade.",
+    nivel: ["Superior"],
+    publico: ["Alunos"],
+    tipo: "IDE / Ferramenta",
+    link: "https://scholar.google.com/scholar?q=JavaSpeak+A+Java+programming+tool+for+students+with+visual+disabilities+Smith+2000",
+    referencia: "Smith, Francioni & Matzek (2000)",
+    data: "2000-04-10"
+  },
+  {
+    id: 17,
+    titulo: "Emacspeak",
+    descricao: "Interface de fala icônica integrada ao editor Emacs, permitindo que desenvolvedores cegos controlem e naveguem por ambientes Unix/Linux através de áudio de alta produtividade.",
+    nivel: ["Superior"],
+    publico: ["Alunos", "Público Específico"],
+    tipo: "IDE / Ferramenta",
+    link: "https://tvraman.github.io/emacspeak/",
+    referencia: "Raman, T. V. (1996)",
+    data: "1996-10-12"
+  },
+  {
+    id: 18,
+    titulo: "Sodbeans e Linguagem Hop",
+    descricao: "Ambiente de desenvolvimento construído sobre a NetBeans que utiliza sintetizadores de voz e pistas auditivas complexas para apoiar alunos no aprendizado e na depuração do código.",
+    nivel: ["Básico", "Técnico", "Superior"],
+    publico: ["Alunos", "Professores"],
+    tipo: "IDE / Ferramenta",
+    link: "https://scholar.google.com/scholar?q=On+the+design+of+an+educational+infrastructure+for+the+blind+visually+impaired+Stefik+2011",
+    referencia: "Stefik, Hundhausen & Smith (2011)",
+    data: "2011-03-05"
+  },
+  {
+    id: 19,
+    titulo: "StructJumper",
+    descricao: "Plugin para a IDE Eclipse que gera uma representação em árvore das estruturas aninhadas do código Java, auxiliando o desenvolvedor cego a se situar e navegar rapidamente.",
+    nivel: ["Superior"],
+    publico: ["Alunos", "Público Específico"],
+    tipo: "Plugin / Ferramenta",
+    link: "https://scholar.google.com/scholar?q=StructJumper+Eclipse+plugin+visually+impaired+Baker+2015",
+    referencia: "Baker, Milne & Ladner (2015)",
+    data: "2015-05-18"
+  },
+  {
+    id: 20,
+    titulo: "GUIDL: Graphical User Interface Description Language",
+    descricao: "Linguagem descritiva projetada para que programadores com deficiência visual possam criar e organizar interfaces gráficas de usuário (GUIs) sem precisar de ferramentas visuais drag-and-drop.",
+    nivel: ["Técnico", "Superior"],
+    publico: ["Alunos", "Público Específico"],
+    tipo: "Linguagem / Ferramenta",
+    link: "https://scholar.google.com/scholar?q=GUIDL+as+an+Aiding+Technology+in+Programming+Education+of+Visually+Impaired+Konecki+2014",
+    referencia: "Konecki, M. (2014)",
+    data: "2014-12-01"
+  },
+  {
+    id: 21,
+    titulo: "Wicked Audio Debugger (WAD)",
+    descricao: "Depurador sonoro integrado ao Visual Studio que auxilia programadores cegos no processo de debug por meio de alertas baseados em áudio tridimensional e notas musicais.",
+    nivel: ["Superior"],
+    publico: ["Alunos", "Público Específico"],
+    tipo: "Plugin / Ferramenta",
+    link: "https://scholar.google.com/scholar?q=WAD+A+Feasibility+study+using+the+Wicked+Audio+Debugger+Stefik+2007",
+    referencia: "Stefik et al. (2007)",
+    data: "2007-06-25"
+  },
+  {
+    id: 22,
+    titulo: "Lady Beetle",
+    descricao: "Ambiente lúdico de introdução ao pensamento computacional onde crianças cegas controlam uma joaninha virtual sobre um grid por comandos simplificados de teclado, ouvindo coordenadas lidas em áudio.",
+    nivel: ["Básico"],
+    publico: ["Alunos", "Professores"],
+    tipo: "Ambiente Lúdico",
+    link: "https://scholar.google.com/scholar?q=Programming+Microworlds+for+Visually+Impaired+Pupils+Jaskova+2014",
+    referencia: "Jašková & Kaliaková (2014)",
+    data: "2014-09-10"
+  },
+  {
+    id: 23,
+    titulo: "World of Sounds",
+    descricao: "Ambiente lúdico alternativo que permite que crianças criem pequenos programas que geram sequências e laços sonoros, facilitando a internalização de lógica por meios auditivos.",
+    nivel: ["Básico"],
+    publico: ["Alunos", "Professores"],
+    tipo: "Ambiente Lúdico",
+    link: "https://scholar.google.com/scholar?q=Programming+Microworlds+for+Visually+Impaired+Pupils+Jaskova+2014",
+    referencia: "Jašková & Kaliaková (2014)",
+    data: "2014-09-10"
+  },
+  {
+    id: 24,
+    titulo: "Noodle",
+    descricao: "Ambiente alternativo a linguagens visuais de blocos que permite criar sequências musicais e ritmos por teclado, projetado especialmente para a introdução lúdica à lógica em crianças PcDV.",
+    nivel: ["Básico"],
+    publico: ["Alunos"],
+    tipo: "Linguagem / Ferramenta",
+    link: "https://scholar.google.com/scholar?q=Work+in+Progress+Report+Nonvisual+Visual+Programming+Lewis+2014",
+    referencia: "Lewis, C. (2014)",
+    data: "2014-11-05"
   }
 ];

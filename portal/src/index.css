@@ -290,3 +290,172 @@ select:focus-visible {
   background-color: var(--secondary-bg);
   margin-top: auto;
 }
+
+/* ====================================================
+   MOBILE NAVIGATION
+   ==================================================== */
+.menu-toggle {
+  display: none;
+  padding: 0.5rem;
+}
+
+.mobile-menu {
+  background: rgba(15, 23, 42, 0.98);
+  border-top: 1px solid var(--border-color);
+  padding: 1rem 2rem;
+}
+
+.mobile-nav-link {
+  display: block;
+  padding: 0.85rem 0;
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-weight: 500;
+  border-bottom: 1px solid var(--border-color);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link.active {
+  color: var(--accent-color);
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-content {
+    padding-top: 5rem;
+  }
+}
+
+/* ====================================================
+   GRID RESPONSIVO DE 2 COLUNAS
+   ==================================================== */
+.grid-responsive {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .grid-responsive {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* ====================================================
+   FORMULÁRIOS ACESSÍVEIS
+   ==================================================== */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+.form-input {
+  background-color: var(--secondary-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-family: inherit;
+  width: 100%;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+.form-input:focus {
+  border-color: var(--accent-color);
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+textarea::placeholder {
+  color: #64748b;
+}
+
+/* Label styling */
+label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+/* Radio button accessible styling */
+input[type="radio"] {
+  accent-color: var(--accent-color);
+  width: 1.1rem;
+  height: 1.1rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+input[type="radio"]:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+/* ====================================================
+   WIZARD — OPÇÕES INTERATIVAS
+   ==================================================== */
+.wizard-option {
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.wizard-option:hover {
+  border-color: rgba(96, 165, 250, 0.5) !important;
+  background-color: rgba(59, 130, 246, 0.07) !important;
+}
+
+.wizard-option:focus-within {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+  border-radius: 0.75rem;
+}
+
+/* ====================================================
+   GLASS PANEL — DESATIVAR HOVER EM ARTIGOS ESTÁTICOS
+   ==================================================== */
+article.glass-panel:hover {
+  transform: none;
+}
+
+/* ====================================================
+   UTILITÁRIOS ADICIONAIS
+   ==================================================== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
