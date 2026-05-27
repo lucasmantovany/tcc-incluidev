@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { BookOpen, Menu, X } from 'lucide-react';
+import { BookOpen, Menu, X, Sun, Moon } from 'lucide-react';
 import Home from './pages/Home';
 import Repositorio from './pages/Repositorio';
 import Assistente from './pages/Assistente';
 import Experiencias from './pages/Experiencias';
 import Moderacao from './pages/Moderacao';
+import ConteudoDetalhe from './pages/ConteudoDetalhe';
 
 const NAV_LINKS = [
   { to: '/', label: 'Início', exact: true },
@@ -14,7 +15,7 @@ const NAV_LINKS = [
   { to: '/experiencias', label: 'Experiências' },
 ];
 
-function Navigation() {
+function Navigation({ tema, alternarTema }) {
   const location = useLocation();
   const [menuAberto, setMenuAberto] = useState(false);
 
@@ -27,34 +28,48 @@ function Navigation() {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-4" aria-label="IncluiDev — Voltar para a página inicial">
           <BookOpen color="#3b82f6" size={28} aria-hidden="true" />
-          <span style={{ fontSize: '1.4rem', fontWeight: '700', color: '#fff' }}>IncluiDev</span>
+          <span style={{ fontSize: '1.4rem', fontWeight: '700', color: 'var(--text-primary)' }}>IncluiDev</span>
         </Link>
 
-        {/* Links Desktop */}
-        <ul className="nav-links" role="list">
-          {NAV_LINKS.map(link => (
-            <li key={link.to}>
-              <Link
-                to={link.to}
-                className={isAtivo(link.to, link.exact) ? 'active' : ''}
-                aria-current={isAtivo(link.to, link.exact) ? 'page' : undefined}
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <div className="flex items-center">
+          {/* Links Desktop */}
+          <ul className="nav-links" role="list">
+            {NAV_LINKS.map(link => (
+              <li key={link.to}>
+                <Link
+                  to={link.to}
+                  className={isAtivo(link.to, link.exact) ? 'active' : ''}
+                  aria-current={isAtivo(link.to, link.exact) ? 'page' : undefined}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
 
-        {/* Botão hamburger para mobile */}
-        <button
-          className="menu-toggle btn btn-secondary"
-          onClick={() => setMenuAberto(prev => !prev)}
-          aria-expanded={menuAberto}
-          aria-controls="mobile-menu"
-          aria-label={menuAberto ? 'Fechar menu' : 'Abrir menu de navegação'}
-        >
-          {menuAberto ? <X size={22} /> : <Menu size={22} />}
-        </button>
+          {/* Theme Toggle Botão */}
+          <button
+            onClick={alternarTema}
+            className="btn btn-secondary"
+            style={{ padding: '0.5rem', borderRadius: '50%', marginLeft: '1rem', border: 'none' }}
+            aria-label={`Alternar para modo ${tema === 'dark' ? 'claro' : 'escuro'}`}
+            title={`Alternar para modo ${tema === 'dark' ? 'claro' : 'escuro'}`}
+          >
+            {tema === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+
+          {/* Botão hamburger para mobile */}
+          <button
+            className="menu-toggle btn btn-secondary"
+            onClick={() => setMenuAberto(prev => !prev)}
+            aria-expanded={menuAberto}
+            aria-controls="mobile-menu"
+            aria-label={menuAberto ? 'Fechar menu' : 'Abrir menu de navegação'}
+            style={{ marginLeft: '1rem' }}
+          >
+            {menuAberto ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </div>
 
       {/* Menu Mobile */}
@@ -101,10 +116,24 @@ function Footer() {
 }
 
 function App() {
+  const [tema, setTema] = useState(() => {
+    const salvo = localStorage.getItem('tcc_theme');
+    return salvo ? salvo : 'dark';
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', tema);
+    localStorage.setItem('tcc_theme', tema);
+  }, [tema]);
+
+  const alternarTema = () => {
+    setTema(prev => prev === 'dark' ? 'light' : 'dark');
+  };
+
   return (
     <Router>
       <a href="#main-content" className="skip-link">Pular para o conteúdo principal</a>
-      <Navigation />
+      <Navigation tema={tema} alternarTema={alternarTema} />
       <main id="main-content" tabIndex="-1">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -112,6 +141,7 @@ function App() {
           <Route path="/assistente" element={<Assistente />} />
           <Route path="/experiencias" element={<Experiencias />} />
           <Route path="/moderacao" element={<Moderacao />} />
+          <Route path="/conteudo/:id" element={<ConteudoDetalhe />} />
         </Routes>
       </main>
       <Footer />

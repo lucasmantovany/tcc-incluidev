@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, RefreshCw, Book, ExternalLink, HelpCircle } from 'lucide-react';
 import { conteudos } from '../data/conteudos';
 
@@ -346,16 +346,27 @@ function Assistente() {
                     ))}
                   </div>
                   
-                  <a 
-                    href={item.link} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="btn btn-primary" 
-                    style={{ width: '100%', display: 'flex', justifyContent: 'center', gap: '0.5rem' }}
-                    aria-label={`Acessar conteúdo de ${item.titulo}`}
-                  >
-                    Acessar Conteúdo <ExternalLink size={18} aria-hidden="true" />
-                  </a>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginTop: 'auto' }}>
+                    <Link 
+                      to={`/conteudo/${item.id}`} 
+                      className="btn btn-secondary" 
+                      style={{ display: 'flex', justifyContent: 'center' }}
+                      aria-label={`Ver resumo detalhado de ${item.titulo}`}
+                    >
+                      Ver Detalhes
+                    </Link>
+                    <a 
+                      href={item.link} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="btn btn-primary" 
+                      style={{ display: 'flex', justifyContent: 'center', gap: '0.25rem' }}
+                      aria-label={`Acessar conteúdo original de ${item.titulo} (abre em nova aba)`}
+                    >
+                      Original <ExternalLink size={16} aria-hidden="true" />
+                    </a>
+                  </div>
+
                   <div style={{ marginTop: '1rem', fontSize: '0.8rem', color: '#64748b' }}>
                     Ref: {item.referencia}
                   </div>

@@ -101,7 +101,7 @@ function Experiencias() {
       {/* Título Principal */}
       <div className="flex justify-between items-center" style={{ marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
-          <h1 tabIndex="0" style={{ margin: 0 }}>Experiências e Relatos</h1>
+          <h1 tabIndex="-1" style={{ margin: 0 }}>Experiências e Relatos</h1>
           <p style={{ margin: 0, marginTop: '0.5rem', fontSize: '1.1rem' }}>
             Compartilhe e conheça relatos reais sobre o ensino e uso prático de programação acessível.
           </p>
@@ -123,7 +123,7 @@ function Experiencias() {
             {experiencias.length > 0 ? (
               experiencias.map(exp => (
                 <article key={exp.id} className="glass-panel" style={{ padding: '1.5rem', borderLeft: '4px solid var(--accent-color)' }}>
-                  <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#fff' }}>{exp.titulo}</h3>
+                  <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: 'var(--text-primary)' }}>{exp.titulo}</h3>
                   <p style={{ fontStyle: 'italic', fontSize: '0.95rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
                     "{exp.mensagem}"
                   </p>
@@ -148,7 +148,7 @@ function Experiencias() {
         {/* Lado Direito: Formulário de Envio */}
         <section aria-label="Compartilhar novo relato">
           <div className="glass-panel" style={{ padding: '2rem' }}>
-            <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#fff' }}>
+            <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--text-primary)' }}>
               <MessageSquare size={24} color="#10b981" /> Compartilhe seu Relato
             </h2>
             <p style={{ marginBottom: '1.5rem', fontSize: '0.95rem' }}>
@@ -172,8 +172,8 @@ function Experiencias() {
                 role="alert"
               >
                 <CheckCircle size={40} color="#10b981" style={{ margin: '0 auto 1rem', display: 'block' }} />
-                <h3 style={{ color: '#fff', marginBottom: '0.5rem' }}>Relato enviado com sucesso!</h3>
-                <p style={{ fontSize: '0.9rem', marginBottom: '1.5rem' }}>
+                <h3 style={{ color: 'var(--text-primary)', marginBottom: '0.5rem' }}>Relato enviado com sucesso!</h3>
+                <p style={{ fontSize: '0.9rem', marginBottom: '1.5rem', color: 'var(--text-primary)' }}>
                   Agradecemos a sua contribuição. Ela foi encaminhada ao painel administrativo e será exibida no portal assim que for aprovada pelo moderador.
                 </p>
                 <button 
@@ -205,7 +205,6 @@ function Experiencias() {
                     onChange={(e) => setNome(e.target.value)}
                     required
                     placeholder="Ex: Prof. João Silva"
-                    style={{ width: '100%', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid var(--border-color)', backgroundColor: 'var(--secondary-bg)', color: '#fff' }}
                   />
                 </div>
 
@@ -259,7 +258,6 @@ function Experiencias() {
                     onChange={(e) => setTitulo(e.target.value)}
                     required
                     placeholder="Ex: Desafios na aula de loops"
-                    style={{ width: '100%', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid var(--border-color)', backgroundColor: 'var(--secondary-bg)', color: '#fff' }}
                   />
                 </div>
 
@@ -275,7 +273,7 @@ function Experiencias() {
                     onChange={(e) => setMensagem(e.target.value)}
                     required
                     placeholder="Conte detalhes sobre o que funcionou, ferramentas usadas e dificuldades."
-                    style={{ width: '100%', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid var(--border-color)', backgroundColor: 'var(--secondary-bg)', color: '#fff', resize: 'vertical' }}
+                    style={{ resize: 'vertical' }}
                   ></textarea>
                 </div>
 
