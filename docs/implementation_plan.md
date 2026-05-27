@@ -33,6 +33,12 @@ Após a reunião com a orientadora, as seguintes melhorias e novos recursos fora
 - **Refatoração de Experiências:**
   - Remoção de estilos inline engessados com paletas fixas (cores sólidas de hexadecimais incompatíveis com Light Mode) substituídas por variáveis de CSS dinâmico. 
 
+### Fase 4: Extração de Conteúdos, Resumos e Filtros (Atual)
+- **Atualização de Filtros no Repositório:** Inclusão de um novo filtro por "Tipo de Material" (Ferramentas, Artigos, Guias) com base na lógica construída no *Assistente Guia*.
+- **Extração Analítica de PDFs Locais:** Leitura e análise profunda via IA dos documentos no diretório `/artigos` gerando resumos em português focados na metodologia de ensino.
+- **Enriquecimento de Ferramentas sem PDF:** Criação de resumos extensos diretamente da fonte de conhecimento das ferramentas de mercado catalogadas em `conteudos.js`.
+- **Implementação Visual:** Atualização de `ConteudoDetalhe.jsx` para exibir o conteúdo longo enriquecido (campo `detalhes`).
+
 ---
 
 ## Verification Plan & Conclusão

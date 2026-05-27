@@ -9,33 +9,51 @@ function Repositorio() {
   // Lendo os valores iniciais da URL (se o usuário veio das caixas da Home)
   const initialNivel = searchParams.get('nivel') || 'Todos';
   const initialPublico = searchParams.get('publico') || 'Todos';
+  const initialTipo = searchParams.get('tipo') || 'Todos';
 
   const [filtroNivel, setFiltroNivel] = useState(initialNivel);
   const [filtroPublico, setFiltroPublico] = useState(initialPublico);
+  const [filtroTipo, setFiltroTipo] = useState(initialTipo);
 
   // Atualizar a URL quando os filtros mudam para permitir compartilhamento de links
   useEffect(() => {
     const params = new URLSearchParams();
     if (filtroNivel !== 'Todos') params.set('nivel', filtroNivel);
     if (filtroPublico !== 'Todos') params.set('publico', filtroPublico);
+    if (filtroTipo !== 'Todos') params.set('tipo', filtroTipo);
     setSearchParams(params);
-  }, [filtroNivel, filtroPublico, setSearchParams]);
+  }, [filtroNivel, filtroPublico, filtroTipo, setSearchParams]);
 
   // Sincronizar estado caso o usuário use botões de voltar/avançar no navegador
   useEffect(() => {
     setFiltroNivel(searchParams.get('nivel') || 'Todos');
     setFiltroPublico(searchParams.get('publico') || 'Todos');
+    setFiltroTipo(searchParams.get('tipo') || 'Todos');
   }, [searchParams]);
 
   // Listas de opções para os filtros
   const niveis = ['Todos', 'Básico', 'Técnico', 'Superior'];
   const publicos = ['Todos', 'Professores', 'Alunos', 'Público Geral', 'Público Específico'];
+  const tiposMaterial = ['Todos', 'Ferramentas Práticas / IDEs', 'Artigos / Acadêmicos', 'Guias / Normas'];
 
   // Lógica de filtragem
   const conteudosFiltrados = conteudos.filter(item => {
     const matchNivel = filtroNivel === 'Todos' || item.nivel.includes(filtroNivel);
     const matchPublico = filtroPublico === 'Todos' || item.publico.includes(filtroPublico);
-    return matchNivel && matchPublico;
+    
+    let matchTipo = true;
+    if (filtroTipo === 'Ferramentas Práticas / IDEs') {
+      const termosFerramenta = ['Linguagem', 'Ferramenta', 'IDE', 'Hardware', 'Aplicativo', 'Ambiente Lúdico', 'Plugin'];
+      matchTipo = termosFerramenta.some(termo => item.tipo.toLowerCase().includes(termo.toLowerCase()));
+    } else if (filtroTipo === 'Artigos / Acadêmicos') {
+      const termosAcademico = ['Artigo', 'Revisão', 'Mapeamento', 'Tese'];
+      matchTipo = termosAcademico.some(termo => item.tipo.toLowerCase().includes(termo.toLowerCase()));
+    } else if (filtroTipo === 'Guias / Normas') {
+      const termosGuias = ['Guia', 'Norma'];
+      matchTipo = termosGuias.some(termo => item.tipo.toLowerCase().includes(termo.toLowerCase()));
+    }
+
+    return matchNivel && matchPublico && matchTipo;
   });
 
   return (
@@ -75,6 +93,22 @@ function Repositorio() {
           >
             {publicos.map(publico => (
               <option key={publico} value={publico}>{publico}</option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor="filtro-tipo" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>
+            Tipo de Material:
+          </label>
+          <select 
+            id="filtro-tipo" 
+            className="filter-select" 
+            value={filtroTipo} 
+            onChange={(e) => setFiltroTipo(e.target.value)}
+          >
+            {tiposMaterial.map(tipoMat => (
+              <option key={tipoMat} value={tipoMat}>{tipoMat}</option>
             ))}
           </select>
         </div>

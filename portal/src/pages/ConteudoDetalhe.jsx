@@ -2,6 +2,24 @@ import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ExternalLink, ArrowLeft, Calendar, User, Tag, BookOpen } from 'lucide-react';
 import { conteudos } from '../data/conteudos';
+import { detalhesConteudo } from '../data/detalhes';
+
+// Função auxiliar simples para renderizar marcação markdown básica sem biblioteca externa
+const renderMarkup = (text) => {
+  if (!text) return { __html: '' };
+  
+  let html = text
+    // Cabeçalhos (### Título)
+    .replace(/^### (.*$)/gim, '<h3 style="font-size: 1.3rem; margin-top: 1.5rem; margin-bottom: 0.75rem; color: var(--text-primary);">$1</h3>')
+    // Negrito (**texto**)
+    .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
+    // Listas (- item)
+    .replace(/^- (.*$)/gim, '<li style="margin-left: 1.5rem; margin-bottom: 0.5rem;">$1</li>')
+    // Quebras de linha
+    .replace(/\n\n/gim, '<br/><br/>');
+    
+  return { __html: html };
+};
 
 function ConteudoDetalhe() {
   const { id } = useParams();
@@ -66,12 +84,20 @@ function ConteudoDetalhe() {
           </div>
         </header>
 
-        {/* Resumo/Descrição */}
-        <section aria-label="Descrição do recurso" style={{ marginBottom: '2.5rem' }}>
-          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--text-primary)' }}>Resumo do Recurso</h2>
-          <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: 'var(--text-secondary)' }}>
+        {/* Resumo Curto */}
+        <section aria-label="Descrição Breve" style={{ marginBottom: '2rem' }}>
+          <p style={{ fontSize: '1.1rem', fontStyle: 'italic', lineHeight: '1.6', color: 'var(--text-secondary)' }}>
             {item.descricao}
           </p>
+        </section>
+
+        {/* Detalhes Extraídos (Longo) */}
+        <section aria-label="Análise Detalhada do Recurso" style={{ marginBottom: '2.5rem', lineHeight: '1.7', color: 'var(--text-secondary)' }}>
+          {detalhesConteudo[item.id] ? (
+            <div dangerouslySetInnerHTML={renderMarkup(detalhesConteudo[item.id])} />
+          ) : (
+            <p>Nenhuma análise aprofundada disponível ainda para este recurso.</p>
+          )}
         </section>
 
         {/* Metadados de Classificação */}
