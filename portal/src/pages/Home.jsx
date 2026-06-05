@@ -57,15 +57,20 @@ function Home() {
             <h4 style={{ margin: 0, fontSize: '1.2rem' }}>Professores e Educadores</h4>
             <p style={{ fontSize: '0.9rem', marginTop: '0.5rem', color: '#cbd5e1' }}>Metodologias e guias práticos de ensino.</p>
           </button>
-          <button className="glass-panel" onClick={() => irParaRepositorio('publico', 'Alunos')} style={{ textAlign: 'left', cursor: 'pointer', width: '100%' }}>
+          <button className="glass-panel" onClick={() => irParaRepositorio('publico', 'Estudantes')} style={{ textAlign: 'left', cursor: 'pointer', width: '100%' }}>
             <LayoutList size={32} color="#fbbf24" style={{ marginBottom: '1rem' }} aria-hidden="true" />
-            <h4 style={{ margin: 0, fontSize: '1.2rem' }}>Alunos PcDV</h4>
+            <h4 style={{ margin: 0, fontSize: '1.2rem' }}>Estudantes</h4>
             <p style={{ fontSize: '0.9rem', marginTop: '0.5rem', color: '#cbd5e1' }}>Ferramentas, linguagens e IDEs acessíveis.</p>
           </button>
-          <button className="glass-panel" onClick={() => irParaRepositorio('publico', 'Público Específico')} style={{ textAlign: 'left', cursor: 'pointer', width: '100%' }}>
+          <button className="glass-panel" onClick={() => irParaRepositorio('publico', 'Pesquisadores')} style={{ textAlign: 'left', cursor: 'pointer', width: '100%' }}>
             <Search size={32} color="#38bdf8" style={{ marginBottom: '1rem' }} aria-hidden="true" />
             <h4 style={{ margin: 0, fontSize: '1.2rem' }}>Pesquisadores</h4>
             <p style={{ fontSize: '0.9rem', marginTop: '0.5rem', color: '#cbd5e1' }}>Revisões sistemáticas e artigos empíricos.</p>
+          </button>
+          <button className="glass-panel" onClick={() => irParaRepositorio('publico', 'Desenvolvedores')} style={{ textAlign: 'left', cursor: 'pointer', width: '100%' }}>
+            <Monitor size={32} color="#3b82f6" style={{ marginBottom: '1rem' }} aria-hidden="true" />
+            <h4 style={{ margin: 0, fontSize: '1.2rem' }}>Desenvolvedores</h4>
+            <p style={{ fontSize: '0.9rem', marginTop: '0.5rem', color: '#cbd5e1' }}>Normas, diretrizes e códigos de acessibilidade.</p>
           </button>
         </div>
       </section>

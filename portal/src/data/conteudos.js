@@ -4,263 +4,359 @@ export const conteudos = [
     titulo: "Linguagem Quorum (Quorum Language)",
     descricao: "Primeira linguagem de programação 'evidence-based', projetada desde o início para ser perfeitamente acessível a leitores de tela, facilitando o ensino de lógica.",
     nivel: ["Básico", "Técnico", "Superior"],
-    publico: ["Professores", "Alunos"],
+    publico: ["Professores", "Estudantes"],
     tipo: "Linguagem / Ferramenta",
     link: "https://quorumlanguage.com/",
     referencia: "Stefik, A. et al.",
-    data: "2023-01-01"
+    data: "2023-01-01",
+    tags: ["ferramentas-ide", "logica-pensamento"]
   },
   {
     id: 2,
     titulo: "Accessible Blockly (Google)",
     descricao: "Uma extensão da biblioteca de programação em blocos do Google (Blockly) que permite a navegação por teclado e feedback para leitores de tela.",
     nivel: ["Básico"],
-    publico: ["Professores", "Público Específico"],
+    publico: ["Professores", "Desenvolvedores"],
     tipo: "Ferramenta / Framework",
     link: "https://developers.google.com/blockly/guides/configure/web/keyboard-nav",
     referencia: "Google Developers",
-    data: "2021-08-15"
+    data: "2021-08-15",
+    tags: ["logica-pensamento", "ferramentas-ide"]
   },
   {
     id: 3,
     titulo: "Code Jumper (Programação Física)",
     descricao: "Metodologia onde os alunos escrevem código conectando pods físicos grandes, ensinando sequências e loops de forma tátil e sonora.",
     nivel: ["Básico"],
-    publico: ["Professores", "Alunos"],
+    publico: ["Professores", "Estudantes"],
     tipo: "Metodologia / Hardware",
     link: "https://codejumper.com/",
     referencia: "Microsoft / APH",
-    data: "2020-05-10"
+    data: "2020-05-10",
+    tags: ["robotica-fisica", "logica-pensamento", "metodologia-ensino"]
   },
   {
     id: 4,
     titulo: "Swift Playgrounds com VoiceOver",
     descricao: "Aplicativo de iPad da Apple que usa o leitor de tela nativo (VoiceOver) para ensinar programação Swift através de quebra-cabeças com áudio-descrições ricas.",
     nivel: ["Básico", "Técnico"],
-    publico: ["Alunos", "Público Geral"],
+    publico: ["Estudantes", "Desenvolvedores"],
     tipo: "Aplicativo",
     link: "https://www.apple.com/swift/playgrounds/",
     referencia: "Apple Accessibility",
-    data: "2022-11-20"
+    data: "2022-11-20",
+    tags: ["logica-pensamento", "ferramentas-ide", "web-mobile"]
   },
   {
     id: 5,
     titulo: "JBrick: IDE Acessível para LEGO Mindstorms",
     descricao: "Um ambiente de desenvolvimento em Java totalmente acessível via leitores de tela para estudantes programarem robôs educacionais (LEGO).",
     nivel: ["Técnico", "Superior"],
-    publico: ["Alunos", "Público Específico"],
+    publico: ["Estudantes", "Desenvolvedores"],
     tipo: "IDE / Ferramenta",
     link: "https://sourceforge.net/projects/jbrick/",
     referencia: "Ludi, S. et al.",
-    data: "2018-04-12"
+    data: "2018-04-12",
+    tags: ["ferramentas-ide", "robotica-fisica"]
   },
   {
     id: 6,
     titulo: "Acessibilidade no Visual Studio Code",
     descricao: "Guia oficial detalhando as melhores práticas, atalhos e configurações para usar o VS Code com leitores de tela (NVDA e JAWS).",
     nivel: ["Técnico", "Superior"],
-    publico: ["Alunos", "Público Geral"],
+    publico: ["Estudantes", "Desenvolvedores"],
     tipo: "Guia",
     link: "https://code.visualstudio.com/docs/editor/accessibility",
     referencia: "Documentação Oficial Microsoft",
-    data: "2023-10-05"
+    data: "2023-10-05",
+    tags: ["ferramentas-ide"]
   },
   {
     id: 7,
     titulo: "Diretrizes WCAG para Ferramentas Educacionais",
     descricao: "Normas técnicas oficiais da Web Accessibility Initiative para garantir que portais e compiladores online de ensino sejam inclusivos.",
     nivel: ["Técnico", "Superior"],
-    publico: ["Professores", "Público Geral"],
+    publico: ["Professores", "Desenvolvedores"],
     tipo: "Norma Técnica",
     link: "https://www.w3.org/WAI/standards-guidelines/wcag/",
     referencia: "W3C (WAI)",
-    data: "2023-08-01"
+    data: "2023-08-01",
+    tags: ["leis-diretrizes", "web-mobile"]
   },
   {
     id: 8,
     titulo: "Physical Programming for Blind and Low Vision Children at Scale",
     descricao: "Estudo empírico sobre o impacto da programação física e tangível (como blocos sonoros) para crianças cegas ou com baixa visão. Destaca metodologias inclusivas.",
     nivel: ["Básico", "Superior"],
-    publico: ["Professores", "Público Específico"],
+    publico: ["Professores", "Pesquisadores"],
     tipo: "Artigo Acadêmico",
     link: "https://doi.org/10.1080/07370024.2019.1621175",
     referencia: "Morrison, C., et al. (Taylor & Francis / HC-I)",
-    data: "2019-06-01"
+    data: "2019-06-01",
+    tags: ["metodologia-ensino", "revisao-primaria", "avaliacao-validacao", "intervencao-pedagogica"]
   },
   {
     id: 9,
     titulo: "Making Programming Accessible to Learners with Visual Impairments: A Literature Review",
     descricao: "Revisão sistemática de literatura focada nos desafios e métodos de ensino (incluindo feedback háptico e áudio) para crianças (primary-aged).",
     nivel: ["Superior"],
-    publico: ["Professores", "Público Específico"],
+    publico: ["Professores", "Pesquisadores"],
     tipo: "Revisão de Literatura",
     link: "https://doi.org/10.21585/ijcses.v2i2.25",
     referencia: "Hadwen-Bennett, A., Sentance, S., & Morrison, C. (IJCSES)",
-    data: "2018-05-15"
+    data: "2018-05-15",
+    tags: ["curriculo-inclusivo", "revisao-secundaria", "intervencao-pedagogica"]
   },
   {
     id: 10,
     titulo: "A Systematic Review on Developing Computer Programming Skills for Visually Impaired Students",
     descricao: "Estudo recente e abrangente (2000-2023) sobre tecnologias assistivas, mapeando a evolução no ensino de linguagens textuais e baseadas em blocos.",
     nivel: ["Superior"],
-    publico: ["Professores", "Público Geral"],
+    publico: ["Professores", "Pesquisadores"],
     tipo: "Revisão Sistemática",
     link: "https://scholar.google.com/scholar?q=A+Systematic+Review+on+Developing+Computer+Programming+Skills+for+Visually+Impaired+Students+2024",
     referencia: "Journal of Disability Research (2024)",
-    data: "2024-01-10"
+    data: "2024-01-10",
+    tags: ["curriculo-inclusivo", "revisao-terciaria", "avaliacao-validacao"]
   },
   {
     id: 11,
     titulo: "Assistive Technologies for Teaching Programming to Visually Impaired Learners: A Systematic Review",
     descricao: "Revisão sistemática detalhando o estado da arte e a eficácia das tecnologias assistivas utilizadas no ensino de programação para alunos com deficiência visual.",
     nivel: ["Técnico", "Superior"],
-    publico: ["Professores", "Público Específico"],
+    publico: ["Professores", "Pesquisadores"],
     tipo: "Revisão Sistemática",
     link: "https://scholar.google.com/scholar?q=Assistive+Technologies+for+Teaching+Programming+to+Visually+Impaired+Learners+A+Systematic+Review+Mendes+2025",
     referencia: "Mendes et al. (UFG, 2025)",
-    data: "2025-02-10"
+    data: "2025-02-10",
+    tags: ["curriculo-inclusivo", "revisao-terciaria", "avaliacao-validacao"]
   },
   {
     id: 12,
     titulo: "Teaching Programming for Blinds: A Review",
     descricao: "Revisão sistemática histórica de estudos entre 1975 e 2013, analisando os primeiros desafios de linguagens textuais e de blocos para estudantes cegos.",
     nivel: ["Superior"],
-    publico: ["Professores", "Público Geral"],
+    publico: ["Professores", "Pesquisadores"],
     tipo: "Revisão Sistemática",
     link: "https://scholar.google.com/scholar?q=Teaching+Programming+for+Blinds+A+Review+Al-Ratta+Al-Khalifa+2013",
     referencia: "Al-Ratta & Al-Khalifa (King Saud University, 2013)",
-    data: "2013-06-15"
+    data: "2013-06-15",
+    tags: ["curriculo-inclusivo", "revisao-terciaria"]
   },
   {
     id: 13,
     titulo: "Teaching Programming Logic for People with Blindness or Visual Impairments: a Systematic Mapping Study",
     descricao: "Mapeamento sistemático de literatura focado nas abordagens pedagógicas e ferramentas voltadas para o ensino de lógica de programação e algoritmos de forma inclusiva.",
     nivel: ["Básico", "Superior"],
-    publico: ["Professores", "Público Específico"],
+    publico: ["Professores", "Pesquisadores"],
     tipo: "Mapeamento Sistemático",
     link: "https://scholar.google.com/scholar?q=Teaching+Programming+Logic+for+People+with+Blindness+or+Visual+Impairments+a+Systematic+Mapping+Study+Santos+2025",
     referencia: "Santos, Shibata, Pinto (UFPA, 2025)",
-    data: "2025-01-20"
+    data: "2025-01-20",
+    tags: ["curriculo-inclusivo", "revisao-secundaria", "intervencao-pedagogica"]
   },
   {
     id: 14,
     titulo: "Diretrizes de Acessibilidade em Ambientes de Desenvolvimento Integrado (IDEs) para Estudantes Cegos",
     descricao: "Tese de doutorado que propõe e valida um conjunto de diretrizes de acessibilidade para o design de IDEs visando melhorar a experiência de programadores cegos.",
     nivel: ["Técnico", "Superior"],
-    publico: ["Professores", "Público Específico"],
+    publico: ["Pesquisadores", "Desenvolvedores", "Professores"],
     tipo: "Tese de Doutorado",
     link: "https://scholar.google.com/scholar?q=Diretrizes+de+Acessibilidade+em+Ambientes+de+Desenvolvimento+Integrado+para+Estudantes+Cegos+Zen+Tavares+2025",
     referencia: "Zen & Tavares (IFFar & UFPEL, 2025)",
-    data: "2025-03-01"
+    data: "2025-03-01",
+    tags: ["leis-diretrizes", "ferramentas-ide", "revisao-terciaria", "avaliacao-validacao"]
   },
   {
     id: 15,
     titulo: "APL: Audio Programming Language",
     descricao: "Interface e linguagem de programação baseada em áudio para ajudar estudantes cegos a dominar o pensamento algorítmico sem a complexidade visual e de sintaxe de caracteres especiais.",
     nivel: ["Básico"],
-    publico: ["Alunos", "Professores"],
+    publico: ["Estudantes", "Professores"],
     tipo: "Linguagem / Ferramenta",
     link: "https://scholar.google.com/scholar?q=APL+Audio+Programming+Language+for+Blind+Learners+Sanchez+2006",
     referencia: "Sánchez & Aguayo (2006)",
-    data: "2006-07-15"
+    data: "2006-07-15",
+    tags: ["ferramentas-ide", "logica-pensamento", "revisao-primaria"]
   },
   {
     id: 16,
     titulo: "JavaSpeak",
     descricao: "Ferramenta projetada para ajudar estudantes universitários cegos a aprender a programar em Java, permitindo que naveguem e ouçam o código em diferentes níveis de granularidade.",
     nivel: ["Superior"],
-    publico: ["Alunos"],
+    publico: ["Estudantes", "Desenvolvedores"],
     tipo: "IDE / Ferramenta",
     link: "https://scholar.google.com/scholar?q=JavaSpeak+A+Java+programming+tool+for+students+with+visual+disabilities+Smith+2000",
     referencia: "Smith, Francioni & Matzek (2000)",
-    data: "2000-04-10"
+    data: "2000-04-10",
+    tags: ["ferramentas-ide", "revisao-primaria"]
   },
   {
     id: 17,
     titulo: "Emacspeak",
     descricao: "Interface de fala icônica integrada ao editor Emacs, permitindo que desenvolvedores cegos controlem e naveguem por ambientes Unix/Linux através de áudio de alta produtividade.",
     nivel: ["Superior"],
-    publico: ["Alunos", "Público Específico"],
+    publico: ["Estudantes", "Desenvolvedores"],
     tipo: "IDE / Ferramenta",
     link: "https://tvraman.github.io/emacspeak/",
     referencia: "Raman, T. V. (1996)",
-    data: "1996-10-12"
+    data: "1996-10-12",
+    tags: ["ferramentas-ide", "revisao-primaria"]
   },
   {
     id: 18,
     titulo: "Sodbeans e Linguagem Hop",
     descricao: "Ambiente de desenvolvimento construído sobre a NetBeans que utiliza sintetizadores de voz e pistas auditivas complexas para apoiar alunos no aprendizado e na depuração do código.",
     nivel: ["Básico", "Técnico", "Superior"],
-    publico: ["Alunos", "Professores"],
+    publico: ["Estudantes", "Professores"],
     tipo: "IDE / Ferramenta",
     link: "https://scholar.google.com/scholar?q=On+the+design+of+an+educational+infrastructure+for+the+blind+visually+impaired+Stefik+2011",
     referencia: "Stefik, Hundhausen & Smith (2011)",
-    data: "2011-03-05"
+    data: "2011-03-05",
+    tags: ["ferramentas-ide", "logica-pensamento", "revisao-primaria"]
   },
   {
     id: 19,
     titulo: "StructJumper",
     descricao: "Plugin para a IDE Eclipse que gera uma representação em árvore das estruturas aninhadas do código Java, auxiliando o desenvolvedor cego a se situar e navegar rapidamente.",
     nivel: ["Superior"],
-    publico: ["Alunos", "Público Específico"],
+    publico: ["Estudantes", "Desenvolvedores"],
     tipo: "Plugin / Ferramenta",
     link: "https://scholar.google.com/scholar?q=StructJumper+Eclipse+plugin+visually+impaired+Baker+2015",
     referencia: "Baker, Milne & Ladner (2015)",
-    data: "2015-05-18"
+    data: "2015-05-18",
+    tags: ["ferramentas-ide", "revisao-primaria"]
   },
   {
     id: 20,
     titulo: "GUIDL: Graphical User Interface Description Language",
     descricao: "Linguagem descritiva projetada para que programadores com deficiência visual possam criar e organizar interfaces gráficas de usuário (GUIs) sem precisar de ferramentas visuais drag-and-drop.",
     nivel: ["Técnico", "Superior"],
-    publico: ["Alunos", "Público Específico"],
+    publico: ["Estudantes", "Desenvolvedores"],
     tipo: "Linguagem / Ferramenta",
     link: "https://scholar.google.com/scholar?q=GUIDL+as+an+Aiding+Technology+in+Programming+Education+of+Visually+Impaired+Konecki+2014",
     referencia: "Konecki, M. (2014)",
-    data: "2014-12-01"
+    data: "2014-12-01",
+    tags: ["ferramentas-ide", "revisao-primaria", "web-mobile"]
   },
   {
     id: 21,
     titulo: "Wicked Audio Debugger (WAD)",
     descricao: "Depurador sonoro integrado ao Visual Studio que auxilia programadores cegos no processo de debug por meio de alertas baseados em áudio tridimensional e notas musicais.",
     nivel: ["Superior"],
-    publico: ["Alunos", "Público Específico"],
+    publico: ["Estudantes", "Desenvolvedores"],
     tipo: "Plugin / Ferramenta",
     link: "https://scholar.google.com/scholar?q=WAD+A+Feasibility+study+using+the+Wicked+Audio+Debugger+Stefik+2007",
     referencia: "Stefik et al. (2007)",
-    data: "2007-06-25"
+    data: "2007-06-25",
+    tags: ["ferramentas-ide", "revisao-primaria"]
   },
   {
     id: 22,
     titulo: "Lady Beetle",
     descricao: "Ambiente lúdico de introdução ao pensamento computacional onde crianças cegas controlam uma joaninha virtual sobre um grid por comandos simplificados de teclado, ouvindo coordenadas lidas em áudio.",
     nivel: ["Básico"],
-    publico: ["Alunos", "Professores"],
+    publico: ["Estudantes", "Professores", "Desenvolvedores"],
     tipo: "Ambiente Lúdico",
     link: "https://scholar.google.com/scholar?q=Programming+Microworlds+for+Visually+Impaired+Pupils+Jaskova+2014",
     referencia: "Jašková & Kaliaková (2014)",
-    data: "2014-09-10"
+    data: "2014-09-10",
+    tags: ["logica-pensamento", "robotica-fisica", "jogos", "revisao-primaria"]
   },
   {
     id: 23,
     titulo: "World of Sounds",
     descricao: "Ambiente lúdico alternativo que permite que crianças criem pequenos programas que geram sequências e laços sonoros, facilitando a internalização de lógica por meios auditivos.",
     nivel: ["Básico"],
-    publico: ["Alunos", "Professores"],
+    publico: ["Estudantes", "Professores", "Desenvolvedores"],
     tipo: "Ambiente Lúdico",
     link: "https://scholar.google.com/scholar?q=Programming+Microworlds+for+Visually+Impaired+Pupils+Jaskova+2014",
     referencia: "Jašková & Kaliaková (2014)",
-    data: "2014-09-10"
+    data: "2014-09-10",
+    tags: ["logica-pensamento", "robotica-fisica", "jogos", "revisao-primaria"]
   },
   {
     id: 24,
     titulo: "Noodle",
     descricao: "Ambiente alternativo a linguagens visuais de blocos que permite criar sequências musicais e ritmos por teclado, projetado especialmente para a introdução lúdica à lógica em crianças PcDV.",
     nivel: ["Básico"],
-    publico: ["Alunos"],
+    publico: ["Estudantes", "Desenvolvedores"],
     tipo: "Linguagem / Ferramenta",
     link: "https://scholar.google.com/scholar?q=Work+in+Progress+Report+Nonvisual+Visual+Programming+Lewis+2014",
     referencia: "Lewis, C. (2014)",
-    data: "2014-11-05"
+    data: "2014-11-05",
+    tags: ["logica-pensamento", "robotica-fisica", "jogos", "revisao-primaria"]
+  },
+  {
+    id: 25,
+    titulo: "Guia de Acessibilidade MDN (MDN Accessibility Guide)",
+    descricao: "Documentação de referência completa cobrindo práticas essenciais de semântica HTML, CSS acessível, navegação por teclado e o uso correto de ARIA para iniciantes e estudantes.",
+    nivel: ["Básico", "Técnico"],
+    publico: ["Estudantes", "Professores", "Desenvolvedores"],
+    tipo: "Guia",
+    link: "https://developer.mozilla.org/pt-BR/docs/Web/Accessibility",
+    referencia: "MDN Web Docs",
+    data: "2024-03-10",
+    tags: ["web-mobile", "ferramentas-ide"]
+  },
+  {
+    id: 26,
+    titulo: "Estrutura Curricular CSforALL (Computing for All)",
+    descricao: "Framework pedagógico com diretrizes e metodologias para ajudar educadores a conceberem e aplicarem currículos de ciência da computação inclusivos e acessíveis a todas as habilidades.",
+    nivel: ["Básico", "Técnico", "Superior"],
+    publico: ["Professores", "Pesquisadores"],
+    tipo: "Metodologia / Guia",
+    link: "https://www.csforall.org/",
+    referencia: "CSforALL Consortium",
+    data: "2023-05-18",
+    tags: ["metodologia-ensino", "curriculo-inclusivo", "intervencao-pedagogica"]
+  },
+  {
+    id: 27,
+    titulo: "Guia de Práticas de Autor ARIA (WAI-ARIA APG)",
+    descricao: "Guia oficial do W3C detalhando padrões de design recomendados, comportamentos de teclado e exemplos de código acessível para o desenvolvimento de componentes web ricos.",
+    nivel: ["Técnico", "Superior"],
+    publico: ["Desenvolvedores"],
+    tipo: "Guia / Norma Técnica",
+    link: "https://www.w3.org/WAI/ARIA/apg/",
+    referencia: "W3C Web Accessibility Initiative (WAI)",
+    data: "2024-02-15",
+    tags: ["web-mobile", "leis-diretrizes"]
+  },
+  {
+    id: 28,
+    titulo: "Diretrizes de Acessibilidade para Jogos (Game Accessibility Guidelines)",
+    descricao: "Um manual prático de referência rápida para designers de jogos e desenvolvedores adicionarem acessibilidade visual, auditiva e motora em jogos eletrônicos, cobrindo níveis de básico a avançado.",
+    nivel: ["Técnico", "Superior"],
+    publico: ["Desenvolvedores"],
+    tipo: "Guia",
+    link: "https://gameaccessibilityguidelines.com/",
+    referencia: "Game Accessibility Guidelines Initiative",
+    data: "2023-11-01",
+    tags: ["jogos", "leis-diretrizes"]
+  },
+  {
+    id: 29,
+    titulo: "Avaliação do Modelo Keystroke-Level (KLM-GOMS) para Leitores de Tela",
+    descricao: "Artigo científico adaptando modelos cognitivos preditivos para estimar e otimizar a velocidade de interação e produtividade de usuários de leitores de tela em sistemas complexos.",
+    nivel: ["Superior"],
+    publico: ["Pesquisadores"],
+    tipo: "Artigo Acadêmico",
+    link: "https://scholar.google.com/scholar?q=KLM-GOMS+predictive+model+screen+reader+interaction",
+    referencia: "Journal of Accessibility and Design (2022)",
+    data: "2022-09-14",
+    tags: ["avaliacao-validacao", "revisao-primaria"]
+  },
+  {
+    id: 30,
+    titulo: "Lei Brasileira de Inclusão da Pessoa com Deficiência (LBI - Lei 13.146/2015)",
+    descricao: "Legislação brasileira federal que define e torna obrigatória a acessibilidade digital em sites de órgãos de governo, comércio eletrônico, instituições de ensino e portais públicos.",
+    nivel: ["Básico", "Técnico", "Superior"],
+    publico: ["Professores", "Pesquisadores", "Desenvolvedores"],
+    tipo: "Norma Técnica",
+    link: "http://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13146.htm",
+    referencia: "Presidência da República (Brasil)",
+    data: "2015-07-06",
+    tags: ["leis-diretrizes", "web-mobile"]
   }
 ];

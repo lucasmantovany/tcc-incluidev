@@ -7,12 +7,14 @@ import Assistente from './pages/Assistente';
 import Experiencias from './pages/Experiencias';
 import Moderacao from './pages/Moderacao';
 import ConteudoDetalhe from './pages/ConteudoDetalhe';
+import Avaliacao from './pages/Avaliacao';
 
 const NAV_LINKS = [
   { to: '/', label: 'Início', exact: true },
   { to: '/repositorio', label: 'Repositório' },
   { to: '/assistente', label: 'Assistente Guia' },
   { to: '/experiencias', label: 'Experiências' },
+  { to: '/avaliacao', label: 'Avaliação' },
 ];
 
 function Navigation({ tema, alternarTema }) {
@@ -140,6 +142,7 @@ function App() {
           <Route path="/repositorio" element={<Repositorio />} />
           <Route path="/assistente" element={<Assistente />} />
           <Route path="/experiencias" element={<Experiencias />} />
+          <Route path="/avaliacao" element={<Avaliacao />} />
           <Route path="/moderacao" element={<Moderacao />} />
           <Route path="/conteudo/:id" element={<ConteudoDetalhe />} />
         </Routes>

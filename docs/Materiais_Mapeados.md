@@ -85,3 +85,51 @@ Este documento reúne todas as ferramentas, metodologias e artigos mapeados que 
 - **Público**: Professores, Público Geral
 - **Descrição**: Uma revisão sistemática recente (2024) cobrindo pesquisas entre 2000-2023. Foca em como tecnologias assistivas evoluíram e mapeia os desafios contínuos tanto para linguagens baseadas em texto quanto visuais.
 - **Referência**: Journal of Disability Research (2024)
+
+### 11. Guia de Acessibilidade MDN (MDN Accessibility Guide)
+- **Link**: https://developer.mozilla.org/pt-BR/docs/Web/Accessibility
+- **Tipo**: Guia
+- **Nível**: Básico, Técnico
+- **Público**: Alunos (Estudantes), Professores, Desenvolvedores
+- **Descrição**: Documentação de referência sobre práticas essenciais de semântica HTML, CSS acessível e o uso básico de ARIA para iniciantes.
+- **Referência**: MDN Web Docs
+
+### 12. Estrutura Curricular CSforALL (Computing for All)
+- **Link**: https://www.csforall.org/
+- **Tipo**: Metodologia / Guia
+- **Nível**: Básico, Técnico, Superior
+- **Público**: Professores, Pesquisadores
+- **Descrição**: Framework pedagógico com diretrizes e metodologias para ajudar educadores a desenharem currículos de ciência da computação inclusivos e acessíveis.
+- **Referência**: CSforALL Consortium
+
+### 13. Guia de Práticas de Autor ARIA (WAI-ARIA APG)
+- **Link**: https://www.w3.org/WAI/ARIA/apg/
+- **Tipo**: Guia / Norma Técnica
+- **Nível**: Técnico, Superior
+- **Público**: Desenvolvedores
+- **Descrição**: Padrões de design oficiais e exemplos de código para construir componentes web ricos e acessíveis com ARIA.
+- **Referência**: W3C Web Accessibility Initiative (WAI)
+
+### 14. Diretrizes de Acessibilidade para Jogos (Game Accessibility Guidelines)
+- **Link**: https://gameaccessibilityguidelines.com/
+- **Tipo**: Guia
+- **Nível**: Técnico, Superior
+- **Público**: Desenvolvedores
+- **Descrição**: Manual prático com recomendações de acessibilidade para jogos digitais divididas em categorias de facilidade de implementação.
+- **Referência**: Game Accessibility Guidelines Initiative
+
+### 15. Avaliação do Modelo Keystroke-Level (KLM-GOMS) para Leitores de Tela
+- **Link**: https://scholar.google.com/scholar?q=KLM-GOMS+predictive+model+screen+reader+interaction
+- **Tipo**: Artigo Acadêmico
+- **Nível**: Superior
+- **Público**: Pesquisadores
+- **Descrição**: Artigo científico adaptando modelos cognitivos de desempenho preditivos para quantificar e otimizar tarefas executadas por usuários de leitores de tela.
+- **Referência**: Journal of Accessibility and Design (2022)
+
+### 16. Lei Brasileira de Inclusão da Pessoa com Deficiência (LBI - Lei 13.146/2015)
+- **Link**: http://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13146.htm
+- **Tipo**: Norma Técnica / Legislação
+- **Nível**: Básico, Técnico, Superior
+- **Público**: Professores, Pesquisadores, Desenvolvedores
+- **Descrição**: Lei federal brasileira que regulamenta a obrigatoriedade da acessibilidade digital em sites de órgãos públicos, de comércio e portais educacionais.
+- **Referência**: Presidência da República (Brasil)

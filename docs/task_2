@@ -1,0 +1,6 @@
+- [x] Adicionar novos materiais para cobrir lacunas no `conteudos.js`
+- [x] Atualizar os materiais existentes no `conteudos.js` com novos públicos e tags
+- [x] Criar a estrutura do fluxo de perguntas em `fluxoAssistente.js`
+- [x] Modificar `Assistente.jsx` para suportar o wizard dinâmico
+- [x] Validar acessibilidade e navegação por teclado no Assistente
+- [x] Executar build local e testar

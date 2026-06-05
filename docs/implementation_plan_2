@@ -1,0 +1,185 @@
+# Reformulação do Assistente Guia — Fluxos Personalizados por Público-Alvo
+
+O Assistente Guia atual usa um wizard genérico de 3 etapas (perfil → nível → tipo de conteúdo) com categorias estáticas. O objetivo é substituí-lo por um questionário dinâmico onde as perguntas mudam conforme o público-alvo selecionado, garantindo que **cada caminho tenha pelo menos um resultado válido** entre os 24 materiais mapeados.
+
+---
+
+## User Review Required
+
+> [!IMPORTANT]
+> **Novos públicos-alvo propostos:**
+> O perfil "Público Geral / Interessado" será removido e substituído por "Desenvolvedor". As 4 opções passam a ser:
+> - **Estudante** (antigo "Aluno") — com nível de ensino
+> - **Professor / Educador** — com nível de ensino que leciona
+> - **Pesquisador** — foco acadêmico (pesquisa, validação, intervenções)
+> - **Desenvolvedor** — foco em criar produtos acessíveis (jogos, IDEs, etc.)
+
+> [!WARNING]
+> **Lacunas identificadas nos materiais mapeados:**
+> Alguns caminhos do novo wizard não terão resultados suficientes com os 24 itens atuais de [conteudos.js](file:///c:/Users/lucas/Documents/Scripts/tcc-incluidev/portal/src/data/conteudos.js). As lacunas e sugestões de novos materiais estão documentadas na seção "Análise de Cobertura" abaixo. Aprovar quais novos materiais serão adicionados.
+
+---
+
+## Análise de Cobertura — Materiais Existentes vs. Novos Fluxos
+
+### Matriz: O que temos para cada perfil + objetivo
+
+#### 🎓 Estudante
+
+| Objetivo do Estudante | Materiais com match | IDs |
+|---|---|---|
+| Aprender ferramentas/IDEs acessíveis | ✅ 8 itens | 1, 4, 5, 6, 15, 16, 17, 18 |
+| Robótica / Programação Física | ✅ 3 itens | 3, 5, 22 |
+| Pensamento computacional / Lógica | ✅ 5 itens | 2, 3, 22, 23, 24 |
+| Programar na web / Mobile | ⚠️ 1 item (Swift/Apple) | 4 |
+
+#### 👩‍🏫 Professor
+
+| Objetivo do Professor | Materiais com match | IDs |
+|---|---|---|
+| Metodologias e planos de aula | ✅ 5 itens | 2, 3, 8, 22, 23 |
+| Ferramentas para usar em sala | ✅ 5 itens | 1, 2, 3, 15, 18 |
+| Leis, diretrizes, normas (WCAG) | ✅ 2 itens | 7, 14 |
+| Criar material/currículo inclusivo | ⚠️ 2 itens (artigos) | 8, 9 |
+
+#### 🔬 Pesquisador
+
+| Objetivo do Pesquisador | Materiais com match | IDs |
+|---|---|---|
+| Fazer pesquisa / Revisão de literatura | ✅ 6 itens | 9, 10, 11, 12, 13, 14 |
+| Validar ferramentas / Avaliação empírica | ✅ 3 itens | 8, 10, 11 |
+| Propor intervenções educacionais | ✅ 3 itens | 8, 9, 13 |
+
+#### 💻 Desenvolvedor
+
+| Objetivo do Desenvolvedor | Materiais com match | IDs |
+|---|---|---|
+| Desenvolver jogos/ambientes lúdicos | ✅ 3 itens | 22, 23, 24 |
+| Desenvolver IDEs/ferramentas | ✅ 5 itens | 5, 14, 16, 17, 19 |
+| Diretrizes/normas (WCAG, a11y) | ✅ 2 itens | 7, 14 |
+| Desenvolver apps/web acessíveis | ⚠️ 1 item | 7 |
+
+### Lacunas e Sugestões de Novos Materiais
+
+> [!CAUTION]
+> Os itens abaixo são **sugestões de materiais que poderiam ser adicionados** para preencher lacunas. O usuário deve aprovar quais serão incluídos.
+
+| Lacuna | Sugestão de Material |
+|---|---|
+| Estudante → Programar web/mobile | **Guia de HTML/CSS acessível para iniciantes cegos** (ex.: MDN Accessibility Guide, FreeCodeCamp with screen reader) |
+| Professor → Criar currículo inclusivo | **Guia pedagógico "Computing for All"** (ex.: CSforALL framework, ou o material do Royal National Institute of Blind People) |
+| Desenvolvedor → Apps/web acessíveis | **ARIA Authoring Practices Guide (APG)** do W3C — guia prático de componentes acessíveis |
+| Desenvolvedor → Jogos acessíveis | **Game Accessibility Guidelines** (gameaccessibilityguidelines.com) — diretrizes para jogos inclusivos |
+| Pesquisador → Métricas de acessibilidade | **Framework de avaliação GOMS/KLM** adaptado para leitores de tela |
+| Legislação brasileira | **LBI (Lei 13.146/2015)** e **Decreto 5.296/2004** — legislação de acessibilidade digital no Brasil |
+
+---
+
+## Proposed Changes
+
+### Dados e Lógica de Filtragem
+
+#### [MODIFY] [conteudos.js](file:///c:/Users/lucas/Documents/Scripts/tcc-incluidev/portal/src/data/conteudos.js)
+
+- Adicionar campo `tags` a cada item de conteúdo para classificação semântica mais granular que permita matches precisos. Exemplo de tags:
+  ```js
+  tags: ['ferramenta', 'ide', 'leitor-de-tela', 'java']
+  ```
+- Atualizar campo `publico` para incluir os novos perfis: `'Estudantes'`, `'Professores'`, `'Pesquisadores'`, `'Desenvolvedores'`
+- Os materiais acadêmicos (IDs 8-14) ganharão `'Pesquisadores'` no campo publico
+- Ferramentas de desenvolvimento (IDs 5, 14, 16, 17, 19, 20, 21) ganharão `'Desenvolvedores'`
+
+---
+
+#### [NEW] [fluxoAssistente.js](file:///c:/Users/lucas/Documents/Scripts/tcc-incluidev/portal/src/data/fluxoAssistente.js)
+
+Novo arquivo com a **árvore de decisão do wizard** por perfil. Cada perfil define suas etapas dinâmicas:
+
+```
+ETAPA 1 (comum): Selecionar perfil
+  ├── Estudante → ETAPA 2: Nível de ensino → ETAPA 3: O que busca aprender
+  ├── Professor → ETAPA 2: Nível que leciona → ETAPA 3: O que busca ensinar
+  ├── Pesquisador → ETAPA 2: Objetivo da pesquisa (direto, sem nível)
+  └── Desenvolvedor → ETAPA 2: O que está desenvolvendo → ETAPA 3: Busca diretrizes/normas?
+```
+
+**Árvore detalhada de cada perfil:**
+
+##### 🎓 Estudante
+- **Etapa 2**: "Em qual nível de ensino você está?"
+  - Ensino Fundamental/Médio (Básico)
+  - Ensino Técnico
+  - Ensino Superior
+- **Etapa 3**: "O que você gostaria de aprender?"
+  - Ferramentas e IDEs acessíveis → filtra ferramentas tipo IDE/Ferramenta/Linguagem
+  - Robótica e programação física → filtra tags robótica/hardware
+  - Pensamento computacional e lógica → filtra ambientes lúdicos e blocos
+  - Quero ver tudo disponível para meu nível
+
+##### 👩‍🏫 Professor / Educador
+- **Etapa 2**: "Qual nível de ensino você leciona?"
+  - Ensino Fundamental/Médio (Básico)
+  - Ensino Técnico
+  - Ensino Superior
+- **Etapa 3**: "O que você busca para suas aulas?"
+  - Ferramentas para usar em sala de aula → filtra ferramentas com público Professor
+  - Metodologias e planos de aula inclusivos → filtra artigos com intervenção pedagógica
+  - Leis, diretrizes e normas de acessibilidade → filtra normas/guias
+  - Quero ver tudo disponível para meu nível
+
+##### 🔬 Pesquisador
+- **Etapa 2**: "Qual é o foco da sua pesquisa?" (sem etapa de nível — pesquisador é sempre superior/acadêmico)
+  - Realizar revisão de literatura / estado da arte → filtra revisões e mapeamentos
+  - Avaliar ou validar ferramentas assistivas → filtra ferramentas + artigos empíricos
+  - Propor intervenções educacionais inclusivas → filtra artigos de intervenção + metodologias
+  - Quero explorar tudo sobre o tema
+
+##### 💻 Desenvolvedor
+- **Etapa 2**: "O que você está desenvolvendo ou pretende desenvolver?"
+  - Jogos ou ambientes lúdicos acessíveis → filtra ambientes lúdicos + tags jogo
+  - IDEs ou ferramentas de programação → filtra IDEs + plugins
+  - Aplicações web ou mobile acessíveis → filtra guias + WCAG
+  - Outro tipo de produto para PcDV
+- **Etapa 3**: "Você busca também diretrizes ou normas técnicas?"
+  - Sim, quero diretrizes (WCAG, leis) junto com os resultados → adiciona normas ao resultado
+  - Não, apenas os materiais técnicos → mantém filtro da etapa anterior
+
+---
+
+### Interface do Assistente
+
+#### [MODIFY] [Assistente.jsx](file:///c:/Users/lucas/Documents/Scripts/tcc-incluidev/portal/src/pages/Assistente.jsx)
+
+Mudanças principais:
+1. **Wizard dinâmico**: O número de etapas e perguntas muda conforme o perfil (2 a 3 etapas dependendo do perfil). A barra de progresso se adapta.
+2. **Novos perfis na Etapa 1**: Estudante, Professor, Pesquisador, Desenvolvedor — com descrições atualizadas
+3. **Etapas condicionais**: Importar a árvore de `fluxoAssistente.js` e renderizar as opções dinamicamente
+4. **Filtragem aprimorada**: A função `obterRecomendacoes()` será reescrita para usar o sistema de tags + as seleções específicas do perfil
+5. **Mensagem de sugestão**: Quando não houver resultados, em vez de uma mensagem genérica, mostrar sugestões do que poderia ser acrescentado ao portal (extraídas das lacunas mapeadas)
+6. **Acessibilidade mantida**: Todos os `aria-live`, `aria-label`, `fieldset/legend`, `focus management` serão preservados e expandidos para as novas etapas
+7. **Resumo contextual nos resultados**: Mostrar um texto personalizado por perfil explicando como os materiais se encaixam na necessidade do usuário
+
+---
+
+## Open Questions
+
+> [!IMPORTANT]
+> 1. **Materiais novos**: Dos materiais sugeridos na tabela de lacunas, quais deseja incluir agora? Ou prefere implementar o wizard primeiro e depois adicionar conteúdos?
+> 2. **Perfil "Desenvolvedor" — escopo**: O desenvolvedor é alguém que já programa e quer criar produtos para PcDV, ou também pode ser um PcDV que desenvolve? Isso afeta os textos/descrições.
+> 3. **Etapa 3 do Pesquisador**: Prefere manter o pesquisador com apenas 1 etapa de pergunta (além do perfil), ou adicionar uma sub-etapa para especificar o tipo de pesquisa (qualitativa, quantitativa, mista)?
+
+---
+
+## Verification Plan
+
+### Manual Verification
+1. Percorrer **cada combinação** de perfil + respostas no wizard e confirmar que retorna ≥ 1 resultado
+2. Testar com leitor de tela (NVDA) para confirmar que os anúncios `aria-live` funcionam nas novas etapas dinâmicas
+3. Testar navegação por teclado (Tab + Enter) em todas as opções do wizard
+4. Verificar responsividade mobile das novas opções
+
+### Automated Tests
+```bash
+cd portal && npm run build
+```
+- Garantir que a build compila sem erros após todas as alterações

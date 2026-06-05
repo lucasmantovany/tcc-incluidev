@@ -33,7 +33,7 @@ function Repositorio() {
 
   // Listas de opções para os filtros
   const niveis = ['Todos', 'Básico', 'Técnico', 'Superior'];
-  const publicos = ['Todos', 'Professores', 'Alunos', 'Público Geral', 'Público Específico'];
+  const publicos = ['Todos', 'Estudantes', 'Professores', 'Pesquisadores', 'Desenvolvedores'];
   const tiposMaterial = ['Todos', 'Ferramentas Práticas / IDEs', 'Artigos / Acadêmicos', 'Guias / Normas'];
 
   // Lógica de filtragem
