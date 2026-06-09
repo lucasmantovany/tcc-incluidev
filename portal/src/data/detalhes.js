@@ -289,4 +289,35 @@ Linguagens como o Blockly requerem a união de formas "quebra-cabeça". O Noodle
 
 ### Inovação em Andamento
 Ao focar apenas nas chaves do teclado com feedback semântico estrito, o Noodle abriu discussões vitais para projetos de acessibilidade contemporâneos, propondo a redução radical da sintaxe para foco absoluto nos fundamentos algorítmicos.`,
+
+  31: `### Visão Geral
+**Curso de Python para Iniciantes com Leitor de Tela** (baseado nos conceitos do FreeCodeCamp) aborda o ensino fundamental da linguagem Python com viés totalmente semântico.
+
+### Por que Python?
+Diversos artigos científicos recomendam Python como a primeira linguagem para PcDV, pois elimina o "noise" (barulho) de caracteres especiais que os leitores de tela soletram (como chaves e ponto-e-vírgula). A base em indentação exige apenas a configuração do leitor para avisar o nível de recuo (tabs/espaços).
+
+### Estrutura
+- Explicação do uso do terminal interativo para testar lógicas curtas e rápidas.
+- Integração de scripts básicos de comandos com saídas auditivas em texto plano.`,
+
+  32: `### Visão Geral
+**Acessibilidade na Prática: HTML e CSS Inclusivos** é um guia central da Web.dev focado em práticas cruciais para que desenvolvedores não criem as próprias barreiras para usuários PcDV.
+
+### Foco Principal
+Mostra que usar \`<button>\` ao invés de \`<div>\` pode ser a diferença entre um usuário conseguir ou não avançar em um portal. Explica também práticas essenciais de CSS como controle de contraste e navegação livre de mouse.`,
+
+  33: `### Visão Geral
+**Sonic Pi** foi originalmente criado por Sam Aaron para ensinar ciências da computação através da criação musical em escolas.
+
+### Abordagem Acessível e Lúdica
+Para PcDVs, a criação musical via código substitui o velho paradigma de desenhar polígonos na tela. O aluno digita \`play 60\`, \`sleep 1\`, \`play 65\` e ouve o resultado em tempo real. Isso os motiva a aprender conceitos de loops (\`live_loop\`), concorrência (múltiplos instrumentos) e sincronização. É uma excelente ferramenta prática de entrada.`,
+
+  34: `### Visão Geral
+**Relato de Experiência: Inclusão Escolar na Disciplina de Programação** exemplifica como educadores do ensino fundamental adaptaram aulas regulares para inclusão de alunos cegos na robótica.
+
+### Metodologias Expostas
+Mostra técnicas como:
+- Trabalho em duplas (um aluno ditando a lógica, outro encaixando os blocos, ou vice-versa).
+- A instrução do "AEE" para fornecer guias e material em braille ou alto relevo em conjunto com a tecnologia.
+- Importância do retorno imediato de erros.`,
 };
