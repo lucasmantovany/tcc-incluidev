@@ -12,7 +12,7 @@ import Avaliacao from './pages/Avaliacao';
 const NAV_LINKS = [
   { to: '/', label: 'Início', exact: true },
   { to: '/repositorio', label: 'Repositório' },
-  { to: '/assistente', label: 'Assistente Guia' },
+  { to: '/busca-guiada', label: 'Busca Guiada' },
   { to: '/experiencias', label: 'Experiências' },
   { to: '/avaliacao', label: 'Avaliação' },
 ];
@@ -110,7 +110,7 @@ function Footer() {
         <div style={{ marginTop: '1rem', fontSize: '0.85rem', color: '#64748b' }}>
           <Link to="/experiencias" style={{ color: '#64748b', textDecoration: 'underline' }}>Compartilhe sua Experiência</Link>
           {' · '}
-          <Link to="/assistente" style={{ color: '#64748b', textDecoration: 'underline' }}>Assistente Guia</Link>
+          <Link to="/busca-guiada" style={{ color: '#64748b', textDecoration: 'underline' }}>Busca Guiada</Link>
         </div>
       </div>
     </footer>
@@ -140,7 +140,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/repositorio" element={<Repositorio />} />
-          <Route path="/assistente" element={<Assistente />} />
+          <Route path="/busca-guiada" element={<Assistente />} />
           <Route path="/experiencias" element={<Experiencias />} />
           <Route path="/avaliacao" element={<Avaliacao />} />
           <Route path="/moderacao" element={<Moderacao />} />

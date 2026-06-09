@@ -24,6 +24,10 @@ function Home() {
             Explorar Tudo
             <ArrowRight size={20} style={{ marginLeft: '0.5rem' }} aria-hidden="true"/>
           </Link>
+          <Link to="/busca-guiada" className="btn btn-secondary" aria-label="Ir para a busca guiada de conteúdos">
+            Busca Guiada
+            <Search size={20} style={{ marginLeft: '0.5rem' }} aria-hidden="true"/>
+          </Link>
         </div>
       </section>
 

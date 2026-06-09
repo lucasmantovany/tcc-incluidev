@@ -8,25 +8,26 @@ function Assistente() {
   const navigate = useNavigate();
   const [etapa, setEtapa] = useState(1);
   const [perfil, setPerfil] = useState('');
-  const [etapa2Ans, setEtapa2Ans] = useState('');
-  const [etapa3Ans, setEtapa3Ans] = useState('');
+  const [respostas, setRespostas] = useState({});
   const [anuncioAcessibilidade, setAnuncioAcessibilidade] = useState('');
   
   const tituloRef = useRef(null);
 
-  const configEtapa2 = perfil && fluxoAssistente[perfil] ? fluxoAssistente[perfil].etapas[0] : null;
-  const configEtapa3 = perfil && fluxoAssistente[perfil] ? fluxoAssistente[perfil].etapas[1] : null;
+  const perfilConfig = perfil ? fluxoAssistente[perfil] : null;
+  const totalEtapas = perfilConfig ? perfilConfig.etapas.length + 1 : 4; 
+  // +1 is the profile selection itself. So if 3 questions, total is 4. Etapa 5 is results.
+
+  const isResultados = etapa > totalEtapas;
 
   // Anunciar mudanças de etapa para leitores de tela e mover o foco
   useEffect(() => {
     let msg = '';
     if (etapa === 1) {
-      msg = 'Etapa 1 de 3: Identificação do seu perfil. Selecione Estudante, Professor, Pesquisador ou Desenvolvedor.';
-    } else if (etapa === 2 && configEtapa2) {
-      msg = `Etapa 2 de 3: ${configEtapa2.pergunta}`;
-    } else if (etapa === 3 && configEtapa3) {
-      msg = `Etapa 3 de 3: ${configEtapa3.pergunta}`;
-    } else if (etapa === 4) {
+      msg = 'Etapa 1: Identificação do seu perfil. Selecione Estudante, Professor, Pesquisador ou Desenvolvedor.';
+    } else if (!isResultados && perfilConfig) {
+      const configEtapaAtual = perfilConfig.etapas[etapa - 2];
+      msg = `Etapa ${etapa}: ${configEtapaAtual.pergunta}`;
+    } else if (isResultados) {
       msg = 'Resultados carregados. Veja as recomendações personalizadas no final da página.';
     }
     setAnuncioAcessibilidade(msg);
@@ -35,12 +36,15 @@ function Assistente() {
     if (tituloRef.current) {
       tituloRef.current.focus();
     }
-  }, [etapa, perfil, configEtapa2, configEtapa3]);
+  }, [etapa, perfil, isResultados, perfilConfig]);
 
   const selecionarPerfil = (novoPerfil) => {
     setPerfil(novoPerfil);
-    setEtapa2Ans('');
-    setEtapa3Ans('');
+    setRespostas({});
+  };
+
+  const selecionarResposta = (idPergunta, valor) => {
+    setRespostas(prev => ({ ...prev, [idPergunta]: valor }));
   };
 
   const avancar = () => {
@@ -48,13 +52,12 @@ function Assistente() {
       setAnuncioAcessibilidade('Por favor, selecione um perfil antes de avançar.');
       return;
     }
-    if (etapa === 2 && !etapa2Ans) {
-      setAnuncioAcessibilidade('Por favor, selecione uma opção antes de avançar.');
-      return;
-    }
-    if (etapa === 3 && !etapa3Ans) {
-      setAnuncioAcessibilidade('Por favor, selecione uma opção antes de avançar.');
-      return;
+    if (etapa > 1 && !isResultados) {
+      const configEtapaAtual = perfilConfig.etapas[etapa - 2];
+      if (!respostas[configEtapaAtual.id]) {
+        setAnuncioAcessibilidade('Por favor, selecione uma opção antes de avançar.');
+        return;
+      }
     }
     setEtapa(prev => prev + 1);
   };
@@ -65,16 +68,15 @@ function Assistente() {
 
   const reiniciar = () => {
     setPerfil('');
-    setEtapa2Ans('');
-    setEtapa3Ans('');
+    setRespostas({});
     setEtapa(1);
   };
 
-  const obterDescricaoFiltro = (etapaNum) => {
-    if (!perfil || !fluxoAssistente[perfil]) return '';
-    const config = fluxoAssistente[perfil].etapas[etapaNum - 2];
-    const resp = etapaNum === 2 ? etapa2Ans : etapa3Ans;
-    const opcao = config?.opcoes.find(o => o.val === resp);
+  const obterDescricaoFiltro = (idPergunta) => {
+    if (!perfilConfig) return '';
+    const config = perfilConfig.etapas.find(e => e.id === idPergunta);
+    if (!config) return '';
+    const opcao = config.opcoes.find(o => o.val === respostas[idPergunta]);
     return opcao ? opcao.label : '';
   };
 
@@ -83,109 +85,102 @@ function Assistente() {
     if (!perfil) return [];
 
     return conteudos.filter(item => {
-      // 1. Filtro base de público-alvo (mapeado semântico)
       let matchPublico = false;
-      if (perfil === 'Estudante') {
-        matchPublico = item.publico.includes('Estudantes');
-      } else if (perfil === 'Professor') {
-        matchPublico = item.publico.includes('Professores');
-      } else if (perfil === 'Pesquisador') {
-        matchPublico = item.publico.includes('Pesquisadores');
-      } else if (perfil === 'Desenvolvedor') {
-        matchPublico = item.publico.includes('Desenvolvedores');
-      }
+      if (perfil === 'Estudante') matchPublico = item.publico.includes('Estudantes') || item.publico.includes('Alunos');
+      else if (perfil === 'Professor') matchPublico = item.publico.includes('Professores');
+      else if (perfil === 'Pesquisador') matchPublico = item.publico.includes('Pesquisadores') || item.publico.includes('Público Específico');
+      else if (perfil === 'Desenvolvedor') matchPublico = item.publico.includes('Desenvolvedores') || item.publico.includes('Público Específico');
 
-      // 2. Filtros específicos por trilha do perfil
       if (perfil === 'Estudante') {
-        // etapa2Ans: Nível (Básico, Técnico, Superior, Qualquer)
-        const matchNivel = etapa2Ans === 'Qualquer' || item.nivel.includes(etapa2Ans);
+        const rNivel = respostas['nivel'];
+        const rObj = respostas['objetivo'];
+        const rTipo = respostas['tipo_conteudo'];
+
+        const mNivel = !rNivel || rNivel === 'Qualquer' || item.nivel.includes(rNivel);
         
-        // etapa3Ans: objetivo (ferramentas, robotica, logica, web, tudo)
-        let matchObjetivo = true;
-        if (etapa3Ans === 'ferramentas') {
-          matchObjetivo = item.tags.includes('ferramentas-ide');
-        } else if (etapa3Ans === 'robotica') {
-          matchObjetivo = item.tags.includes('robotica-fisica');
-        } else if (etapa3Ans === 'logica') {
-          matchObjetivo = item.tags.includes('logica-pensamento');
-        } else if (etapa3Ans === 'web') {
-          matchObjetivo = item.tags.includes('web-mobile');
-        }
-        
-        return matchPublico && matchNivel && matchObjetivo;
+        let mObj = true;
+        if (rObj === 'blocos') mObj = item.tags?.includes('blocos') || item.descricao.toLowerCase().includes('blocos');
+        if (rObj === 'texto') mObj = item.tags?.includes('texto') || item.tipo.includes('Linguagem');
+        if (rObj === 'robotica' || rObj === 'eletronica') mObj = item.tags?.includes('hardware') || item.tipo.includes('Hardware') || item.descricao.toLowerCase().includes('robô') || item.descricao.toLowerCase().includes('física');
+        if (rObj === 'logica') mObj = item.tags?.includes('logica') || item.descricao.toLowerCase().includes('lógica');
+        if (rObj === 'ferramentas') mObj = item.tipo.includes('Ferramenta') || item.tipo.includes('IDE');
+
+        let mTipo = true;
+        if (rTipo === 'ferramentas') mTipo = item.tipo.includes('Ferramenta') || item.tipo.includes('IDE');
+        if (rTipo === 'tutoriais') mTipo = item.tipo.includes('Guia');
+        if (rTipo === 'artigos') mTipo = item.tipo.includes('Artigo') || item.tipo.includes('Revisão');
+
+        return matchPublico && mNivel && mObj && mTipo;
       }
 
       if (perfil === 'Professor') {
-        // etapa2Ans: Nível que leciona (Básico, Técnico, Superior, Qualquer)
-        const matchNivel = etapa2Ans === 'Qualquer' || item.nivel.includes(etapa2Ans);
+        const rNivel = respostas['nivel'];
+        const rNec = respostas['necessidade'];
+        const rTipo = respostas['tipo_conteudo'];
+
+        const mNivel = !rNivel || rNivel === 'Qualquer' || item.nivel.includes(rNivel);
         
-        // etapa3Ans: objetivo (ferramentas, metodologias, diretrizes, curriculo, tudo)
-        let matchObjetivo = true;
-        if (etapa3Ans === 'ferramentas') {
-          matchObjetivo = item.tags.includes('ferramentas-ide');
-        } else if (etapa3Ans === 'metodologias') {
-          matchObjetivo = item.tags.includes('metodologia-ensino');
-        } else if (etapa3Ans === 'diretrizes') {
-          matchObjetivo = item.tags.includes('leis-diretrizes');
-        } else if (etapa3Ans === 'curriculo') {
-          matchObjetivo = item.tags.includes('curriculo-inclusivo');
-        }
-        
-        return matchPublico && matchNivel && matchObjetivo;
-      }
+        let mNec = true;
+        if (rNec === 'metodologias') mNec = item.tipo.includes('Metodologia') || item.tags?.includes('metodologia-ensino');
+        if (rNec === 'ferramentas') mNec = item.tipo.includes('Ferramenta') || item.tipo.includes('IDE');
+        if (rNec === 'relatos') mNec = item.tipo.includes('Artigo') || item.tipo.includes('Revisão');
+        if (rNec === 'leis') mNec = item.tipo.includes('Norma') || item.tipo.includes('Guia');
+        if (rNec === 'objetos') mNec = item.tipo.includes('Hardware') || item.tipo.includes('Lúdico');
 
-      if (perfil === 'Pesquisador') {
-        // etapa2Ans: revisao_tipo (primaria, secundaria, terciaria, qualquer)
-        let matchTipoRevisao = true;
-        if (etapa2Ans === 'primaria') {
-          matchTipoRevisao = item.tags.includes('revisao-primaria');
-        } else if (etapa2Ans === 'secundaria') {
-          matchTipoRevisao = item.tags.includes('revisao-secundaria');
-        } else if (etapa2Ans === 'terciaria') {
-          matchTipoRevisao = item.tags.includes('revisao-terciaria');
-        }
+        let mTipo = true;
+        if (rTipo === 'ferramentas') mTipo = item.tipo.includes('Ferramenta') || item.tipo.includes('IDE');
+        if (rTipo === 'guias') mTipo = item.tipo.includes('Guia') || item.tipo.includes('Norma');
+        if (rTipo === 'artigos') mTipo = item.tipo.includes('Artigo') || item.tipo.includes('Revisão');
 
-        // etapa3Ans: objetivo (estado_arte, validacao, intervencoes, tudo)
-        let matchObjetivo = true;
-        if (etapa3Ans === 'estado_arte') {
-          matchObjetivo = item.tags.includes('curriculo-inclusivo') || 
-                          item.tags.includes('revisao-terciaria') || 
-                          item.tags.includes('revisao-secundaria') ||
-                          (etapa2Ans === 'primaria' && item.tags.includes('revisao-primaria'));
-        } else if (etapa3Ans === 'validacao') {
-          matchObjetivo = item.tags.includes('avaliacao-validacao') || 
-                          item.tags.includes('revisao-secundaria') || 
-                          item.tags.includes('revisao-terciaria');
-        } else if (etapa3Ans === 'intervencoes') {
-          matchObjetivo = item.tags.includes('intervencao-pedagogica') || 
-                          item.tags.includes('metodologia-ensino') || 
-                          item.tags.includes('revisao-secundaria') ||
-                          item.tags.includes('revisao-terciaria');
-        }
-
-        return matchPublico && matchTipoRevisao && matchObjetivo;
+        return matchPublico && mNivel && mNec && mTipo;
       }
 
       if (perfil === 'Desenvolvedor') {
-        // etapa2Ans: produto (jogos, ferramentas, web_mobile, qualquer)
-        let matchProduto = true;
-        if (etapa2Ans === 'jogos') {
-          matchProduto = item.tags.includes('jogos');
-        } else if (etapa2Ans === 'ferramentas') {
-          matchProduto = item.tags.includes('ferramentas-ide');
-        } else if (etapa2Ans === 'web_mobile') {
-          matchProduto = item.tags.includes('web-mobile');
-        }
+        const rObj = respostas['objetivo'];
+        const rFoco = respostas['foco'];
+        const rTipo = respostas['tipo_conteudo'];
 
-        // etapa3Ans: diretrizes (sim, nao)
-        let matchDiretrizes = true;
-        if (etapa3Ans === 'sim') {
-          matchDiretrizes = item.tags.includes('leis-diretrizes') || (matchProduto && !item.tipo.includes('Norma'));
-        } else {
-          matchDiretrizes = !item.tags.includes('leis-diretrizes') || item.tags.includes('ferramentas-ide') || item.tags.includes('jogos');
-        }
+        let mObj = true;
+        if (rObj === 'diretrizes' || rObj === 'normas') mObj = item.tipo.includes('Norma') || item.tipo.includes('Guia');
+        if (rObj === 'estudos' || rObj === 'boas_praticas') mObj = item.tipo.includes('Artigo') || item.tipo.includes('Revisão') || item.tipo.includes('Guia');
 
-        return (matchPublico || item.tags.includes('leis-diretrizes')) && matchProduto && matchDiretrizes;
+        let mFoco = true;
+        if (rFoco === 'blocos') mFoco = item.descricao.toLowerCase().includes('blocos');
+        if (rFoco === 'ide') mFoco = item.tipo.includes('IDE') || item.tipo.includes('Ferramenta');
+        if (rFoco === 'objeto' || rFoco === 'plataforma') mFoco = item.tipo.includes('Aplicativo') || item.tipo.includes('Lúdico');
+
+        let mTipo = true;
+        if (rTipo === 'diretrizes' || rTipo === 'legislacao') mTipo = item.tipo.includes('Norma') || item.tipo.includes('Guia');
+        if (rTipo === 'artigos' || rTipo === 'teses') mTipo = item.tipo.includes('Artigo') || item.tipo.includes('Revisão') || item.tipo.includes('Tese');
+
+        // Para desenvolvedores procurando diretrizes genéricas, afrouxar match publico
+        if (rTipo === 'diretrizes' || rObj === 'diretrizes') matchPublico = matchPublico || item.tipo.includes('Norma');
+
+        return matchPublico && mObj && mFoco && mTipo;
+      }
+
+      if (perfil === 'Pesquisador') {
+        const rTema = respostas['tema'];
+        const rMetodo = respostas['metodo'];
+        const rTipo = respostas['tipo_conteudo'];
+
+        // Pesquisador busca qualquer tipo se for revisão sistemática
+        if (item.tipo.includes('Revisão') || item.tipo.includes('Artigo')) matchPublico = true;
+
+        let mTema = true;
+        if (rTema === 'ensino') mTema = item.tags?.includes('logica-pensamento') || item.descricao.toLowerCase().includes('ensino');
+        if (rTema === 'tecnologias') mTema = item.tipo.includes('Ferramenta') || item.tipo.includes('Revisão');
+        if (rTema === 'acessibilidade') mTema = item.tags?.includes('leis-diretrizes') || item.descricao.toLowerCase().includes('acessível');
+
+        let mMetodo = true;
+        if (rMetodo === 'desenvolvimento' || rMetodo === 'validacao') mMetodo = item.tipo.includes('Artigo') || item.tipo.includes('Tese');
+        if (rMetodo === 'revisao') mMetodo = item.tipo.includes('Revisão') || item.tipo.includes('Mapeamento');
+
+        let mTipo = true;
+        if (rTipo === 'revisoes') mTipo = item.tipo.includes('Revisão');
+        if (rTipo === 'artigos' || rTipo === 'empiricos') mTipo = item.tipo.includes('Artigo') || item.tipo.includes('Tese');
+
+        return matchPublico && mTema && mMetodo && mTipo;
       }
 
       return false;
@@ -196,23 +191,14 @@ function Assistente() {
 
   return (
     <div className="page-content container">
-      {/* Área viva de acessibilidade invisível para anúncios do leitor de tela */}
-      <div className="sr-only" aria-live="assertive" style={{
-        position: 'absolute',
-        width: '1px',
-        height: '1px',
-        padding: '0',
-        margin: '-1px',
-        overflow: 'hidden',
-        clip: 'rect(0, 0, 0, 0)',
-        border: '0'
-      }}>
+      {/* Área viva de acessibilidade */}
+      <div className="sr-only" aria-live="assertive" style={{ position: 'absolute', width: '1px', height: '1px', overflow: 'hidden' }}>
         {anuncioAcessibilidade}
       </div>
 
       <div className="flex justify-between items-center" style={{ marginBottom: '2rem' }}>
         <h1 tabIndex="-1" ref={tituloRef} style={{ outline: 'none', margin: 0 }}>
-          {etapa <= 3 ? `Assistente Guia — Etapa ${etapa} de 3` : 'Recomendações para Você'}
+          {!isResultados ? `Busca Guiada — Etapa ${etapa} de ${totalEtapas}` : 'Recomendações para Você'}
         </h1>
         <button 
           onClick={() => navigate('/repositorio')} 
@@ -223,11 +209,11 @@ function Assistente() {
         </button>
       </div>
 
-      {etapa <= 3 && (
+      {!isResultados && (
         <div style={{ marginBottom: '2rem', display: 'flex', gap: '0.5rem' }} aria-hidden="true">
-          <div style={{ flex: 1, height: '6px', borderRadius: '3px', backgroundColor: etapa >= 1 ? 'var(--accent-color)' : 'var(--tertiary-bg)' }}></div>
-          <div style={{ flex: 1, height: '6px', borderRadius: '3px', backgroundColor: etapa >= 2 ? 'var(--accent-color)' : 'var(--tertiary-bg)' }}></div>
-          <div style={{ flex: 1, height: '6px', borderRadius: '3px', backgroundColor: etapa >= 3 ? 'var(--accent-color)' : 'var(--tertiary-bg)' }}></div>
+          {Array.from({ length: totalEtapas }).map((_, i) => (
+            <div key={i} style={{ flex: 1, height: '6px', borderRadius: '3px', backgroundColor: etapa >= i + 1 ? 'var(--accent-color)' : 'var(--tertiary-bg)' }}></div>
+          ))}
         </div>
       )}
 
@@ -242,10 +228,10 @@ function Assistente() {
             </legend>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {[
-                { val: 'Estudante', label: 'Estudante', desc: 'Desejo encontrar linguagens, IDEs, ferramentas táteis e tutoriais práticos para aprender a programar.' },
-                { val: 'Professor', label: 'Professor / Educador', desc: 'Procuro metodologias, planos de aula, currículos e ferramentas para ensinar programação a PcDV.' },
-                { val: 'Pesquisador', label: 'Pesquisador', desc: 'Busco revisões sistemáticas, mapeamentos de literatura e estudos empíricos para embasar minha pesquisa acadêmica.' },
-                { val: 'Desenvolvedor', label: 'Desenvolvedor', desc: 'Busco diretrizes, normas técnicas, APIs e exemplos de design para criar jogos, IDEs e softwares acessíveis.' }
+                { val: 'Estudante', label: 'Estudante', desc: 'Desejo encontrar linguagens, IDEs, ferramentas táteis e tutoriais práticos.' },
+                { val: 'Professor', label: 'Professor / Educador', desc: 'Procuro metodologias, planos de aula, currículos e ferramentas pedagógicas.' },
+                { val: 'Desenvolvedor', label: 'Desenvolvedor', desc: 'Busco diretrizes, normas, APIs e exemplos de design inclusivo.' },
+                { val: 'Pesquisador', label: 'Pesquisador', desc: 'Busco revisões sistemáticas, mapeamentos de literatura e estudos empíricos.' }
               ].map(item => (
                 <label 
                   key={item.val}
@@ -281,99 +267,59 @@ function Assistente() {
           </fieldset>
         )}
 
-        {/* ETAPA 2: DINÂMICA */}
-        {etapa === 2 && configEtapa2 && (
+        {/* ETAPAS DINÂMICAS 2+ */}
+        {etapa > 1 && !isResultados && perfilConfig && (
           <fieldset style={{ border: 'none', margin: 0, padding: 0 }}>
             <legend style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '1.5rem', color: 'var(--text-primary)' }}>
-              {configEtapa2.pergunta}
+              {perfilConfig.etapas[etapa - 2].pergunta}
             </legend>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              {configEtapa2.opcoes.map(item => (
-                <label 
-                  key={item.val}
-                  style={{
-                    display: 'block',
-                    padding: '1.25rem',
-                    borderRadius: '0.75rem',
-                    border: etapa2Ans === item.val ? '2px solid var(--accent-color)' : '1px solid var(--border-color)',
-                    backgroundColor: etapa2Ans === item.val ? 'rgba(59, 130, 246, 0.15)' : 'rgba(255,255,255,0.02)',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease'
-                  }}
-                  className="wizard-option"
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    <input 
-                      type="radio" 
-                      name="etapa2Option" 
-                      value={item.val}
-                      checked={etapa2Ans === item.val}
-                      onChange={() => setEtapa2Ans(item.val)}
-                      style={{ width: '1.2rem', height: '1.2rem' }}
-                      aria-describedby={`desc-e2-${item.val}`}
-                    />
-                    <div>
-                      <strong style={{ display: 'block', color: 'var(--text-primary)' }}>{item.label}</strong>
-                      <span id={`desc-e2-${item.val}`} style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>{item.desc}</span>
+              {perfilConfig.etapas[etapa - 2].opcoes.map(item => {
+                const isSelected = respostas[perfilConfig.etapas[etapa - 2].id] === item.val;
+                return (
+                  <label 
+                    key={item.val}
+                    style={{
+                      display: 'block',
+                      padding: '1.25rem',
+                      borderRadius: '0.75rem',
+                      border: isSelected ? '2px solid var(--accent-color)' : '1px solid var(--border-color)',
+                      backgroundColor: isSelected ? 'rgba(59, 130, 246, 0.15)' : 'rgba(255,255,255,0.02)',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease'
+                    }}
+                    className="wizard-option"
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                      <input 
+                        type="radio" 
+                        name={`etapa${etapa}Option`} 
+                        value={item.val}
+                        checked={isSelected}
+                        onChange={() => selecionarResposta(perfilConfig.etapas[etapa - 2].id, item.val)}
+                        style={{ width: '1.2rem', height: '1.2rem' }}
+                        aria-describedby={`desc-e${etapa}-${item.val}`}
+                      />
+                      <div>
+                        <strong style={{ display: 'block', color: 'var(--text-primary)' }}>{item.label}</strong>
+                        <span id={`desc-e${etapa}-${item.val}`} style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>{item.desc}</span>
+                      </div>
                     </div>
-                  </div>
-                </label>
-              ))}
+                  </label>
+                );
+              })}
             </div>
           </fieldset>
         )}
 
-        {/* ETAPA 3: DINÂMICA */}
-        {etapa === 3 && configEtapa3 && (
-          <fieldset style={{ border: 'none', margin: 0, padding: 0 }}>
-            <legend style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '1.5rem', color: 'var(--text-primary)' }}>
-              {configEtapa3.pergunta}
-            </legend>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              {configEtapa3.opcoes.map(item => (
-                <label 
-                  key={item.val}
-                  style={{
-                    display: 'block',
-                    padding: '1.25rem',
-                    borderRadius: '0.75rem',
-                    border: etapa3Ans === item.val ? '2px solid var(--accent-color)' : '1px solid var(--border-color)',
-                    backgroundColor: etapa3Ans === item.val ? 'rgba(59, 130, 246, 0.15)' : 'rgba(255,255,255,0.02)',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease'
-                  }}
-                  className="wizard-option"
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    <input 
-                      type="radio" 
-                      name="etapa3Option" 
-                      value={item.val}
-                      checked={etapa3Ans === item.val}
-                      onChange={() => setEtapa3Ans(item.val)}
-                      style={{ width: '1.2rem', height: '1.2rem' }}
-                      aria-describedby={`desc-e3-${item.val}`}
-                    />
-                    <div>
-                      <strong style={{ display: 'block', color: 'var(--text-primary)' }}>{item.label}</strong>
-                      <span id={`desc-e3-${item.val}`} style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>{item.desc}</span>
-                    </div>
-                  </div>
-                </label>
-              ))}
-            </div>
-          </fieldset>
-        )}
-
-        {/* ETAPA 4: RESULTADO */}
-        {etapa === 4 && (
+        {/* RESULTADOS */}
+        {isResultados && (
           <div style={{ textAlign: 'center', padding: '1rem 0' }}>
             <h2 style={{ fontSize: '1.8rem', color: 'var(--text-primary)', marginBottom: '1rem' }}>
               Encontramos {recomendacoes.length} recomendações para você!
             </h2>
             <p style={{ maxWidth: '600px', margin: '0 auto 2rem' }}>
-              Com base no seu perfil de <strong>{fluxoAssistente[perfil]?.nome}</strong>, com as seleções: <br />
-              <strong>{obterDescricaoFiltro(2)}</strong> e <strong>{obterDescricaoFiltro(3)}</strong>.
+              Com base no seu perfil de <strong>{perfilConfig?.nome}</strong> e nas suas respostas exclusivas.
             </p>
             <div className="flex gap-4" style={{ justifyContent: 'center' }}>
               <button onClick={reiniciar} className="btn btn-secondary" style={{ gap: '0.5rem' }}>
@@ -384,7 +330,7 @@ function Assistente() {
         )}
 
         {/* Navegação do Wizard */}
-        {etapa <= 3 && (
+        {!isResultados && (
           <div className="flex justify-between" style={{ marginTop: '2.5rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-color)' }}>
             <button 
               onClick={voltar} 
@@ -399,16 +345,16 @@ function Assistente() {
               onClick={avancar} 
               className="btn btn-primary" 
               style={{ gap: '0.5rem' }}
-              aria-label={etapa === 3 ? "Ver recomendações" : "Avançar para a próxima pergunta"}
+              aria-label={etapa === totalEtapas ? "Ver recomendações" : "Avançar para a próxima pergunta"}
             >
-              {etapa === 3 ? 'Ver Recomendações' : 'Avançar'} <ArrowRight size={18} />
+              {etapa === totalEtapas ? 'Ver Recomendações' : 'Avançar'} <ArrowRight size={18} />
             </button>
           </div>
         )}
       </section>
 
       {/* Resultados Recomendados */}
-      {etapa === 4 && (
+      {isResultados && (
         <section id="recomendacoes-lista" aria-label="Recomendações de conteúdo">
           <div className="cards-grid">
             {recomendacoes.length > 0 ? (
@@ -465,13 +411,12 @@ function Assistente() {
                 <HelpCircle size={48} color="#94a3b8" style={{ marginBottom: '1rem' }} />
                 <h3 style={{ color: 'var(--text-primary)', marginBottom: '0.5rem' }}>Nenhum recurso específico encontrado</h3>
                 <p style={{ maxWidth: '500px', margin: '0 auto', marginBottom: '1.5rem' }}>
-                  Não encontramos um recurso com essa combinação exata na nossa curadoria.
+                  A combinação das respostas para este perfil restringiu demais a busca. Recomendamos clicar em "Responder Novamente" e marcar opções como "Qualquer Nível" ou "Todos os conteúdos" para ver a lista completa!
                 </p>
               </div>
             )}
           </div>
           
-          {/* Caixa de Sugestão e Colaboração */}
           <div className="glass-panel" style={{ marginTop: '3rem', padding: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', border: '1px dashed var(--accent-color)' }}>
             <MessageSquare size={36} color="var(--accent-color)" style={{ marginBottom: '1rem' }} />
             <h3 style={{ fontSize: '1.4rem', color: 'var(--text-primary)', marginBottom: '0.5rem' }}>

@@ -33,14 +33,19 @@ Após a reunião com a orientadora, as seguintes melhorias e novos recursos fora
 - **Refatoração de Experiências:**
   - Remoção de estilos inline engessados com paletas fixas (cores sólidas de hexadecimais incompatíveis com Light Mode) substituídas por variáveis de CSS dinâmico. 
 
-### Fase 4: Extração de Conteúdos, Resumos e Filtros (Atual)
+### Fase 4: Extração de Conteúdos, Resumos e Filtros
 - **Atualização de Filtros no Repositório:** Inclusão de um novo filtro por "Tipo de Material" (Ferramentas, Artigos, Guias) com base na lógica construída no *Assistente Guia*.
 - **Extração Analítica de PDFs Locais:** Leitura e análise profunda via IA dos documentos no diretório `/artigos` gerando resumos em português focados na metodologia de ensino.
 - **Enriquecimento de Ferramentas sem PDF:** Criação de resumos extensos diretamente da fonte de conhecimento das ferramentas de mercado catalogadas em `conteudos.js`.
 - **Implementação Visual:** Atualização de `ConteudoDetalhe.jsx` para exibir o conteúdo longo enriquecido (campo `detalhes`).
 
+### Fase 5: Busca Guiada Avançada (Atual)
+- **Home Otimizada:** Inserção do novo botão de *Busca Guiada* ao lado do Explorar Tudo na página inicial para impulsionar o acesso de usuários menos experientes.
+- **Integração das Jornadas:** Refatoração de *Assistente.jsx* para alinhar perfeitamente com os fluxos do documento *assistente-guiado.md* / *personas-e-jornadas.md*, permitindo quantidades dinâmicas de perguntas por tipo de público-alvo (Estudante, Professor, Pesquisador, Desenvolvedor de TA).
+- **Adequação de Filtros Inteligentes:** Implementada lógica cruzada para o novo formato de perguntas (Nível, Objetivos, Metodologias) interagindo de maneira limpa com o sistema de *tags* de *conteudos.js*.
+
 ---
 
 ## Verification Plan & Conclusão
-- Todos os builds foram testados usando `npm run build` retornando sucesso (vite client environment setup properly).
-- Testes manuais indicam transições responsivas perfeitas no switch de temas e o link persistente do painel moderação com edição em cache funcionando adequadamente.
+- O build rodou adequadamente (`npm run build` sucesso e zero erros do Vite).
+- Botões renomeados com sucesso, e os links roteiam corretamente para as seções adequadas (antigo *Assistente Guia*, agora *Busca Guiada* na rota `/busca-guiada`).
