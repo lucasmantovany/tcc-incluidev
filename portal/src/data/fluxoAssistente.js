@@ -3,145 +3,60 @@ export const fluxoAssistente = {
     nome: "Estudante",
     etapas: [
       {
-        id: "nivel",
-        pergunta: "Em qual nível de ensino você está atualmente?",
-        opcoes: [
-          { val: "Básico", label: "Ensino Básico", desc: "Fundamental ou Médio." },
-          { val: "Técnico", label: "Ensino Técnico", desc: "Cursos profissionalizantes." },
-          { val: "Superior", label: "Ensino Superior", desc: "Graduação ou pós-graduação." }
-        ]
-      },
-      {
         id: "objetivo",
-        pergunta: "O que você deseja aprender ou explorar?",
+        pergunta: "O que você gostaria de explorar hoje?",
         opcoes: [
-          { val: "blocos", label: "Programação em blocos", desc: "Introdução visual/lúdica adaptada." },
-          { val: "texto", label: "Programação textual", desc: "Linguagens comerciais ou ferramentas de código." },
-          { val: "robotica", label: "Robótica educacional", desc: "Interação com hardware educacional." },
-          { val: "eletronica", label: "Eletrônica e computação física", desc: "Projetos tangíveis e sensoriais." },
-          { val: "logica", label: "Lógica de programação", desc: "Conceitos fundamentais e pensamento computacional." },
-          { val: "ferramentas", label: "Ferramentas acessíveis", desc: "IDEs, guias e plugins." }
-        ]
-      },
-      {
-        id: "tipo_conteudo",
-        pergunta: "Que tipo de conteúdo deseja visualizar?",
-        opcoes: [
-          { val: "ferramentas", label: "Ferramentas", desc: "Aplicações e ambientes de código." },
-          { val: "tutoriais", label: "Tutoriais", desc: "Guias práticos e normas." },
-          { val: "artigos", label: "Artigos", desc: "Estudos acadêmicos e revisões." },
-          { val: "tudo", label: "Todos os conteúdos", desc: "Exibir tudo que se encaixa." }
+          { val: "fundamentos", label: "Aprender os fundamentos da programação", desc: "Conceitos básicos, lógica e pensamento computacional." },
+          { val: "pratica", label: "Programar na prática", desc: "Linguagens, IDEs acessíveis, exemplos de código." },
+          { val: "blocos", label: "Explorar programação em blocos", desc: "Ambientes adaptados com blocos e estratégias intuitivas." },
+          { val: "robotica", label: "Aprender com robótica e projetos", desc: "Computação física e eletrônica." },
+          { val: "acessibilidade", label: "Recursos de acessibilidade e apoio", desc: "Leitores de tela, atalhos e guias de configuração." }
         ]
       }
     ]
   },
   Professor: {
-    nome: "Professor / Educador",
+    nome: "Professor(a)",
     etapas: [
       {
-        id: "nivel",
-        pergunta: "Em qual nível de ensino você atua?",
-        opcoes: [
-          { val: "Básico", label: "Ensino Básico", desc: "Fundamental ou Médio." },
-          { val: "Técnico", label: "Ensino Técnico", desc: "Cursos profissionalizantes." },
-          { val: "Superior", label: "Ensino Superior", desc: "Graduação ou pós-graduação." }
-        ]
-      },
-      {
         id: "necessidade",
-        pergunta: "Qual é sua principal necessidade?",
+        pergunta: "Como podemos ajudar você hoje?",
         opcoes: [
-          { val: "metodologias", label: "Metodologias de ensino", desc: "Práticas pedagógicas e frameworks." },
-          { val: "ferramentas", label: "Ferramentas acessíveis", desc: "IDEs e plataformas para alunos." },
-          { val: "relatos", label: "Relatos de experiência", desc: "Experiências práticas aplicadas." },
-          { val: "leis", label: "Leis e normas", desc: "Diretrizes e regulamentações." },
-          { val: "objetos", label: "Criação de objetos de aprendizagem", desc: "Material educacional customizado." }
-        ]
-      },
-      {
-        id: "tipo_conteudo",
-        pergunta: "Que tipo de conteúdo deseja visualizar?",
-        opcoes: [
-          { val: "artigos", label: "Artigos científicos", desc: "Mapeamentos e revisões sistemáticas." },
-          { val: "ferramentas", label: "Ferramentas", desc: "Sistemas e plugins de ensino." },
-          { val: "guias", label: "Guias práticos", desc: "Tutoriais e manuais." },
-          { val: "relatos", label: "Relatos de experiência", desc: "Comunidade e casos de estudo." },
-          { val: "tudo", label: "Todos os conteúdos", desc: "Ver todas as opções." }
+          { val: "estrategias", label: "Estratégias para ensinar programação", desc: "Metodologias, propostas didáticas e intervenções." },
+          { val: "ferramentas", label: "Ferramentas e recursos para a prática", desc: "Ambientes e tecnologias assistivas para a sala de aula." },
+          { val: "experiencias", label: "Conhecer experiências de outros professores", desc: "Relatos de experiência e estudos de caso." },
+          { val: "normas", label: "Consultar leis, normas e diretrizes", desc: "Documentos orientadores e princípios de acessibilidade." },
+          { val: "adaptacao", label: "Criar ou adaptar materiais didáticos", desc: "Recomendações de acessibilidade para objetos de aprendizagem." }
         ]
       }
     ]
   },
   Desenvolvedor: {
-    nome: "Desenvolvedor de Tecnologia Assistiva",
+    nome: "Desenvolvedor(a)",
     etapas: [
       {
         id: "objetivo",
-        pergunta: "O que você procura atualmente?",
+        pergunta: "Como podemos apoiar o desenvolvimento da sua solução?",
         opcoes: [
-          { val: "diretrizes", label: "Diretrizes de acessibilidade", desc: "Padrões W3C, WCAG, etc." },
-          { val: "normas", label: "Normas e legislação", desc: "LBI e regulamentações vigentes." },
-          { val: "estudos", label: "Estudos sobre acessibilidade", desc: "Revisões sistemáticas e papers." },
-          { val: "boas_praticas", label: "Boas práticas de desenvolvimento", desc: "Guias MDN, APG, padrões UI." }
-        ]
-      },
-      {
-        id: "foco",
-        pergunta: "Qual é o foco da solução que está desenvolvendo?",
-        opcoes: [
-          { val: "blocos", label: "Programação em blocos", desc: "Ex: Adaptação de Scratch, Blockly." },
-          { val: "ide", label: "Ambiente de programação (IDE)", desc: "Plugins para VSCode, Eclipse, etc." },
-          { val: "objeto", label: "Objeto de aprendizagem", desc: "Jogos lúdicos, apps focados." },
-          { val: "plataforma", label: "Plataforma educacional", desc: "Plataformas web/mobile." },
-          { val: "outro", label: "Outro", desc: "Soluções não listadas acima." }
-        ]
-      },
-      {
-        id: "tipo_conteudo",
-        pergunta: "Que tipo de material deseja consultar?",
-        opcoes: [
-          { val: "diretrizes", label: "Diretrizes", desc: "WCAG, APG." },
-          { val: "artigos", label: "Artigos científicos", desc: "Estudos de usabilidade." },
-          { val: "teses", label: "Teses e dissertações", desc: "Pesquisas de pós-graduação." },
-          { val: "legislacao", label: "Legislação", desc: "Leis locais ou internacionais." },
-          { val: "tudo", label: "Todos os conteúdos", desc: "Sem restrição." }
+          { val: "diretrizes", label: "Diretrizes para desenvolver tecnologias", desc: "WCAG, W3C, recomendações de design inclusivo." },
+          { val: "legislacao", label: "Normas e legislação", desc: "Leis e documentos que orientam o desenvolvimento." },
+          { val: "evidencias", label: "Evidências e estudos científicos", desc: "Pesquisas, artigos e estudos sobre tecnologias assistivas." }
         ]
       }
     ]
   },
   Pesquisador: {
-    nome: "Pesquisador",
+    nome: "Pesquisador(a)",
     etapas: [
       {
-        id: "tema",
-        pergunta: "Qual é o tema principal da sua pesquisa?",
+        id: "objetivo",
+        pergunta: "Como podemos apoiar a sua pesquisa?",
         opcoes: [
-          { val: "ensino", label: "Ensino de programação", desc: "Lógica, pensamento computacional." },
-          { val: "tecnologias", label: "Tecnologias assistivas", desc: "Soluções de leitura de tela, braille, áudio." },
-          { val: "acessibilidade", label: "Acessibilidade digital", desc: "Desenvolvimento inclusivo em interfaces." },
-          { val: "inclusao", label: "Inclusão educacional", desc: "Adaptação de escolas e planos de aula." },
-          { val: "outro", label: "Outro", desc: "Áreas afins." }
-        ]
-      },
-      {
-        id: "metodo",
-        pergunta: "Sua pesquisa envolve:",
-        opcoes: [
-          { val: "desenvolvimento", label: "Desenvolvimento de ferramenta", desc: "Criando uma nova solução." },
-          { val: "validacao", label: "Validação de ferramenta", desc: "Avaliando soluções existentes." },
-          { val: "intervencao", label: "Intervenção educacional", desc: "Testando métodos com alunos." },
-          { val: "revisao", label: "Revisão de literatura", desc: "Mapeamento sistemático." },
-          { val: "exploratorio", label: "Estudo exploratório", desc: "Investigações iniciais." }
-        ]
-      },
-      {
-        id: "tipo_conteudo",
-        pergunta: "Que tipo de material deseja consultar?",
-        opcoes: [
-          { val: "artigos", label: "Artigos científicos", desc: "Estudos empíricos e teóricos." },
-          { val: "revisoes", label: "Revisões sistemáticas", desc: "Mapeamentos já publicados." },
-          { val: "teses", label: "Teses e dissertações", desc: "Pesquisas de mestrado/doutorado." },
-          { val: "empiricos", label: "Estudos empíricos", desc: "Dados primários, uso de caso." },
-          { val: "tudo", label: "Todos os conteúdos", desc: "Buscar sem filtros de tipo." }
+          { val: "estado_arte", label: "Conhecer o estado da arte", desc: "Revisões sistemáticas e mapeamentos de literatura." },
+          { val: "avaliar", label: "Avaliar ou validar tecnologias", desc: "Métodos, instrumentos e estudos de acessibilidade." },
+          { val: "investigar_dev", label: "Investigar o desenvolvimento de tecnologias", desc: "Processos de design e adaptação de ferramentas." },
+          { val: "investigar_edu", label: "Investigar práticas educacionais", desc: "Metodologias, intervenções e experiências em sala." },
+          { val: "planejar", label: "Planejar estudos com participantes", desc: "Aspectos metodológicos e éticos em pesquisa inclusiva." }
         ]
       }
     ]

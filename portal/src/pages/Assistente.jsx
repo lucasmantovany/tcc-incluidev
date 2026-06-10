@@ -44,7 +44,14 @@ function Assistente() {
   };
 
   const selecionarResposta = (idPergunta, valor) => {
-    setRespostas(prev => ({ ...prev, [idPergunta]: valor }));
+    setRespostas(prev => {
+      const atuais = prev[idPergunta] || [];
+      if (atuais.includes(valor)) {
+        return { ...prev, [idPergunta]: atuais.filter(v => v !== valor) };
+      } else {
+        return { ...prev, [idPergunta]: [...atuais, valor] };
+      }
+    });
   };
 
   const avancar = () => {
@@ -54,8 +61,9 @@ function Assistente() {
     }
     if (etapa > 1 && !isResultados) {
       const configEtapaAtual = perfilConfig.etapas[etapa - 2];
-      if (!respostas[configEtapaAtual.id]) {
-        setAnuncioAcessibilidade('Por favor, selecione uma opção antes de avançar.');
+      const selecionadas = respostas[configEtapaAtual.id] || [];
+      if (selecionadas.length === 0) {
+        setAnuncioAcessibilidade('Por favor, selecione ao menos uma opção antes de avançar.');
         return;
       }
     }
@@ -76,11 +84,14 @@ function Assistente() {
     if (!perfilConfig) return '';
     const config = perfilConfig.etapas.find(e => e.id === idPergunta);
     if (!config) return '';
-    const opcao = config.opcoes.find(o => o.val === respostas[idPergunta]);
-    return opcao ? opcao.label : '';
+    const selecoes = respostas[idPergunta] || [];
+    return selecoes.map(val => {
+      const opcao = config.opcoes.find(o => o.val === val);
+      return opcao ? opcao.label : val;
+    }).join(', ');
   };
 
-  // Filtragem inteligente baseada no perfil e respostas dinâmicas
+  // Filtragem inteligente baseada no perfil e respostas dinâmicas (Múltipla Escolha)
   const obterRecomendacoes = () => {
     if (!perfil) return [];
 
@@ -92,95 +103,79 @@ function Assistente() {
       else if (perfil === 'Desenvolvedor') matchPublico = item.publico.includes('Desenvolvedores') || item.publico.includes('Público Específico');
 
       if (perfil === 'Estudante') {
-        const rNivel = respostas['nivel'];
-        const rObj = respostas['objetivo'];
-        const rTipo = respostas['tipo_conteudo'];
-
-        const mNivel = !rNivel || rNivel === 'Qualquer' || item.nivel.includes(rNivel);
+        const rObj = respostas['objetivo'] || [];
         
-        let mObj = true;
-        if (rObj === 'blocos') mObj = item.tags?.includes('blocos') || item.descricao.toLowerCase().includes('blocos');
-        if (rObj === 'texto') mObj = item.tags?.includes('texto') || item.tipo.includes('Linguagem');
-        if (rObj === 'robotica' || rObj === 'eletronica') mObj = item.tags?.includes('hardware') || item.tipo.includes('Hardware') || item.descricao.toLowerCase().includes('robô') || item.descricao.toLowerCase().includes('física');
-        if (rObj === 'logica') mObj = item.tags?.includes('logica') || item.descricao.toLowerCase().includes('lógica');
-        if (rObj === 'ferramentas') mObj = item.tipo.includes('Ferramenta') || item.tipo.includes('IDE');
-
-        let mTipo = true;
-        if (rTipo === 'ferramentas') mTipo = item.tipo.includes('Ferramenta') || item.tipo.includes('IDE');
-        if (rTipo === 'tutoriais') mTipo = item.tipo.includes('Guia');
-        if (rTipo === 'artigos') mTipo = item.tipo.includes('Artigo') || item.tipo.includes('Revisão');
-
-        return matchPublico && mNivel && mObj && mTipo;
+        let mObj = rObj.length === 0; // se nada for selecionado, match true, mas exigimos ao menos um no avancar
+        if (rObj.length > 0) {
+          mObj = rObj.some(ans => {
+            if (ans === 'fundamentos') return item.tags?.includes('logica') || item.descricao.toLowerCase().includes('lógica') || item.tags?.includes('logica-pensamento');
+            if (ans === 'pratica') return item.tags?.includes('texto') || item.tags?.includes('ferramentas') || item.tipo.includes('Linguagem');
+            if (ans === 'blocos') return item.tags?.includes('blocos') || item.descricao.toLowerCase().includes('blocos');
+            if (ans === 'robotica') return item.tags?.includes('robotica') || item.tags?.includes('eletronica') || item.tipo.includes('Hardware') || item.descricao.toLowerCase().includes('física');
+            if (ans === 'acessibilidade') return item.tags?.includes('boas_praticas') || item.tipo.includes('Guia') || item.descricao.toLowerCase().includes('leitor de tela');
+            return false;
+          });
+        }
+        
+        return matchPublico && mObj;
       }
 
       if (perfil === 'Professor') {
-        const rNivel = respostas['nivel'];
-        const rNec = respostas['necessidade'];
-        const rTipo = respostas['tipo_conteudo'];
-
-        const mNivel = !rNivel || rNivel === 'Qualquer' || item.nivel.includes(rNivel);
+        const rNec = respostas['necessidade'] || [];
         
-        let mNec = true;
-        if (rNec === 'metodologias') mNec = item.tipo.includes('Metodologia') || item.tags?.includes('metodologia-ensino');
-        if (rNec === 'ferramentas') mNec = item.tipo.includes('Ferramenta') || item.tipo.includes('IDE');
-        if (rNec === 'relatos') mNec = item.tipo.includes('Artigo') || item.tipo.includes('Revisão');
-        if (rNec === 'leis') mNec = item.tipo.includes('Norma') || item.tipo.includes('Guia');
-        if (rNec === 'objetos') mNec = item.tipo.includes('Hardware') || item.tipo.includes('Lúdico');
+        let mNec = rNec.length === 0;
+        if (rNec.length > 0) {
+          mNec = rNec.some(ans => {
+            if (ans === 'estrategias') return item.tipo.includes('Metodologia') || item.tags?.includes('metodologia-ensino') || item.tags?.includes('intervencao');
+            if (ans === 'ferramentas') return item.tipo.includes('Ferramenta') || item.tipo.includes('IDE');
+            if (ans === 'experiencias') return item.tags?.includes('relatos') || item.tipo.includes('Relato') || item.tags?.includes('empiricos');
+            if (ans === 'normas') return item.tipo.includes('Norma') || item.tags?.includes('leis-diretrizes');
+            if (ans === 'adaptacao') return item.tags?.includes('curriculo-inclusivo') || item.tipo.includes('Hardware') || item.tags?.includes('objeto');
+            return false;
+          });
+        }
 
-        let mTipo = true;
-        if (rTipo === 'ferramentas') mTipo = item.tipo.includes('Ferramenta') || item.tipo.includes('IDE');
-        if (rTipo === 'guias') mTipo = item.tipo.includes('Guia') || item.tipo.includes('Norma');
-        if (rTipo === 'artigos') mTipo = item.tipo.includes('Artigo') || item.tipo.includes('Revisão');
-
-        return matchPublico && mNivel && mNec && mTipo;
+        return matchPublico && mNec;
       }
 
       if (perfil === 'Desenvolvedor') {
-        const rObj = respostas['objetivo'];
-        const rFoco = respostas['foco'];
-        const rTipo = respostas['tipo_conteudo'];
-
-        let mObj = true;
-        if (rObj === 'diretrizes' || rObj === 'normas') mObj = item.tipo.includes('Norma') || item.tipo.includes('Guia');
-        if (rObj === 'estudos' || rObj === 'boas_praticas') mObj = item.tipo.includes('Artigo') || item.tipo.includes('Revisão') || item.tipo.includes('Guia');
-
-        let mFoco = true;
-        if (rFoco === 'blocos') mFoco = item.descricao.toLowerCase().includes('blocos');
-        if (rFoco === 'ide') mFoco = item.tipo.includes('IDE') || item.tipo.includes('Ferramenta');
-        if (rFoco === 'objeto' || rFoco === 'plataforma') mFoco = item.tipo.includes('Aplicativo') || item.tipo.includes('Lúdico');
-
-        let mTipo = true;
-        if (rTipo === 'diretrizes' || rTipo === 'legislacao') mTipo = item.tipo.includes('Norma') || item.tipo.includes('Guia');
-        if (rTipo === 'artigos' || rTipo === 'teses') mTipo = item.tipo.includes('Artigo') || item.tipo.includes('Revisão') || item.tipo.includes('Tese');
+        const rObj = respostas['objetivo'] || [];
+        
+        let mObj = rObj.length === 0;
+        if (rObj.length > 0) {
+          mObj = rObj.some(ans => {
+            if (ans === 'diretrizes') return item.tipo.includes('Norma') || item.tags?.includes('diretrizes');
+            if (ans === 'legislacao') return item.tags?.includes('legislacao') || item.tags?.includes('leis');
+            if (ans === 'evidencias') return item.tipo.includes('Artigo') || item.tipo.includes('Revisão') || item.tags?.includes('estudos');
+            return false;
+          });
+        }
 
         // Para desenvolvedores procurando diretrizes genéricas, afrouxar match publico
-        if (rTipo === 'diretrizes' || rObj === 'diretrizes') matchPublico = matchPublico || item.tipo.includes('Norma');
+        if (rObj.includes('diretrizes') || rObj.includes('legislacao')) matchPublico = matchPublico || item.tipo.includes('Norma');
 
-        return matchPublico && mObj && mFoco && mTipo;
+        return matchPublico && mObj;
       }
 
       if (perfil === 'Pesquisador') {
-        const rTema = respostas['tema'];
-        const rMetodo = respostas['metodo'];
-        const rTipo = respostas['tipo_conteudo'];
+        const rObj = respostas['objetivo'] || [];
 
         // Pesquisador busca qualquer tipo se for revisão sistemática
         if (item.tipo.includes('Revisão') || item.tipo.includes('Artigo')) matchPublico = true;
 
-        let mTema = true;
-        if (rTema === 'ensino') mTema = item.tags?.includes('logica-pensamento') || item.descricao.toLowerCase().includes('ensino');
-        if (rTema === 'tecnologias') mTema = item.tipo.includes('Ferramenta') || item.tipo.includes('Revisão');
-        if (rTema === 'acessibilidade') mTema = item.tags?.includes('leis-diretrizes') || item.descricao.toLowerCase().includes('acessível');
+        let mObj = rObj.length === 0;
+        if (rObj.length > 0) {
+          mObj = rObj.some(ans => {
+            if (ans === 'estado_arte') return item.tipo.includes('Revisão') || item.tags?.includes('revisoes');
+            if (ans === 'avaliar') return item.tags?.includes('validacao') || item.tags?.includes('avaliacao-validacao') || item.tipo.includes('Tese');
+            if (ans === 'investigar_dev') return item.tipo.includes('Tese') || item.tags?.includes('ferramentas-ide');
+            if (ans === 'investigar_edu') return item.tags?.includes('intervencao') || item.tags?.includes('metodologias') || item.tags?.includes('relatos');
+            if (ans === 'planejar') return item.tags?.includes('boas_praticas') || item.tipo.includes('Guia');
+            return false;
+          });
+        }
 
-        let mMetodo = true;
-        if (rMetodo === 'desenvolvimento' || rMetodo === 'validacao') mMetodo = item.tipo.includes('Artigo') || item.tipo.includes('Tese');
-        if (rMetodo === 'revisao') mMetodo = item.tipo.includes('Revisão') || item.tipo.includes('Mapeamento');
-
-        let mTipo = true;
-        if (rTipo === 'revisoes') mTipo = item.tipo.includes('Revisão');
-        if (rTipo === 'artigos' || rTipo === 'empiricos') mTipo = item.tipo.includes('Artigo') || item.tipo.includes('Tese');
-
-        return matchPublico && mTema && mMetodo && mTipo;
+        return matchPublico && mObj;
       }
 
       return false;
@@ -275,7 +270,8 @@ function Assistente() {
             </legend>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {perfilConfig.etapas[etapa - 2].opcoes.map(item => {
-                const isSelected = respostas[perfilConfig.etapas[etapa - 2].id] === item.val;
+                const arr = respostas[perfilConfig.etapas[etapa - 2].id] || [];
+                const isSelected = arr.includes(item.val);
                 return (
                   <label 
                     key={item.val}
@@ -292,7 +288,7 @@ function Assistente() {
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                       <input 
-                        type="radio" 
+                        type="checkbox" 
                         name={`etapa${etapa}Option`} 
                         value={item.val}
                         checked={isSelected}
@@ -319,7 +315,8 @@ function Assistente() {
               Encontramos {recomendacoes.length} recomendações para você!
             </h2>
             <p style={{ maxWidth: '600px', margin: '0 auto 2rem' }}>
-              Com base no seu perfil de <strong>{perfilConfig?.nome}</strong> e nas suas respostas exclusivas.
+              Com base no seu perfil de <strong>{perfilConfig?.nome}</strong> e nas suas respostas exclusivas: <br />
+              <strong>{obterDescricaoFiltro(perfilConfig?.etapas[0]?.id)}</strong>
             </p>
             <div className="flex gap-4" style={{ justifyContent: 'center' }}>
               <button onClick={reiniciar} className="btn btn-secondary" style={{ gap: '0.5rem' }}>

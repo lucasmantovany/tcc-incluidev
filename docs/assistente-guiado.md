@@ -1,391 +1,458 @@
-# Assistente Guiado por Perfis - Especificação Funcional
+# Assistente Guiado - Fluxo Conversacional por Perfis
 
 ## Visão Geral
 
-O Assistente Guiado do IncluiDev tem como objetivo auxiliar usuários na localização de recursos relacionados ao ensino de programação para Pessoas com Deficiência Visual (PcDV), por meio de uma navegação conversacional baseada em perfis.
+O Assistente Guiado do IncluiDev foi concebido para facilitar a navegação e a descoberta de conteúdos relacionados ao ensino de programação para Pessoas com Deficiência Visual (PcDV).
 
-Diferentemente dos filtros tradicionais do repositório, o assistente conduz o usuário por um fluxo de perguntas específicas para seu contexto, apresentando recomendações mais relevantes e reduzindo o esforço de busca.
+Diferentemente de um sistema tradicional baseado apenas em filtros, o assistente utiliza um fluxo conversacional estruturado por perfis e objetivos de uso, permitindo que cada usuário encontre conteúdos mais adequados às suas necessidades.
 
----
-
-# Objetivos
-
-* Facilitar o acesso ao conteúdo do repositório.
-* Personalizar recomendações conforme o perfil do usuário.
-* Melhorar a experiência de navegação para usuários iniciantes.
-* Demonstrar a aplicação prática da taxonomia do projeto.
-* Apoiar professores, estudantes, pesquisadores e desenvolvedores na busca por materiais adequados.
+A proposta busca reduzir a complexidade de navegação, melhorar a experiência do usuário e demonstrar a aplicação prática da taxonomia definida no projeto.
 
 ---
 
 # Estrutura Geral do Fluxo
 
-## Pergunta Inicial
+## Etapa 1 — Identificação do Perfil
 
-### Qual é o seu perfil?
+### Título
 
-Escolha o perfil que melhor representa seu objetivo atual.
+## Qual é o seu perfil?
 
-### Opções
+### Subtítulo
 
-* Estudante
-* Professor
-* Desenvolvedor de Tecnologia Assistiva
-* Pesquisador
+Selecione a opção que melhor representa como você pretende utilizar este repositório.
 
 ---
 
 # Perfil: Estudante
 
-## Descrição
+## Card Inicial
 
-Destinado a estudantes com deficiência visual que desejam aprender programação, explorar tecnologias acessíveis ou encontrar recursos para desenvolvimento de competências em computação.
+### Título
 
-O foco deste perfil é apresentar ferramentas, metodologias e recursos educacionais voltados para a aprendizagem.
+🎓 Estudante
 
----
+### Descrição
 
-## Fluxo de Perguntas
-
-### Pergunta 1
-
-**Em qual nível de ensino você está atualmente?**
-
-Opções:
-
-* Ensino Básico
-* Ensino Técnico
-* Ensino Superior
+Quero encontrar recursos para aprender programação, explorar ferramentas acessíveis e descobrir novas formas de desenvolver habilidades computacionais.
 
 ---
 
-### Pergunta 2
+## Fluxo do Perfil
 
-**O que você deseja aprender ou explorar?**
+### Pergunta
 
-Opções:
-
-* Programação em blocos
-* Programação textual
-* Robótica educacional
-* Eletrônica e computação física
-* Lógica de programação
-* Ferramentas acessíveis
+## O que você gostaria de explorar hoje?
 
 ---
 
-### Pergunta 3
+## Opção 1 — Aprender os fundamentos da programação
 
-**Que tipo de conteúdo deseja visualizar?**
+### Descrição
 
-Opções:
+Conceitos básicos, lógica de programação e pensamento computacional para dar os primeiros passos.
 
-* Ferramentas
-* Tutoriais
-* Artigos
-* Todos os conteúdos
+### Resultados Esperados
 
----
-
-## Recomendações Esperadas
-
-### Ferramentas
-
-* Quorum Language
-* Accessible Blockly
-* Code Jumper
-* Swift Playgrounds
-* JBrick
-
-### Guias
-
-* Configuração acessível do VS Code
-* Guia de acessibilidade MDN
+* atividades introdutórias;
+* lógica de programação;
+* pensamento computacional;
+* materiais conceituais.
 
 ---
 
-# Perfil: Professor
+## Opção 2 — Programar na prática
 
-## Descrição
+### Descrição
 
-Destinado a professores, educadores e profissionais que atuam no ensino de programação para estudantes com deficiência visual.
+Quero aprender a escrever códigos utilizando linguagens de programação, ambientes de desenvolvimento e tutoriais acessíveis.
 
-O objetivo é fornecer metodologias, práticas pedagógicas, relatos de experiência, diretrizes e recursos para adaptação de atividades educacionais.
+### Resultados Esperados
 
----
-
-## Fluxo de Perguntas
-
-### Pergunta 1
-
-**Em qual nível de ensino você atua?**
-
-Opções:
-
-* Ensino Básico
-* Ensino Técnico
-* Ensino Superior
+* linguagens de programação;
+* IDEs acessíveis;
+* tutoriais;
+* exemplos de código;
+* ambientes de programação.
 
 ---
 
-### Pergunta 2
+## Opção 3 — Explorar programação em blocos
 
-**Qual é sua principal necessidade?**
+### Descrição
 
-Opções:
+Quero aprender programação por meio de ambientes adaptados que utilizam blocos e estratégias mais intuitivas.
 
-* Metodologias de ensino
-* Ferramentas acessíveis
-* Relatos de experiência
-* Leis e normas
-* Criação de objetos de aprendizagem
+### Resultados Esperados
 
----
-
-### Pergunta 3
-
-**Que tipo de conteúdo deseja visualizar?**
-
-Opções:
-
-* Artigos científicos
-* Ferramentas
-* Guias práticos
-* Relatos de experiência
-* Todos os conteúdos
+* ferramentas em blocos;
+* recursos introdutórios;
+* estudos relacionados.
 
 ---
 
-## Recomendações Esperadas
+## Opção 4 — Aprender com robótica e projetos mão na massa
 
-### Metodologias
+### Descrição
 
-* CSforALL
-* Physical Programming for Blind and Low Vision Children at Scale
+Quero explorar a programação por meio da criação de projetos interativos, utilizando robótica, eletrônica e computação física.
 
-### Ferramentas
+### Resultados Esperados
 
-* Code Jumper
-* Accessible Blockly
-* Quorum Language
-
-### Legislação
-
-* Lei Brasileira de Inclusão (LBI)
-
-### Estudos
-
-* Revisões sistemáticas
-* Estudos empíricos
-* Relatos de experiência
+* robótica educacional;
+* eletrônica aplicada;
+* computação física;
+* projetos práticos;
+* experiências de aprendizagem baseadas em experimentação.
 
 ---
 
-# Perfil: Desenvolvedor de Tecnologia Assistiva
+## Opção 5 — Recursos de acessibilidade e apoio ao estudo
 
-## Descrição
+### Descrição
 
-Destinado a profissionais envolvidos no desenvolvimento de softwares, ambientes educacionais, tecnologias assistivas ou ferramentas voltadas à acessibilidade no ensino de programação.
+Quero conhecer tecnologias e estratégias que facilitem o acesso aos ambientes de programação e ao estudo de conteúdos computacionais.
 
-Seu foco é fornecer diretrizes, normas, legislações e evidências científicas para apoiar o desenvolvimento de soluções acessíveis.
+### Resultados Esperados
 
----
-
-## Fluxo de Perguntas
-
-### Pergunta 1
-
-**O que você procura atualmente?**
-
-Opções:
-
-* Diretrizes de acessibilidade
-* Normas e legislação
-* Estudos sobre acessibilidade
-* Boas práticas de desenvolvimento
+* plugins de acessibilidade;
+* leitores de tela;
+* atalhos de teclado;
+* dicas de navegação;
+* guias de configuração;
+* estratégias de uso de ferramentas acessíveis.
 
 ---
 
-### Pergunta 2
+# Perfil: Professor(a)
 
-**Qual é o foco da solução que está desenvolvendo?**
+## Card Inicial
 
-Opções:
+### Título
 
-* Programação em blocos
-* Ambiente de programação (IDE)
-* Objeto de aprendizagem
-* Plataforma educacional
-* Outro
+👩‍🏫 Professor(a)
 
----
+### Descrição
 
-### Pergunta 3
-
-**Que tipo de material deseja consultar?**
-
-Opções:
-
-* Diretrizes
-* Artigos científicos
-* Teses e dissertações
-* Legislação
-* Todos os conteúdos
+Procuro metodologias, ferramentas e experiências que possam apoiar o ensino de programação para estudantes com deficiência visual.
 
 ---
 
-## Recomendações Esperadas
+## Fluxo do Perfil
 
-### Diretrizes
+### Pergunta
 
-* WCAG 2.1
-* WAI-ARIA Authoring Practices
-* Guia MDN Accessibility
-
-### Legislação
-
-* Lei Brasileira de Inclusão (LBI)
-
-### Estudos
-
-* Revisões sistemáticas
-* Pesquisas sobre IDEs acessíveis
-* Estudos sobre tecnologias assistivas
+## Como podemos ajudar você hoje?
 
 ---
 
-# Perfil: Pesquisador
+## Opção 1 — Encontrar estratégias para ensinar programação
 
-## Descrição
+### Descrição
 
-Destinado a pesquisadores, acadêmicos e estudantes de pós-graduação interessados em investigar o ensino de programação para pessoas com deficiência visual.
+Quero conhecer metodologias, práticas pedagógicas e formas de apoiar estudantes com deficiência visual no aprendizado da programação.
 
-O objetivo é facilitar o acesso a estudos, revisões sistemáticas, métodos de pesquisa, intervenções educacionais e evidências científicas da área.
+### Resultados Esperados
 
----
-
-## Fluxo de Perguntas
-
-### Pergunta 1
-
-**Qual é o tema principal da sua pesquisa?**
-
-Opções:
-
-* Ensino de programação
-* Tecnologias assistivas
-* Acessibilidade digital
-* Inclusão educacional
-* Outro
+* metodologias de ensino;
+* propostas didáticas;
+* sequências de atividades;
+* intervenções pedagógicas.
 
 ---
 
-### Pergunta 2
+## Opção 2 — Conhecer ferramentas e recursos para a prática docente
 
-**Sua pesquisa envolve:**
+### Descrição
 
-Opções:
+Quero descobrir ferramentas, ambientes e tecnologias que possam apoiar minhas aulas.
 
-* Desenvolvimento de ferramenta
-* Validação de ferramenta
-* Intervenção educacional
-* Revisão de literatura
-* Estudo exploratório
+### Resultados Esperados
 
----
-
-### Pergunta 3
-
-**Que tipo de material deseja consultar?**
-
-Opções:
-
-* Artigos científicos
-* Revisões sistemáticas
-* Teses e dissertações
-* Estudos empíricos
-* Todos os conteúdos
+* ferramentas educacionais;
+* ambientes acessíveis;
+* tecnologias assistivas;
+* recursos utilizados em sala de aula.
 
 ---
 
-## Recomendações Esperadas
+## Opção 3 — Conhecer experiências de outros professores
 
-### Produção Científica
+### Descrição
 
-* Revisões sistemáticas
-* Revisões de literatura
-* Estudos empíricos
-* Teses e dissertações
+Quero entender como outros educadores conduziram o ensino de programação com estudantes com deficiência visual.
 
-### Metodologias de Pesquisa
+### Resultados Esperados
 
-* Estudos de validação
-* Avaliação de tecnologias assistivas
-* Pesquisas com usuários PcDV
+* relatos de experiência;
+* estudos de caso;
+* desafios encontrados;
+* estratégias adotadas.
 
 ---
 
-# Estrutura Recomendada para a Home
+## Opção 4 — Consultar leis, normas e diretrizes
 
-## Opção 1 — Explorar Todo o Repositório
+### Descrição
 
-Permite acesso direto aos filtros tradicionais do portal.
+Quero acessar documentos que orientem práticas educacionais inclusivas e acessíveis.
 
-### Recursos
+### Resultados Esperados
 
-* Busca livre
-* Filtros por público
-* Filtros por nível de ensino
-* Filtros por categoria
-
----
-
-## Opção 2 — Busca Guiada
-
-Fluxo conversacional baseado em perfil.
-
-### Exemplo
-
-Qual é o seu perfil?
-
-→ Estudante
-
-Em qual nível de ensino você está?
-
-→ Ensino Técnico
-
-O que deseja aprender?
-
-→ Programação em blocos
-
-Resultado:
-
-✓ Accessible Blockly
-
-✓ Code Jumper
-
-✓ Artigos relacionados
-
-✓ Guias de aprendizagem
+* Lei Brasileira de Inclusão;
+* normas e recomendações;
+* documentos orientadores;
+* princípios de acessibilidade.
 
 ---
 
-# Benefícios da Abordagem
+## Opção 5 — Criar ou adaptar materiais didáticos acessíveis
 
-* Navegação simplificada para usuários iniciantes.
-* Recomendações mais relevantes.
-* Menor sobrecarga cognitiva.
-* Melhor aderência ao público-alvo do projeto.
-* Demonstração prática da taxonomia do TCC.
-* Facilita futuras avaliações de usabilidade e acessibilidade.
+### Descrição
+
+Quero orientações para desenvolver atividades e objetos de aprendizagem mais acessíveis.
+
+### Resultados Esperados
+
+* diretrizes para objetos de aprendizagem;
+* recomendações de acessibilidade;
+* exemplos de adaptação;
+* princípios de design inclusivo.
+
+---
+
+# Perfil: Desenvolvedor(a)
+
+## Card Inicial
+
+### Título
+
+💻 Desenvolvedor(a)
+
+### Descrição
+
+Busco diretrizes, normas e recomendações para desenvolver tecnologias acessíveis voltadas ao ensino de programação.
+
+---
+
+## Fluxo do Perfil
+
+### Pergunta
+
+## Como podemos apoiar o desenvolvimento da sua solução?
+
+---
+
+## Opção 1 — Diretrizes para desenvolver tecnologias acessíveis
+
+### Descrição
+
+Recomendações e princípios para criar soluções voltadas ao ensino de programação.
+
+### Resultados Esperados
+
+* WCAG;
+* W3C;
+* diretrizes identificadas na RSL;
+* recomendações de design inclusivo;
+* critérios específicos encontrados nos estudos.
+
+---
+
+## Opção 2 — Normas e legislação
+
+### Descrição
+
+Leis e documentos que orientam o desenvolvimento acessível.
+
+### Resultados Esperados
+
+* Lei Brasileira de Inclusão;
+* regulamentações;
+* normas aplicáveis;
+* documentos institucionais.
+
+---
+
+## Opção 3 — Evidências e estudos científicos
+
+### Descrição
+
+Artigos, revisões e pesquisas sobre tecnologias acessíveis.
+
+### Resultados Esperados
+
+* artigos;
+* revisões;
+* dissertações;
+* teses;
+* estudos empíricos.
+
+---
+
+# Perfil: Pesquisador(a)
+
+## Card Inicial
+
+### Título
+
+🔎 Pesquisador(a)
+
+### Descrição
+
+Procuro estudos científicos, evidências e referências para pesquisas relacionadas ao ensino de programação para pessoas com deficiência visual.
+
+---
+
+## Fluxo do Perfil
+
+### Pergunta
+
+## Como podemos apoiar a sua pesquisa?
+
+---
+
+## Opção 1 — Conhecer o estado da arte
+
+### Descrição
+
+Revisões, mapeamentos e identificação de lacunas de pesquisa.
+
+### Resultados Esperados
+
+* revisões sistemáticas;
+* revisões de literatura;
+* mapeamentos sistemáticos;
+* lacunas de pesquisa;
+* tendências da área.
+
+---
+
+## Opção 2 — Avaliar ou validar tecnologias
+
+### Descrição
+
+Métodos, instrumentos e estudos envolvendo usuários e validação de tecnologias acessíveis.
+
+### Resultados Esperados
+
+* métodos de avaliação;
+* instrumentos de coleta;
+* estudos com usuários;
+* validação de ferramentas;
+* avaliação de acessibilidade.
+
+---
+
+## Opção 3 — Investigar o desenvolvimento de tecnologias
+
+### Descrição
+
+Processos relacionados à criação, adaptação e implementação de soluções acessíveis.
+
+### Resultados Esperados
+
+* desenvolvimento de tecnologias assistivas;
+* processos de design;
+* adaptação de ferramentas;
+* acessibilidade em ambientes computacionais.
+
+---
+
+## Opção 4 — Investigar práticas educacionais
+
+### Descrição
+
+Intervenções, metodologias e experiências pedagógicas relacionadas ao ensino de programação.
+
+### Resultados Esperados
+
+* práticas pedagógicas;
+* intervenções educacionais;
+* metodologias de ensino;
+* experiências em sala de aula;
+* inclusão educacional.
+
+---
+
+## Opção 5 — Planejar estudos com participantes
+
+### Descrição
+
+Aspectos metodológicos, éticos e organizacionais relacionados à pesquisa inclusiva.
+
+### Resultados Esperados
+
+* aspectos éticos;
+* recrutamento de participantes;
+* acessibilidade em pesquisas;
+* protocolos de pesquisa;
+* planejamento metodológico.
+
+---
+
+# Diretrizes de UX para Implementação
+
+## Estrutura dos Cards
+
+Cada card deve possuir:
+
+* ícone representativo;
+* título claro;
+* descrição objetiva;
+* navegação totalmente acessível por teclado;
+* compatibilidade com leitores de tela;
+* foco visual destacado;
+* contraste adequado.
+
+---
+
+## Estrutura das Perguntas
+
+As perguntas devem:
+
+* utilizar linguagem simples e objetiva;
+* evitar excesso de opções simultâneas;
+* apresentar descrições curtas;
+* facilitar compreensão por leitores de tela.
+
+---
+
+## Estrutura dos Resultados
+
+Os resultados devem apresentar:
+
+* título do recurso;
+* tipo do conteúdo;
+* descrição resumida;
+* tags relacionadas;
+* link para acesso;
+* filtros aplicados automaticamente.
+
+---
+
+# Benefícios da Nova Estrutura
+
+A reformulação do fluxo traz melhorias importantes para o projeto:
+
+* experiência mais contextualizada;
+* menor sobrecarga cognitiva;
+* maior clareza dos objetivos do usuário;
+* melhor alinhamento com jornadas reais;
+* organização mais semântica dos conteúdos;
+* fortalecimento da fundamentação metodológica do TCC;
+* maior potencial para testes futuros de usabilidade e acessibilidade.
 
 ---
 
 # Evoluções Futuras
 
-* Recomendações por inteligência artificial.
-* Histórico de buscas.
-* Perfis personalizados.
-* Aprendizado baseado nas escolhas dos usuários.
-* Integração com relatos e experiências da comunidade.
-* Sistema de favoritos e coleções.
+Possíveis melhorias futuras incluem:
+
+* recomendação automática baseada em comportamento;
+* personalização de trilhas;
+* sistema de favoritos;
+* histórico de navegação;
+* integração com inteligência artificial;
+* recomendação contextual baseada em tags;
+* adaptação dinâmica do fluxo conforme o perfil do usuário.
