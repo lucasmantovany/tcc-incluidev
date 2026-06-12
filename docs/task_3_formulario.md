@@ -6,7 +6,7 @@ Este documento detalha a estrutura do formulário de avaliação do repositório
 
 1. **Qual é o seu perfil de acesso?**
    - Estudante
-   - Professor / Educador
+   - Professor
    - Pesquisador
    - Desenvolvedor de Tecnologia Assistiva
 

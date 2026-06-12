@@ -11,8 +11,12 @@ function Avaliacao() {
   const [scoreSUS, setScoreSUS] = useState(null);
   const [erro, setErro] = useState('');
   const [anuncioAcessibilidade, setAnuncioAcessibilidade] = useState('');
+  const [enviando, setEnviando] = useState(false); // Estado de loading
   
   const topoRef = useRef(null);
+
+  // Coloque o seu link do Formspree aqui
+  const FORMSPREE_ENDPOINT = "https://formspree.io/f/mojzpvww";
   
   // Seção 1: Caracterização do Participante
   const [perfil, setPerfil] = useState('');
@@ -146,7 +150,7 @@ function Avaliacao() {
     setEtapa(prev => Math.max(1, prev - 1));
   };
 
-  const submeter = (e) => {
+  const submeter = async (e) => {
     e.preventDefault();
     setErro('');
 
@@ -159,7 +163,8 @@ function Avaliacao() {
 
       const susFinal = calcularSUS();
       setScoreSUS(susFinal);
-      setEnviado(true);
+      setEnviando(true);
+      setAnuncioAcessibilidade('Enviando avaliação, aguarde...');
 
       const avaliacaoData = {
         secao1: { perfil, acessibilidadeDigital, faixaEtaria, familiaridadeTecnologia },
@@ -176,11 +181,58 @@ function Avaliacao() {
         dataEnvio: new Date().toISOString()
       };
 
-      const avaliacoesSalvas = JSON.parse(localStorage.getItem('tcc_avaliacoes') || '[]');
-      avaliacoesSalvas.push(avaliacaoData);
-      localStorage.setItem('tcc_avaliacoes', JSON.stringify(avaliacoesSalvas));
+      // Formatação amigável para leitura no E-mail
+      const emailPayload = {
+        _subject: `Nova Avaliação IncluiDev - Score SUS: ${susFinal}`,
+        Perfil: avaliacaoData.secao1.perfil,
+        FaixaEtaria: avaliacaoData.secao1.faixaEtaria,
+        Acessibilidade: avaliacaoData.secao1.acessibilidadeDigital,
+        Familiaridade: avaliacaoData.secao1.familiaridadeTecnologia,
+        Score_SUS_Final: susFinal,
+        Encontrou_Recursos: avaliacaoData.finalizacao.encontrouRecursos,
+        Leitor_De_Tela: avaliacaoData.finalizacao.leitorTelaUsado,
+        Navegacao: avaliacaoData.finalizacao.formaNavegacao,
+        O_que_gostou: avaliacaoData.perguntasAbertas.gostouPortal || "Não respondeu",
+        O_que_mudaria: avaliacaoData.perguntasAbertas.mudariaPortal || "Não respondeu",
+        Barreiras_Acessibilidade: avaliacaoData.perguntasAbertas.barreirasNavegacao || "Não respondeu",
+        Dados_Completos_JSON: JSON.stringify(avaliacaoData)
+      };
 
-      if (topoRef.current) topoRef.current.focus();
+      try {
+        if (FORMSPREE_ENDPOINT.includes("SEU_ID_AQUI")) {
+          // Se ainda não configurou o endpoint, salva só local para não quebrar a aplicação
+          console.warn("Endpoint do Formspree não configurado. Salvando apenas localmente.");
+        } else {
+          const response = await fetch(FORMSPREE_ENDPOINT, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify(emailPayload)
+          });
+
+          if (!response.ok) {
+            throw new Error('Falha ao comunicar com o servidor de email.');
+          }
+        }
+
+        // Salvar localmente como backup
+        const avaliacoesSalvas = JSON.parse(localStorage.getItem('tcc_avaliacoes') || '[]');
+        avaliacoesSalvas.push(avaliacaoData);
+        localStorage.setItem('tcc_avaliacoes', JSON.stringify(avaliacoesSalvas));
+
+        setEnviado(true);
+        setAnuncioAcessibilidade('Avaliação enviada com sucesso!');
+        if (topoRef.current) topoRef.current.focus();
+
+      } catch (error) {
+        setErro('Ocorreu um erro ao enviar sua avaliação (Verifique sua conexão com a internet). Seus dados não foram perdidos. Tente submeter novamente.');
+        setAnuncioAcessibilidade('Erro ao enviar avaliação.');
+        if (topoRef.current) topoRef.current.focus();
+      } finally {
+        setEnviando(false);
+      }
     }
   };
 
@@ -533,10 +585,11 @@ function Avaliacao() {
               ) : (
                 <button 
                   type="submit" 
+                  disabled={enviando}
                   className="btn btn-primary" 
-                  style={{ gap: '0.5rem' }}
+                  style={{ gap: '0.5rem', opacity: enviando ? 0.7 : 1, cursor: enviando ? 'not-allowed' : 'pointer' }}
                 >
-                  Finalizar Avaliação <ClipboardCheck size={20} />
+                  {enviando ? 'Enviando...' : 'Finalizar Avaliação'} {!enviando && <ClipboardCheck size={20} />}
                 </button>
               )}
             </div>

@@ -51,20 +51,59 @@ Para alcançar este propósito, definiram-se os seguintes objetivos específicos
 \subsection{Organização do artigo}
 O restante deste artigo está organizado da seguinte forma: a Seção 2 apresenta a Fundamentação Teórica sobre o ensino acessível e os métodos de avaliação. A Seção 3 detalha os Métodos aplicados na construção do repositório e os procedimentos de validação. A Seção 4 reporta os Resultados alcançados, enquanto a Seção 5 discute as implicações desses achados. Finalmente, a Seção 6 traz a Conclusão e os trabalhos futuros.
 
-% TODO: Preencher as seções seguintes.
 \section{Fundamentação Teórica}
-\textit{Em desenvolvimento...}
+
+\subsection{Ensino de Programação para Pessoas com Deficiência Visual}
+A compreensão de lógicas algorítmicas por pessoas videntes frequentemente se apoia em recursos visuais como diagramas de bloco, pseudocódigos formatados e interfaces de programação baseadas em encaixe (por exemplo, Scratch). Para Pessoas com Deficiência Visual (PcDV), a dependência quase exclusiva desses artefatos constitui uma barreira pedagógica e técnica. A literatura aponta que as principais dificuldades residem na sobrecarga cognitiva imposta pela linearidade dos leitores de tela. Um programador sem deficiência visualiza a estrutura de um laço de repetição ou de uma condicional de forma global através da indentação; em contrapartida, um usuário de leitor de tela precisa memorizar a estrutura enquanto escuta linha por linha.
+
+Para mitigar esses desafios, diferentes estratégias educacionais e tecnologias assistivas têm sido propostas. Abordagens baseadas em áudio e sonificação de código (onde blocos e erros emitem sons característicos em um ambiente 3D) e ambientes tangíveis (como a programação física utilizando hardwares que se conectam) destacam-se como intervenções empíricas eficazes.
+
+\subsection{Recursos e Tecnologias para Inclusão}
+O avanço do estado da arte gerou soluções focadas tanto na adaptação do ambiente quanto no desenvolvimento de novas linguagens. Ferramentas consolidadas no mercado, como o Visual Studio Code, implementaram modos de acessibilidade rigorosos, facilitando a navegação nativa. Simultaneamente, linguagens de programação concebidas a partir de evidências de usabilidade reduziram drasticamente a dependência de caracteres especiais de sintaxe, otimizando a leitura fonética.
+
+Apesar da disponibilidade tecnológica, a eficácia dessas ferramentas depende da curadoria da informação e do acesso a guias e diretrizes atualizadas, como as Web Content Accessibility Guidelines (WCAG). A organização desses materiais em repositórios é essencial para que educadores não necessitem recriar adaptações pedagógicas a partir do zero, garantindo o reuso e a padronização das intervenções de acessibilidade.
+
+\subsection{Avaliação de Sistemas Educacionais}
+A validação de portais e repositórios acadêmicos demanda instrumentos confiáveis de mensuração. A \textit{System Usability Scale} (SUS) é um questionário padronizado internacionalmente e amplamente adotado para avaliar, de forma rápida e quantitativa, a usabilidade global de uma interface tecnológica. Complementarmente, o \textit{Technology Acceptance Model} (TAM) avalia a utilidade e a facilidade de uso percebidas, verificando a intenção comportamental do usuário frente à inovação. No contexto de acessibilidade digital, esses modelos quantitativos, quando aliados a questões qualitativas abertas, fornecem evidências robustas sobre as reais barreiras enfrentadas e o grau de satisfação do usuário.
 
 \section{Método}
-\textit{Em desenvolvimento...}
+Este trabalho caracteriza-se como uma pesquisa aplicada com abordagem de métodos mistos (quantitativa e qualitativa). O escopo do desenvolvimento foi fundamentado por um Mapeamento Sistemático prévio, o qual identificou e catalogou diretrizes metodológicas, ferramentas de software, aplicações lúdicas e estudos empíricos focados na intersecção entre o ensino de programação e a deficiência visual.
+
+\subsection{Desenvolvimento do Repositório}
+O portal \textit{IncluiDev} foi desenvolvido na forma de uma \textit{Single Page Application} (SPA) empregando a biblioteca React.js e o empacotador Vite. A arquitetura de software priorizou componentes funcionais acessíveis, assegurando compatibilidade retroativa com os atributos WAI-ARIA (como \textit{aria-live} e \textit{aria-labelledby}). O processo de catalogação originou uma matriz taxonômica que classifica cada material levantado na literatura sob duas dimensões: o Nível de Ensino (Básico, Técnico, Superior) e o Público-Alvo (Estudantes, Professores, Desenvolvedores e Pesquisadores).
+
+\subsection{Construção do Assistente Guia}
+Para contornar as limitações de mecanismos de busca convencionais, desenvolveu-se o "Assistente Guia", um sistema recomendador ancorado no design de jornadas conversacionais. Diferentemente de uma filtragem rígida, o sistema solicita inicialmente que o usuário se autoidentifique perante um dos quatro perfis criados a partir das lacunas observadas na Revisão de Literatura. 
+
+Em seguida, o fluxo apresenta questionamentos dinâmicos focados no objetivo pedagógico ou técnico imediato do usuário (por exemplo, "ensinar lógicas através de blocos físicos" ou "obter as normativas da Lei Brasileira de Inclusão"). Um motor de inferência relaciona as respostas obtidas com metadados (\textit{tags} semânticas) dos artefatos do repositório, retornando opções precisas de consumo de conhecimento sem gerar sobrecarga informacional.
+
+\subsection{Avaliação do Sistema}
+A avaliação do portal utilizará um formulário digital estruturado em cinco seções fundamentais. A primeira seção traça a caracterização do participante, mapeando a familiaridade com programação e as tecnologias assistivas utilizadas rotineiramente. As seções seguintes mensuram a aceitação e usabilidade através dos questionários padronizados TAM e SUS (na escala Likert de 5 pontos). Por fim, instrumentos qualitativos foram inseridos para documentar a experiência pontual na Busca Guiada e mapear prováveis atritos de arquitetura da informação não detectados nos testes de caixa branca.
 
 \section{Resultados}
-\textit{Em desenvolvimento...}
+
+\subsection{Caracterização do Repositório}
+A etapa de curadoria e extração consolidou um acervo de 34 recursos centrais. A categorização permitiu integrar desde frameworks industriais globais (como as diretrizes oficiais de acessibilidade W3C e manuais MDN) a ambientes de programação educacional em áudio e tangíveis (como a APL e o Code Jumper). O repositório oferece descrições resumidas com acesso às produções científicas subjacentes, assegurando suporte legal, teórico e prático em uma única plataforma centralizada.
+
+\subsection{Funcionamento da Busca Guiada}
+Os testes de implementação do Assistente Guia confirmaram que as árvores de decisão convergem para resultados não vazios em todas as trilhas lógicas propostas para os quatro perfis. As interfaces apresentaram compatibilidade integral com a navegação por teclado e anunciaram as trocas de contexto corretamente nos ensaios preliminares via leitores de tela virtuais.
+
+\subsection{Perfil dos Participantes}
+% TODO: Inserir a análise demográfica coletada após a aplicação real dos testes (faixa etária, predominância de perfil, incidência do uso de leitores de tela).
+\textit{Dados em fase de coleta. Esta subseção apresentará as estatísticas descritivas sobre os usuários que participaram das avaliações do portal.}
+
+\subsection{Resultados da Avaliação}
+% TODO: Reportar escore médio do SUS, índices do TAM, percepção sobre a relevância das recomendações e listagem das barreiras relatadas pelos usuários.
+\textit{Dados em fase de coleta. Esta subseção apresentará os gráficos e a pontuação final de usabilidade (SUS), bem como o nível de utilidade percebida a partir da validação empírica.}
 
 \section{Discussão}
-\textit{Em desenvolvimento...}
+% TODO: Contrastar os achados com o embasamento teórico.
+\textit{O delineamento das discussões dependerá substancialmente dos índices de aceitação documentados na seção anterior. Espera-se validar que abordagens guiadas por personas reduzem a dispersão da informação e aumentam a segurança tecnológica para adoção de metodologias inclusivas nas salas de aula.}
 
 \section{Conclusão}
-\textit{Em desenvolvimento...}
+Este estudo propôs o desenvolvimento e a modelagem do \textit{IncluiDev}, visando consolidar a produção teórica e ferramental sobre a programação acessível. Constata-se que a estruturação de repositórios baseada em arquiteturas modernas e sistemas de buscas guiados tem o potencial de conectar de maneira eficiente a pesquisa de ponta aos educadores e pessoas com deficiência visual. 
+
+Dentre as limitações desta pesquisa, destaca-se % TODO: adicionar limitações inerentes aos resultados coletados
+o desafio na catalogação dinâmica contínua. Para trabalhos futuros, sugere-se a expansão do catálogo através da colaboração em código aberto, a integração de modelos heurísticos automatizados na busca e a condução de ensaios longitudinais no espaço escolar com professores de ensino básico visando quantificar o impacto letivo direto das ferramentas disponibilizadas.
 
 \end{document}
