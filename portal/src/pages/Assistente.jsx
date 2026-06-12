@@ -224,9 +224,9 @@ function Assistente() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {[
                 { val: 'Estudante', label: 'Estudante', desc: 'Desejo encontrar linguagens, IDEs, ferramentas táteis e tutoriais práticos.' },
-                { val: 'Professor', label: 'Professor / Educador', desc: 'Procuro metodologias, planos de aula, currículos e ferramentas pedagógicas.' },
-                { val: 'Desenvolvedor', label: 'Desenvolvedor', desc: 'Busco diretrizes, normas, APIs e exemplos de design inclusivo.' },
-                { val: 'Pesquisador', label: 'Pesquisador', desc: 'Busco revisões sistemáticas, mapeamentos de literatura e estudos empíricos.' }
+                { val: 'Professor', label: 'Professor(a)', desc: 'Procuro metodologias, planos de aula, currículos e ferramentas pedagógicas.' },
+                { val: 'Desenvolvedor', label: 'Desenvolvedor(a)', desc: 'Busco diretrizes, normas, APIs e exemplos de design inclusivo.' },
+                { val: 'Pesquisador', label: 'Pesquisador(a)', desc: 'Busco revisões sistemáticas, mapeamentos de literatura e estudos empíricos.' }
               ].map(item => (
                 <label 
                   key={item.val}

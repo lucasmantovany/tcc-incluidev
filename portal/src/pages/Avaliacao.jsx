@@ -305,9 +305,9 @@ function Avaliacao() {
                     <strong style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-primary)' }}>1. Qual é o seu perfil de acesso?</strong>
                     {renderRadioGroup('perfil', perfil, setPerfil, [
                       'Estudante', 
-                      'Professor / Educador', 
-                      'Pesquisador', 
-                      'Desenvolvedor de Tecnologia Assistiva'
+                      'Professor(a)', 
+                      'Pesquisador(a)', 
+                      'Desenvolvedor(a)'
                     ])}
                   </div>
 
