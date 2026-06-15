@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { MessageSquare, Send, ShieldAlert, Award, User, GraduationCap, CheckCircle } from 'lucide-react';
+import { collection, addDoc, getDocs, query, where, orderBy } from 'firebase/firestore';
+import { db } from '../config/firebase';
 
-// Experiências de exemplo para inicializar o localStorage caso esteja vazio
+// Experiências de exemplo de fallback
 const EXPERIENCIAS_MOCK = [
   {
     id: 'mock-1',
@@ -12,16 +14,6 @@ const EXPERIENCIAS_MOCK = [
     titulo: 'Uso da Linguagem Quorum no Ensino Superior',
     mensagem: 'Implementamos a linguagem Quorum no laboratório com estudantes cegos e a experiência foi fantástica. A eliminação de chaves e ponto-e-vírgula e o retorno por voz ajudou na assimilação de lógica muito mais rápido do que com linguagens como Java.',
     data: '2026-05-10T14:30:00.000Z',
-    status: 'approved'
-  },
-  {
-    id: 'mock-2',
-    nome: 'Juliana Rocha',
-    perfil: 'Aluno',
-    nivel: 'Técnico',
-    titulo: 'Minhas primeiras semanas de VS Code com NVDA',
-    mensagem: 'No início foi difícil entender a indentação e os blocos de código usando o leitor de tela. Porém, seguindo os guias de atalhos e ajustando as leituras de quebras de linha recomendadas aqui no portal, meu rendimento melhorou muito no curso técnico!',
-    data: '2026-05-18T09:15:00.000Z',
     status: 'approved'
   }
 ];
@@ -35,25 +27,44 @@ function Experiencias() {
   const [mensagem, setMensagem] = useState('');
   const [sucesso, setSucesso] = useState(false);
   const [erro, setErro] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [enviando, setEnviando] = useState(false);
   
   const formRef = useRef(null);
   const alertRef = useRef(null);
 
-  // Carregar e inicializar relatos do localStorage
-  useEffect(() => {
-    const dadosLocais = localStorage.getItem('tcc_feedbacks');
-    if (!dadosLocais) {
-      localStorage.setItem('tcc_feedbacks', JSON.stringify(EXPERIENCIAS_MOCK));
-      setExperiencias(EXPERIENCIAS_MOCK);
-    } else {
-      const parsed = JSON.parse(dadosLocais);
-      // Filtrar apenas aprovados para exibição pública
-      const aprovados = parsed.filter(item => item.status === 'approved');
-      setExperiencias(aprovados);
-    }
-  }, [sucesso]); // Atualizar quando um novo relato for submetido
+  // Carregar relatos aprovados do Firestore
+  const carregarFeedbacks = async () => {
+    setLoading(true);
+    try {
+      const feedbacksRef = collection(db, 'feedbacks');
+      // Buscar apenas os aprovados
+      const q = query(feedbacksRef, where("status", "==", "approved"));
+      const querySnapshot = await getDocs(q);
+      
+      const lista = [];
+      querySnapshot.forEach((doc) => {
+        lista.push({ id: doc.id, ...doc.data() });
+      });
 
-  const enviarFeedback = (e) => {
+      // Ordenar localmente por data (mais recentes primeiro)
+      lista.sort((a, b) => new Date(b.data) - new Date(a.data));
+      
+      setExperiencias(lista.length > 0 ? lista : EXPERIENCIAS_MOCK);
+    } catch (err) {
+      console.error("Erro ao carregar do Firebase, usando mock:", err);
+      // Fallback para não quebrar a tela caso não tenha configurado permissões corretamente
+      setExperiencias(EXPERIENCIAS_MOCK);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    carregarFeedbacks();
+  }, [sucesso]); 
+
+  const enviarFeedback = async (e) => {
     e.preventDefault();
     setErro('');
     
@@ -62,8 +73,9 @@ function Experiencias() {
       return;
     }
 
+    setEnviando(true);
+
     const novoRelato = {
-      id: 'user-' + Date.now(),
       nome,
       perfil,
       nivel,
@@ -74,10 +86,8 @@ function Experiencias() {
     };
 
     try {
-      const dadosLocais = localStorage.getItem('tcc_feedbacks');
-      const listaAtual = dadosLocais ? JSON.parse(dadosLocais) : [...EXPERIENCIAS_MOCK];
-      listaAtual.push(novoRelato);
-      localStorage.setItem('tcc_feedbacks', JSON.stringify(listaAtual));
+      const feedbacksRef = collection(db, 'feedbacks');
+      await addDoc(feedbacksRef, novoRelato);
       
       // Limpar formulário e disparar sucesso
       setNome('');
@@ -91,7 +101,10 @@ function Experiencias() {
       }, 100);
 
     } catch (err) {
-      setErro('Ocorreu um erro ao salvar o relato. Tente novamente.');
+      console.error("Erro ao salvar relato:", err);
+      setErro('Ocorreu um erro ao conectar com o servidor. Tente novamente mais tarde.');
+    } finally {
+      setEnviando(false);
     }
   };
 
@@ -115,12 +128,16 @@ function Experiencias() {
         
         {/* Lado Esquerdo: Lista de Experiências Aprovadas */}
         <section aria-label="Relatos Compartilhados pela Comunidade">
-          <h2 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#fff' }}>
+          <h2 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--text-primary)' }}>
             <Award size={24} color="var(--accent-color)" /> Depoimentos da Comunidade
           </h2>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            {experiencias.length > 0 ? (
+            {loading ? (
+              <div className="glass-panel" style={{ textAlign: 'center', padding: '3rem 1.5rem' }}>
+                <p>Carregando relatos da comunidade...</p>
+              </div>
+            ) : experiencias.length > 0 ? (
               experiencias.map(exp => (
                 <article key={exp.id} className="glass-panel" style={{ padding: '1.5rem', borderLeft: '4px solid var(--accent-color)' }}>
                   <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: 'var(--text-primary)' }}>{exp.titulo}</h3>
@@ -281,8 +298,9 @@ function Experiencias() {
                   type="submit" 
                   className="btn btn-primary" 
                   style={{ width: '100%', gap: '0.5rem', display: 'flex', justifyContent: 'center' }}
+                  disabled={enviando}
                 >
-                  Enviar Relato <Send size={18} />
+                  {enviando ? 'Enviando...' : 'Enviar Relato'} {!enviando && <Send size={18} />}
                 </button>
               </form>
             )}

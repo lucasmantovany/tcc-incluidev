@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ShieldCheck, Check, X, Edit3, Trash2, ArrowLeft, LogOut, CheckSquare } from 'lucide-react';
+import { collection, getDocs, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import { db } from '../config/firebase';
 
 function Moderacao() {
   const navigate = useNavigate();
@@ -13,18 +15,34 @@ function Moderacao() {
   const [editTitulo, setEditTitulo] = useState('');
   const [editMensagem, setEditMensagem] = useState('');
   const [mensagemStatus, setMensagemStatus] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  // Carrega relatos do localStorage
-  const carregarFeedbacks = () => {
-    const dadosLocais = localStorage.getItem('tcc_feedbacks');
-    if (dadosLocais) {
-      setFeedbacks(JSON.parse(dadosLocais));
+  // Carrega relatos do Firebase
+  const carregarFeedbacks = async () => {
+    setLoading(true);
+    try {
+      const feedbacksRef = collection(db, 'feedbacks');
+      const querySnapshot = await getDocs(feedbacksRef);
+      const lista = [];
+      querySnapshot.forEach((document) => {
+        lista.push({ id: document.id, ...document.data() });
+      });
+      // Ordenar por data
+      lista.sort((a, b) => new Date(b.data) - new Date(a.data));
+      setFeedbacks(lista);
+    } catch (error) {
+      console.error("Erro ao carregar do Firebase:", error);
+      setMensagemStatus("Erro ao conectar com o banco de dados.");
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    carregarFeedbacks();
-  }, []);
+    if (autenticado) {
+      carregarFeedbacks();
+    }
+  }, [autenticado]);
 
   const lidarComLogin = (e) => {
     e.preventDefault();
@@ -36,20 +54,36 @@ function Moderacao() {
     }
   };
 
-  // Funções de Moderação
-  const aprovarDireto = (id) => {
-    const atualizados = feedbacks.map(item => {
-      if (item.id === id) {
-        return { ...item, status: 'approved' };
-      }
-      return item;
-    });
-    salvarEAtualizar(atualizados, 'Relato aprovado e publicado com sucesso!');
+  const exibirMensagem = (aviso, isErro = false) => {
+    setMensagemStatus((isErro ? 'Erro: ' : '') + aviso);
+    setTimeout(() => setMensagemStatus(''), 4000);
   };
 
-  const rejeitarRelato = (id) => {
-    const atualizados = feedbacks.filter(item => item.id !== id);
-    salvarEAtualizar(atualizados, 'Relato rejeitado e excluído com sucesso.');
+  // Funções de Moderação conectadas ao Firebase
+  const aprovarDireto = async (id) => {
+    try {
+      const docRef = doc(db, 'feedbacks', id);
+      await updateDoc(docRef, { status: 'approved' });
+      
+      setFeedbacks(prev => prev.map(item => item.id === id ? { ...item, status: 'approved' } : item));
+      exibirMensagem('Relato aprovado e publicado com sucesso!');
+    } catch (error) {
+      console.error(error);
+      exibirMensagem('Falha ao aprovar relato.', true);
+    }
+  };
+
+  const rejeitarRelato = async (id) => {
+    try {
+      const docRef = doc(db, 'feedbacks', id);
+      await deleteDoc(docRef);
+      
+      setFeedbacks(prev => prev.filter(item => item.id !== id));
+      exibirMensagem('Relato rejeitado e excluído com sucesso.');
+    } catch (error) {
+      console.error(error);
+      exibirMensagem('Falha ao rejeitar relato.', true);
+    }
   };
 
   const iniciarEdicaoParcial = (item) => {
@@ -59,45 +93,46 @@ function Moderacao() {
     setMensagemStatus('');
   };
 
-  const salvarEdicaoParcial = (id) => {
+  const salvarEdicaoParcial = async (id) => {
     if (!editTitulo.trim() || !editMensagem.trim()) {
-      setMensagemStatus('Erro: O título e a mensagem não podem estar vazios.');
+      exibirMensagem('O título e a mensagem não podem estar vazios.', true);
       return;
     }
 
-    const atualizados = feedbacks.map(item => {
-      if (item.id === id) {
-        return {
-          ...item,
-          titulo: editTitulo,
-          mensagem: editMensagem,
-          status: 'approved', // Salva e já aprova/publica
-          parcialmenteAprovado: true // Flag informativa opcional
-        };
-      }
-      return item;
-    });
+    try {
+      const docRef = doc(db, 'feedbacks', id);
+      await updateDoc(docRef, {
+        titulo: editTitulo,
+        mensagem: editMensagem,
+        status: 'approved',
+        parcialmenteAprovado: true
+      });
 
-    setEditandoId(null);
-    salvarEAtualizar(atualizados, 'Relato editado e publicado com sucesso!');
+      setFeedbacks(prev => prev.map(item => {
+        if (item.id === id) {
+          return { ...item, titulo: editTitulo, mensagem: editMensagem, status: 'approved', parcialmenteAprovado: true };
+        }
+        return item;
+      }));
+      setEditandoId(null);
+      exibirMensagem('Relato editado e publicado com sucesso!');
+    } catch (error) {
+      console.error(error);
+      exibirMensagem('Falha ao editar relato.', true);
+    }
   };
 
-  const desaprovarRelato = (id) => {
-    const atualizados = feedbacks.map(item => {
-      if (item.id === id) {
-        return { ...item, status: 'pending' };
-      }
-      return item;
-    });
-    salvarEAtualizar(atualizados, 'Relato despublicado e retornado para a fila de pendentes.');
-  };
-
-  const salvarEAtualizar = (novaLista, aviso) => {
-    localStorage.setItem('tcc_feedbacks', JSON.stringify(novaLista));
-    setFeedbacks(novaLista);
-    setMensagemStatus(aviso);
-    // Limpar mensagem de status após 4 segundos
-    setTimeout(() => setMensagemStatus(''), 4000);
+  const desaprovarRelato = async (id) => {
+    try {
+      const docRef = doc(db, 'feedbacks', id);
+      await updateDoc(docRef, { status: 'pending' });
+      
+      setFeedbacks(prev => prev.map(item => item.id === id ? { ...item, status: 'pending' } : item));
+      exibirMensagem('Relato despublicado e retornado para a fila de pendentes.');
+    } catch (error) {
+      console.error(error);
+      exibirMensagem('Falha ao despublicar relato.', true);
+    }
   };
 
   const pendentes = feedbacks.filter(item => item.status === 'pending');
@@ -109,9 +144,9 @@ function Moderacao() {
       <div className="page-content container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <section className="glass-panel" style={{ maxWidth: '450px', width: '100%', padding: '2.5rem', textAlign: 'center' }} aria-label="Acesso Administrativo">
           <ShieldCheck size={50} color="var(--accent-color)" style={{ margin: '0 auto 1.5rem', display: 'block' }} />
-          <h1 style={{ fontSize: '1.8rem', marginBottom: '0.5rem', color: '#fff' }}>Área de Moderação</h1>
+          <h1 style={{ fontSize: '1.8rem', marginBottom: '0.5rem', color: 'var(--text-primary)' }}>Área de Moderação</h1>
           <p style={{ fontSize: '0.95rem', marginBottom: '1.5rem' }}>
-            Acesso reservado ao moderador do portal para análise e publicação de relatos.
+            Acesso reservado ao moderador do portal para análise e publicação de relatos da nuvem (Firebase).
           </p>
 
           <form onSubmit={lidarComLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
@@ -132,7 +167,7 @@ function Moderacao() {
                 onChange={(e) => setSenha(e.target.value)}
                 placeholder="Digite a senha (admin ou tcc-ufms)"
                 required
-                style={{ width: '100%', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid var(--border-color)', backgroundColor: 'var(--secondary-bg)', color: '#fff' }}
+                className="form-input"
               />
             </div>
 
@@ -164,7 +199,7 @@ function Moderacao() {
             <ShieldCheck color="#10b981" size={32} /> Painel de Moderação
           </h1>
           <p style={{ margin: 0, marginTop: '0.5rem', fontSize: '1.1rem' }}>
-            Aprove, rejeite ou edite relatos de experiências enviados pela comunidade.
+            Aprove, rejeite ou edite relatos sincronizados na nuvem em tempo real.
           </p>
         </div>
         <div className="flex gap-4">
@@ -190,156 +225,162 @@ function Moderacao() {
           }}
           role="alert"
         >
-          <p style={{ margin: 0, color: '#fff', fontWeight: '500' }}>{mensagemStatus}</p>
+          <p style={{ margin: 0, color: 'var(--text-primary)', fontWeight: '500' }}>{mensagemStatus}</p>
         </div>
       )}
 
-      {/* Grid de Relatos */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem' }} className="grid-responsive">
-        
-        {/* Coluna 1: Relatos Pendentes */}
-        <section aria-label="Relatos Aguardando Moderação">
-          <h2 style={{ fontSize: '1.4rem', marginBottom: '1.5rem', color: '#fbbf24', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            Fila de Espera ({pendentes.length})
-          </h2>
+      {loading ? (
+        <div style={{ textAlign: 'center', padding: '3rem' }}>
+          <p style={{ fontSize: '1.2rem', color: 'var(--text-secondary)' }}>Carregando dados do Firebase...</p>
+        </div>
+      ) : (
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem' }} className="grid-responsive">
+          
+          {/* Coluna 1: Relatos Pendentes */}
+          <section aria-label="Relatos Aguardando Moderação">
+            <h2 style={{ fontSize: '1.4rem', marginBottom: '1.5rem', color: '#fbbf24', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              Fila de Espera ({pendentes.length})
+            </h2>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            {pendentes.length > 0 ? (
-              pendentes.map(item => (
-                <div key={item.id} className="glass-panel" style={{ padding: '1.5rem', borderLeft: '4px solid #fbbf24' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              {pendentes.length > 0 ? (
+                pendentes.map(item => (
+                  <div key={item.id} className="glass-panel" style={{ padding: '1.5rem', borderLeft: '4px solid #fbbf24' }}>
+                    
+                    {editandoId === item.id ? (
+                      /* FORMULÁRIO DE EDIÇÃO */
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        <h3 style={{ fontSize: '1.1rem', color: '#fbbf24', margin: 0 }}>Edição de Relato (Aprovação Parcial)</h3>
+                        <div>
+                          <label htmlFor={`edit-title-${item.id}`} style={{ display: 'block', fontSize: '0.85rem', marginBottom: '0.25rem' }}>Título:</label>
+                          <input 
+                            type="text" 
+                            id={`edit-title-${item.id}`}
+                            value={editTitulo} 
+                            onChange={(e) => setEditTitulo(e.target.value)}
+                            className="form-input"
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor={`edit-msg-${item.id}`} style={{ display: 'block', fontSize: '0.85rem', marginBottom: '0.25rem' }}>Descrição:</label>
+                          <textarea 
+                            id={`edit-msg-${item.id}`}
+                            rows="4" 
+                            value={editMensagem} 
+                            onChange={(e) => setEditMensagem(e.target.value)}
+                            className="form-input"
+                            style={{ resize: 'vertical' }}
+                          ></textarea>
+                        </div>
+                        <div className="flex gap-4">
+                          <button onClick={() => salvarEdicaoParcial(item.id)} className="btn btn-primary" style={{ flex: 1, padding: '0.5rem', fontSize: '0.9rem', gap: '0.25rem' }}>
+                            <Check size={16} /> Salvar e Publicar
+                          </button>
+                          <button onClick={() => setEditandoId(null)} className="btn btn-secondary" style={{ flex: 1, padding: '0.5rem', fontSize: '0.9rem' }}>
+                            Cancelar
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      /* EXIBIÇÃO DE RELATO PENDENTE */
+                      <>
+                        <div className="flex justify-between items-start" style={{ marginBottom: '0.5rem' }}>
+                          <span style={{ fontSize: '0.8rem', color: '#fbbf24', fontWeight: '600' }}>PENDENTE DE APROVAÇÃO</span>
+                          <span style={{ fontSize: '0.8rem', color: '#64748b' }}>{new Date(item.data).toLocaleDateString()}</span>
+                        </div>
+                        <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: 'var(--text-primary)' }}>{item.titulo}</h3>
+                        <p style={{ fontSize: '0.95rem', marginBottom: '1rem', color: 'var(--text-secondary)' }}>"{item.mensagem}"</p>
+                        
+                        <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '1.5rem' }}>
+                          Enviado por: <strong>{item.nome}</strong> ({item.perfil}) | Nível: {item.nivel}
+                        </div>
+
+                        {/* Botões de Ação */}
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.5rem' }}>
+                          <button 
+                            onClick={() => aprovarDireto(item.id)} 
+                            className="btn btn-primary" 
+                            style={{ padding: '0.5rem', fontSize: '0.85rem', gap: '0.25rem', backgroundColor: '#10b981', border: 'none' }}
+                            aria-label="Aprovar e publicar relato sem alterações"
+                          >
+                            <Check size={14} /> Aprovar
+                          </button>
+                          <button 
+                            onClick={() => iniciarEdicaoParcial(item)} 
+                            className="btn btn-secondary" 
+                            style={{ padding: '0.5rem', fontSize: '0.85rem', gap: '0.25rem' }}
+                            aria-label="Aprovar parcialmente permitindo edição de conteúdo"
+                          >
+                            <Edit3 size={14} /> Editar
+                          </button>
+                          <button 
+                            onClick={() => rejeitarRelato(item.id)} 
+                            className="btn btn-secondary" 
+                            style={{ padding: '0.5rem', fontSize: '0.85rem', gap: '0.25rem', border: '1px solid #ef4444', color: '#ef4444' }}
+                            aria-label="Rejeitar e excluir relato"
+                          >
+                            <X size={14} /> Rejeitar
+                          </button>
+                        </div>
+                      </>
+                    )}
+
+                  </div>
+                ))
+              ) : (
+                <div className="glass-panel" style={{ textAlign: 'center', padding: '3rem 1.5rem' }}>
+                  <CheckSquare size={32} color="#64748b" style={{ margin: '0 auto 1rem', display: 'block' }} />
+                  <p>Nenhum relato na fila de pendentes.</p>
+                </div>
+              )}
+            </div>
+          </section>
+
+          {/* Coluna 2: Relatos Aprovados */}
+          <section aria-label="Relatos Publicados no Site">
+            <h2 style={{ fontSize: '1.4rem', marginBottom: '1.5rem', color: '#10b981', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              Publicados no Site ({aprovados.length})
+            </h2>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              {aprovados.map(item => (
+                <div key={item.id} className="glass-panel" style={{ padding: '1.5rem', borderLeft: '4px solid #10b981' }}>
+                  <div className="flex justify-between items-start" style={{ marginBottom: '0.5rem' }}>
+                    <span style={{ fontSize: '0.8rem', color: '#10b981', fontWeight: '600' }}>
+                      ATIVO {item.parcialmenteAprovado && '• EDITADO'}
+                    </span>
+                    <span style={{ fontSize: '0.8rem', color: '#64748b' }}>{new Date(item.data).toLocaleDateString()}</span>
+                  </div>
+                  <h3 style={{ fontSize: '1.15rem', marginBottom: '0.5rem', color: 'var(--text-primary)' }}>{item.titulo}</h3>
+                  <p style={{ fontSize: '0.9rem', marginBottom: '1rem', fontStyle: 'italic', color: 'var(--text-secondary)' }}>"{item.mensagem}"</p>
                   
-                  {editandoId === item.id ? (
-                    /* FORMULÁRIO DE EDIÇÃO (APROVADO PARCIALMENTE) */
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                      <h3 style={{ fontSize: '1.1rem', color: '#fbbf24', margin: 0 }}>Edição de Relato (Aprovação Parcial)</h3>
-                      <div>
-                        <label htmlFor={`edit-title-${item.id}`} style={{ display: 'block', fontSize: '0.85rem', marginBottom: '0.25rem' }}>Título:</label>
-                        <input 
-                          type="text" 
-                          id={`edit-title-${item.id}`}
-                          value={editTitulo} 
-                          onChange={(e) => setEditTitulo(e.target.value)}
-                          style={{ width: '100%', padding: '0.5rem', borderRadius: '0.25rem', border: '1px solid var(--border-color)', backgroundColor: 'var(--primary-bg)', color: '#fff' }}
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor={`edit-msg-${item.id}`} style={{ display: 'block', fontSize: '0.85rem', marginBottom: '0.25rem' }}>Descrição:</label>
-                        <textarea 
-                          id={`edit-msg-${item.id}`}
-                          rows="4" 
-                          value={editMensagem} 
-                          onChange={(e) => setEditMensagem(e.target.value)}
-                          style={{ width: '100%', padding: '0.5rem', borderRadius: '0.25rem', border: '1px solid var(--border-color)', backgroundColor: 'var(--primary-bg)', color: '#fff', resize: 'vertical' }}
-                        ></textarea>
-                      </div>
-                      <div className="flex gap-4">
-                        <button onClick={() => salvarEdicaoParcial(item.id)} className="btn btn-primary" style={{ flex: 1, padding: '0.5rem', fontSize: '0.9rem', gap: '0.25rem' }}>
-                          <Check size={16} /> Salvar e Publicar
-                        </button>
-                        <button onClick={() => setEditandoId(null)} className="btn btn-secondary" style={{ flex: 1, padding: '0.5rem', fontSize: '0.9rem' }}>
-                          Cancelar
-                        </button>
-                      </div>
+                  <div className="flex justify-between items-center" style={{ fontSize: '0.8rem', color: '#94a3b8' }}>
+                    <span>Por: {item.nome} ({item.perfil})</span>
+                    <div className="flex gap-4">
+                      <button 
+                        onClick={() => desaprovarRelato(item.id)} 
+                        className="btn btn-secondary" 
+                        style={{ padding: '0.25rem 0.5rem', fontSize: '0.8rem', gap: '0.25rem' }}
+                        aria-label="Despublicar relato e mandar de volta para fila"
+                      >
+                        Despublicar
+                      </button>
+                      <button 
+                        onClick={() => rejeitarRelato(item.id)} 
+                        style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+                        aria-label="Excluir relato permanentemente"
+                      >
+                        <Trash2 size={16} />
+                      </button>
                     </div>
-                  ) : (
-                    /* EXIBIÇÃO DE RELATO PENDENTE */
-                    <>
-                      <div className="flex justify-between items-start" style={{ marginBottom: '0.5rem' }}>
-                        <span style={{ fontSize: '0.8rem', color: '#fbbf24', fontWeight: '600' }}>PENDENTE DE APROVAÇÃO</span>
-                        <span style={{ fontSize: '0.8rem', color: '#64748b' }}>{new Date(item.data).toLocaleDateString()}</span>
-                      </div>
-                      <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: '#fff' }}>{item.titulo}</h3>
-                      <p style={{ fontSize: '0.95rem', marginBottom: '1rem', color: 'var(--text-secondary)' }}>"{item.mensagem}"</p>
-                      
-                      <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '1.5rem' }}>
-                        Enviado por: <strong>{item.nome}</strong> ({item.perfil}) | Nível: {item.nivel}
-                      </div>
-
-                      {/* Botões de Ação */}
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.5rem' }}>
-                        <button 
-                          onClick={() => aprovarDireto(item.id)} 
-                          className="btn btn-primary" 
-                          style={{ padding: '0.5rem', fontSize: '0.85rem', gap: '0.25rem', backgroundColor: '#10b981' }}
-                          aria-label="Aprovar e publicar relato sem alterações"
-                        >
-                          <Check size={14} /> Aprovar
-                        </button>
-                        <button 
-                          onClick={() => iniciarEdicaoParcial(item)} 
-                          className="btn btn-secondary" 
-                          style={{ padding: '0.5rem', fontSize: '0.85rem', gap: '0.25rem' }}
-                          aria-label="Aprovar parcialmente permitindo edição de conteúdo"
-                        >
-                          <Edit3 size={14} /> Editar
-                        </button>
-                        <button 
-                          onClick={() => rejeitarRelato(item.id)} 
-                          className="btn btn-secondary" 
-                          style={{ padding: '0.5rem', fontSize: '0.85rem', gap: '0.25rem', border: '1px solid #ef4444', color: '#ef4444' }}
-                          aria-label="Rejeitar e excluir relato"
-                        >
-                          <X size={14} /> Rejeitar
-                        </button>
-                      </div>
-                    </>
-                  )}
-
-                </div>
-              ))
-            ) : (
-              <div className="glass-panel" style={{ textAlign: 'center', padding: '3rem 1.5rem' }}>
-                <CheckSquare size={32} color="#64748b" style={{ margin: '0 auto 1rem', display: 'block' }} />
-                <p>Nenhum relato na fila de pendentes.</p>
-              </div>
-            )}
-          </div>
-        </section>
-
-        {/* Coluna 2: Relatos Aprovados */}
-        <section aria-label="Relatos Publicados no Site">
-          <h2 style={{ fontSize: '1.4rem', marginBottom: '1.5rem', color: '#10b981', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            Publicados no Site ({aprovados.length})
-          </h2>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            {aprovados.map(item => (
-              <div key={item.id} className="glass-panel" style={{ padding: '1.5rem', borderLeft: '4px solid #10b981' }}>
-                <div className="flex justify-between items-start" style={{ marginBottom: '0.5rem' }}>
-                  <span style={{ fontSize: '0.8rem', color: '#10b981', fontWeight: '600' }}>
-                    ATIVO {item.parcialmenteAprovado && '• EDITADO'}
-                  </span>
-                  <span style={{ fontSize: '0.8rem', color: '#64748b' }}>{new Date(item.data).toLocaleDateString()}</span>
-                </div>
-                <h3 style={{ fontSize: '1.15rem', marginBottom: '0.5rem', color: '#fff' }}>{item.titulo}</h3>
-                <p style={{ fontSize: '0.9rem', marginBottom: '1rem', fontStyle: 'italic' }}>"{item.mensagem}"</p>
-                
-                <div className="flex justify-between items-center" style={{ fontSize: '0.8rem', color: '#94a3b8' }}>
-                  <span>Por: {item.nome} ({item.perfil})</span>
-                  <div className="flex gap-4">
-                    <button 
-                      onClick={() => desaprovarRelato(item.id)} 
-                      className="btn btn-secondary" 
-                      style={{ padding: '0.25rem 0.5rem', fontSize: '0.8rem', gap: '0.25rem' }}
-                      aria-label="Despublicar relato e mandar de volta para fila"
-                    >
-                      Despublicar
-                    </button>
-                    <button 
-                      onClick={() => rejeitarRelato(item.id)} 
-                      style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-                      aria-label="Excluir relato permanentemente"
-                    >
-                      <Trash2 size={16} />
-                    </button>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </section>
+              ))}
+            </div>
+          </section>
 
-      </div>
+        </div>
+      )}
     </div>
   );
 }
