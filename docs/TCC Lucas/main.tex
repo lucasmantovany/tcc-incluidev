@@ -21,31 +21,31 @@
 \maketitle
 
 \begin{abstract}
-  The inclusion of visually impaired individuals (VIP) in Computer Science presents significant challenges due to the historical dependence on visual metaphors in programming languages and environments. Although studies, tools, and guidelines for accessible programming education exist, these resources are highly fragmented across literature and the web. This study aims to develop and evaluate a centralized repository, named \textit{IncluiDev}, which organizes and provides these tools, methods, and scientific papers. The repository was built as an accessible web application and features a "Guided Assistant", a dynamic recommendation system based on user profiles (Students, Teachers, Developers, and Researchers). System validation will be conducted using the System Usability Scale (SUS) and the Technology Acceptance Model (TAM), along with qualitative accessibility evaluations. Preliminary results indicate that centralization and guided recommendation reduce search effort and promote equitable access to technological education.
+  The inclusion of blind and visually impaired (BVI) individuals in Computer Science presents significant challenges due to the historical dependence on visual metaphors in programming languages and environments \cite{stefik2013empirical}. Although studies, tools, and guidelines for accessible programming education exist, these resources are highly fragmented across literature and the web. This study aims to develop and evaluate a centralized repository, named \textit{IncluiDev}, which organizes and provides these tools, methods, and scientific papers. The repository was built as an accessible web application and features a ``Guided Assistant'', a dynamic recommendation system based on user profiles (Students, Teachers, Developers, and Researchers). System validation will be conducted using the System Usability Scale (SUS) \cite{brooke1996sus} and the Technology Acceptance Model (TAM) \cite{davis1989tam}, along with qualitative accessibility evaluations.
 \end{abstract}
      
 \begin{resumo} 
-  A inclusão de Pessoas com Deficiência Visual (PcDV) no campo da Ciência da Computação apresenta desafios significativos devido à histórica dependência de metáforas visuais em linguagens e ambientes de programação. Apesar da existência de estudos, ferramentas e diretrizes voltadas para a acessibilidade no ensino de programação, esses recursos encontram-se dispersos na literatura e na web. O objetivo deste estudo é desenvolver e avaliar um repositório centralizado, denominado \textit{IncluiDev}, que organiza e disponibiliza essas ferramentas, métodos e artigos científicos. O repositório foi construído como uma aplicação web acessível e incorpora um "Assistente Guia", um sistema de recomendação dinâmico baseado em perfis de usuário (Estudantes, Professores, Desenvolvedores e Pesquisadores). A validação do sistema será conduzida utilizando as escalas \textit{System Usability Scale} (SUS) e o \textit{Technology Acceptance Model} (TAM), juntamente com avaliações qualitativas de acessibilidade. Os resultados preliminares indicam que a centralização e a recomendação guiada reduzem o esforço de busca e promovem o acesso equitativo à educação tecnológica.
+  A inclusão de Pessoas com Deficiência Visual (PcDV) no campo da Ciência da Computação apresenta desafios significativos devido à histórica dependência de metáforas visuais em linguagens e ambientes de programação \cite{stefik2013empirical}. Apesar da existência de estudos, ferramentas e diretrizes voltadas para a acessibilidade no ensino de programação, esses recursos encontram-se dispersos na literatura e na web. O objetivo deste estudo é desenvolver e avaliar um repositório centralizado, denominado \textit{IncluiDev}, que organiza e disponibiliza essas ferramentas, métodos e artigos científicos. O repositório foi construído como uma aplicação web acessível e incorpora um ``Assistente Guiado'', um sistema de recomendação dinâmico baseado em perfis de usuário (Estudantes, Professores, Desenvolvedores e Pesquisadores). A validação do sistema será conduzida utilizando as escalas \textit{System Usability Scale} (SUS) \cite{brooke1996sus} e o \textit{Technology Acceptance Model} (TAM) \cite{davis1989tam}, juntamente com avaliações qualitativas de acessibilidade.
 \end{resumo}
 
 \section{Introdução}
 
-A inclusão digital de Pessoas com Deficiência Visual (PcDV) nas áreas de Ciência da Computação e Tecnologia da Informação (TI) tem se mostrado cada vez mais essencial em uma sociedade fortemente impulsionada pela tecnologia. O ensino de programação tradicionalmente exige a assimilação de metáforas visuais complexas, como diagramas de fluxo, código em blocos coloridos e a própria indentação textual, criando barreiras significativas de aprendizagem para estudantes cegos ou com baixa visão.
+A inclusão digital de Pessoas com Deficiência Visual (PcDV) nas áreas de Ciência da Computação e Tecnologia da Informação (TI) tem se mostrado cada vez mais essencial em uma sociedade fortemente impulsionada pela tecnologia. O ensino de programação tradicionalmente exige a compreensão de metáforas visuais complexas, como diagramas de fluxo, código em blocos coloridos e a própria indentação textual \cite{resnick2009scratch}, criando barreiras significativas de aprendizagem para estudantes cegos ou com baixa visão.
 
-Felizmente, a comunidade acadêmica e de desenvolvimento tem respondido a essas barreiras através da criação de linguagens baseadas em evidências (como a Quorum Language), ambientes tangíveis (como o Code Jumper) e a adaptação de leitores de tela em IDEs de mercado. No entanto, o simples desenvolvimento dessas soluções não garante o acesso ao usuário final.
+A comunidade acadêmica e de desenvolvimento tem respondido a essas barreiras por meio da criação de linguagens baseadas em evidências, como a Quorum Language \cite{stefik2019quorum}, ambientes tangíveis como o Code Jumper \cite{codejumper2019}, e a adaptação de leitores de tela em IDEs de mercado \cite{seo2023coding}. No entanto, o desenvolvimento dessas soluções, por si só, não garante o acesso ao usuário final.
 
 \subsection{Problema de Pesquisa}
-Apesar do crescente número de estudos sobre o ensino de programação para pessoas com deficiência visual, os recursos encontram-se profundamente dispersos, dificultando sua localização e utilização prática por diferentes públicos. Professores em busca de metodologias de ensino, desenvolvedores buscando diretrizes de acessibilidade e os próprios estudantes enfrentam a exaustiva tarefa de garimpar soluções fragmentadas. Nesse contexto, emerge a questão de pesquisa: como centralizar, classificar e recomendar de forma acessível metodologias, ferramentas e pesquisas sobre o ensino de programação para PcDV?
+Apesar do crescente número de estudos sobre o ensino de programação para PcDV, os recursos encontram-se dispersos, dificultando sua localização e utilização prática por diferentes públicos. Professores em busca de metodologias de ensino, desenvolvedores buscando diretrizes de acessibilidade e os próprios estudantes enfrentam a tarefa de buscar soluções fragmentadas em diversas fontes. Diante desse cenário, este trabalho busca responder à seguinte questão de pesquisa: como centralizar, classificar e recomendar de forma acessível metodologias, ferramentas e pesquisas sobre o ensino de programação para PcDV?
 
 \subsection{Objetivos}
-O objetivo geral deste trabalho é construir e avaliar um portal web dinâmico e centralizado que funcione como um repositório interativo de práticas, ferramentas e estudos voltados ao ensino de programação para pessoas com deficiência visual.
+O objetivo geral deste trabalho é construir e avaliar um portal web dinâmico e centralizado que funcione como um repositório interativo de práticas, ferramentas e estudos voltados ao ensino de programação para PcDV.
 
-Para alcançar este propósito, definiram-se os seguintes objetivos específicos:
+Para alcançar este propósito, foram definidos os seguintes objetivos específicos:
 \begin{itemize}
     \item Organizar os recursos identificados na literatura acadêmica e na indústria em uma taxonomia coerente;
-    \item Desenvolver um repositório web que respeite rigorosamente as diretrizes de acessibilidade (WCAG 2.1 AA);
-    \item Implementar um sistema de recomendações ("Busca Guiada") baseado em jornadas de perfis (Estudante, Professor, Pesquisador e Desenvolvedor);
-    \item Avaliar a usabilidade, a aceitação e a acessibilidade do sistema desenvolvido utilizando métodos empíricos e escalas padronizadas.
+    \item Desenvolver um repositório web que respeite as diretrizes de acessibilidade WCAG 2.1 nível AA \cite{wcag21};
+    \item Implementar um sistema de recomendações (``Assistente Guiado'') baseado em jornadas de perfis (Estudante, Professor, Pesquisador e Desenvolvedor);
+    \item Avaliar a usabilidade, a aceitação e a acessibilidade do sistema utilizando métodos empíricos e escalas padronizadas \cite{brooke1996sus, davis1989tam}.
 \end{itemize}
 
 \subsection{Organização do artigo}
@@ -54,53 +54,76 @@ O restante deste artigo está organizado da seguinte forma: a Seção 2 apresent
 \section{Referencial Teórico} \label{sec:referencial}
 
 \subsection{Ensino de Programação para Pessoas com Deficiência Visual}
-A compreensão de lógicas algorítmicas por indivíduos videntes frequentemente se apoia em recursos visuais como diagramas de bloco, pseudocódigos formatados e interfaces baseadas em interações de arrastar e soltar, a exemplo do Scratch. Para PcDVs, a dependência quase exclusiva de tais artefatos constitui uma severa barreira pedagógica e técnica. A literatura aponta que a principal dificuldade reside na sobrecarga cognitiva imposta pela linearidade intrínseca aos leitores de tela. Um programador vidente visualiza a estrutura de um laço de repetição ou de uma estrutura condicional de forma global mediante a indentação espacial; em contrapartida, um usuário de leitor de tela necessita memorizar a estrutura lógica enquanto escuta o código linha por linha.
+A compreensão de lógicas algorítmicas por indivíduos videntes frequentemente se apoia em recursos visuais como diagramas de bloco, pseudocódigos formatados e interfaces baseadas em interações de arrastar e soltar, a exemplo do Scratch \cite{resnick2009scratch}. Para PcDV, a dependência quase exclusiva desses artefatos representa uma barreira significativa para o ensino e a prática de programação.
 
-Para mitigar tais desafios, estratégias educacionais e tecnologias assistivas distintas têm sido propostas. Abordagens baseadas em áudio e sonificação de código (onde blocos e erros emitem sons característicos em um ambiente acústico) e ambientes tangíveis (como a programação física utilizando hardwares modulares conectáveis) destacam-se como intervenções empíricas com eficácia demonstrada no ensino inclusivo.
+Estudos na área apontam que a principal dificuldade reside na sobrecarga cognitiva imposta pela leitura sequencial dos leitores de tela \cite{baker2015structjumper}. Um programador vidente visualiza a estrutura de um laço de repetição ou de uma estrutura condicional de forma global por meio da indentação espacial. Em contrapartida, um usuário de leitor de tela necessita memorizar a estrutura lógica enquanto escuta o código linha por linha \cite{baker2019educational}.
+
+Para mitigar tais desafios, diferentes estratégias educacionais e tecnologias assistivas têm sido propostas. Abordagens baseadas em áudio e sonificação de código --- onde blocos e erros emitem sons característicos em um ambiente acústico --- e ambientes tangíveis, como a programação física utilizando hardwares modulares conectáveis \cite{codejumper2019}, são exemplos de intervenções com eficácia demonstrada no ensino inclusivo \cite{stefik2013empirical}.
 
 \subsection{Recursos e Tecnologias para Inclusão}
-O avanço do estado da arte impulsionou soluções focadas tanto na adaptação dos ambientes existentes quanto no desenvolvimento de novas abordagens de codificação. Ferramentas consolidadas no mercado de trabalho, a exemplo do Visual Studio Code, implementaram modos de acessibilidade rigorosos e atalhos otimizados, facilitando a navegação nativa. Simultaneamente, linguagens de programação concebidas sob a ótica de evidências de usabilidade (como a linguagem Quorum) reduziram drasticamente a dependência de caracteres especiais complexos, otimizando substancialmente a leitura fonética realizada por softwares de síntese de voz.
+O avanço do estado da arte impulsionou soluções focadas tanto na adaptação dos ambientes existentes quanto no desenvolvimento de novas abordagens de codificação. Ferramentas consolidadas no mercado, como o Visual Studio Code, implementaram modos de acessibilidade e atalhos otimizados, facilitando a navegação com leitores de tela \cite{seo2023coding, vscode_accessibility}. Paralelamente, linguagens de programação concebidas sob a perspectiva de evidências de usabilidade, como a linguagem Quorum \cite{stefik2019quorum}, contribuíram para reduzir a dependência de caracteres especiais complexos, otimizando a leitura fonética realizada por softwares de síntese de voz.
 
-Apesar da disponibilidade tecnológica crescente, a aplicabilidade efetiva dessas ferramentas depende da curadoria da informação e do acesso a guias e diretrizes atualizadas, como as Diretrizes de Acessibilidade para Conteúdo Web (WCAG). A organização sistemática desses materiais em repositórios qualificados é essencial para assegurar que os educadores não precisem elaborar adaptações pedagógicas a partir do zero, fomentando assim o reuso e a padronização das intervenções de acessibilidade digital.
+Apesar da crescente disponibilidade tecnológica, a aplicabilidade efetiva dessas ferramentas depende da curadoria da informação e do acesso a guias e diretrizes atualizadas, como as Diretrizes de Acessibilidade para Conteúdo Web (WCAG) \cite{wcag21}. A organização sistemática desses materiais em repositórios qualificados é essencial para que os educadores não precisem criar adaptações pedagógicas a partir do zero, promovendo o reuso e a padronização das intervenções de acessibilidade digital.
 
 \subsection{Avaliação de Sistemas Educacionais}
-A validação de portais e repositórios educacionais exige o emprego de instrumentos confiáveis de mensuração. A \textit{System Usability Scale} (SUS) caracteriza-se como um questionário de dez itens padronizado internacionalmente e amplamente adotado para mensurar, de forma rápida e quantitativa, a usabilidade global de uma interface tecnológica. De maneira complementar, o \textit{Technology Acceptance Model} (TAM) é empregado para aferir a utilidade percebida e a facilidade de uso percebida, fatores que determinam a intenção comportamental e a adoção do sistema por parte do usuário. No contexto da acessibilidade digital, tais modelos quantitativos, quando corroborados por questões qualitativas abertas, fornecem um escopo de evidências robusto acerca das reais barreiras enfrentadas durante a interação e do correspondente nível de satisfação do usuário.
+A validação de portais e repositórios educacionais exige o uso de instrumentos confiáveis de avaliação. A \textit{System Usability Scale} (SUS) \cite{brooke1996sus} é um questionário de dez itens, padronizado internacionalmente, amplamente adotado para medir de forma rápida e quantitativa a usabilidade global de uma interface tecnológica.
+
+De maneira complementar, o \textit{Technology Acceptance Model} (TAM) \cite{davis1989tam} é utilizado para avaliar a utilidade percebida e a facilidade de uso percebida, fatores que determinam a intenção comportamental e a adoção do sistema pelo usuário.
+
+No contexto da acessibilidade digital, esses modelos quantitativos, quando complementados por questões qualitativas abertas, fornecem um conjunto robusto de evidências sobre as barreiras enfrentadas durante a interação e o nível de satisfação do usuário.
 
 \section{Método}
 
-A presente pesquisa caracteriza-se como um estudo de natureza aplicada, conduzido sob uma abordagem de métodos mistos (quantitativa e qualitativa). O escopo do desenvolvimento foi estruturado com base nos achados de uma Revisão de Literatura preliminar, a qual identificou e catalogou diretrizes metodológicas, ferramentas de software, aplicações lúdicas educacionais e estudos empíricos centrados na intersecção entre o ensino de programação e a deficiência visual.
+A presente pesquisa caracteriza-se como um estudo de natureza aplicada, conduzido sob uma abordagem de métodos mistos (quantitativa e qualitativa). O escopo do desenvolvimento foi estruturado com base nos achados de uma Revisão de Literatura preliminar, a qual identificou e catalogou diretrizes metodológicas, ferramentas de software, aplicações lúdicas educacionais e estudos empíricos centrados na interseção entre o ensino de programação e a deficiência visual.
 
 \subsection{Desenvolvimento do Repositório}
-O repositório digital, nomeado \textit{IncluiDev}, foi projetado segundo a arquitetura de \textit{Single Page Application} (SPA), utilizando a biblioteca React juntamente com o empacotador Vite e o ambiente Node.js. A concepção arquitetural enfatizou o desenvolvimento de componentes funcionais plenamente acessíveis, garantindo a integração retroativa de atributos WAI-ARIA (como as propriedades \textit{aria-live} para atualizações dinâmicas e \textit{aria-labelledby} para estruturação semântica). O processo contínuo de catalogação do estado da arte gerou uma taxonomia bidimensional, na qual cada recurso levantado é mapeado e indexado em função do Nível de Ensino (Básico, Técnico, Superior) e do Público-Alvo primário.
+O repositório digital, nomeado \textit{IncluiDev}, foi projetado segundo a arquitetura de \textit{Single Page Application} (SPA), utilizando a biblioteca React \cite{react2023} juntamente com o empacotador Vite \cite{vite2023} e o ambiente Node.js.
 
-\subsection{Construção do Assistente Guia}
-De modo a suprimir as limitações inerentes aos mecanismos clássicos de filtragem e pesquisa em tabela, propôs-se o desenvolvimento da "Busca Guiada", um sistema recomendador ancorado em modelos de jornadas conversacionais adaptativas. A formulação do fluxo rompe com a listagem exaustiva de filtros estáticos; o sistema induz o usuário a uma autoidentificação pautada em quatro perfis operacionais derivados das lacunas mapeadas na literatura: Estudante, Professor, Desenvolvedor e Pesquisador.
+A concepção arquitetural priorizou o desenvolvimento de componentes funcionais acessíveis, garantindo a incorporação nativa de atributos WAI-ARIA \cite{waiaria12}, como as propriedades \textit{aria-live} para atualizações dinâmicas e \textit{aria-labelledby} para estruturação semântica.
 
-Conforme a premissa de cada perfil selecionado, a aplicação desencadeia um fluxo dinâmico de interações de múltipla escolha focadas no objetivo pedagógico ou técnico premente (e.g., exploração de ferramentas baseadas em áudio ou obtenção de referenciais de revisões sistemáticas). Um motor de busca processa o cruzamento dessas respostas em tempo real com as \textit{tags} semânticas associadas aos recursos subjacentes, devolvendo recomendações precisas sem impor sobrecarga informacional ao usuário de tecnologias assistivas. O fluxograma integral das árvores de decisão encontra-se referenciado nos anexos deste trabalho.
+O processo contínuo de catalogação do estado da arte gerou uma taxonomia bidimensional, na qual cada recurso levantado é mapeado e indexado em função do Nível de Ensino (Básico, Técnico, Superior) e do Público-Alvo primário.
+
+\subsection{Construção do Assistente Guiado}
+Para superar as limitações dos mecanismos tradicionais de filtragem e pesquisa em tabela, foi proposto o ``Assistente Guiado'': um sistema de recomendação baseado em fluxos conversacionais adaptativos.
+
+Diferentemente de uma listagem estática de filtros, o sistema orienta o usuário a uma autoidentificação com base em quatro perfis operacionais derivados das lacunas mapeadas na literatura: Estudante, Professor, Desenvolvedor e Pesquisador.
+
+A partir do perfil selecionado, a aplicação apresenta perguntas de múltipla escolha focadas no objetivo pedagógico ou técnico principal (por exemplo, exploração de ferramentas baseadas em áudio ou obtenção de referências de revisões sistemáticas). Um motor de busca cruza essas respostas em tempo real com as \textit{tags} semânticas associadas aos recursos catalogados, apresentando recomendações relevantes sem sobrecarregar o usuário de tecnologias assistivas.
+
+O fluxograma completo das árvores de decisão encontra-se referenciado nos anexos deste trabalho.
 
 \subsection{Avaliação do Sistema}
-O protocolo de validação do portal abrangerá um corpo de participantes representativo, submetidos a testes de navegação e busca de conteúdo na plataforma. A coleta de dados será mediada por um formulário eletrônico particionado. Os procedimentos iniciarão pelo mapeamento do perfil tecnológico (frequência de uso de leitores de tela e experiência com linguagens de código). Os instrumentos centrais de avaliação compreenderão o SUS e o TAM, avaliados em escala Likert de 5 pontos, conjugados a indagações quantitativas direcionadas exclusivamente à assertividade do Assistente Guia. O questionário encerra-se com perguntas abertas concebidas para capturar as percepções subjetivas sobre barreiras remanescentes de acessibilidade.
+O protocolo de validação do repositório abrangerá um grupo representativo de participantes, submetidos a testes de navegação e busca de conteúdo na plataforma.
+
+A coleta de dados será realizada por meio de um formulário eletrônico dividido em seções. Os procedimentos iniciarão pelo mapeamento do perfil tecnológico dos participantes (frequência de uso de leitores de tela e experiência com linguagens de programação).
+
+Os instrumentos centrais de avaliação incluem o SUS \cite{brooke1996sus} e o TAM \cite{davis1989tam}, ambos avaliados em escala Likert de 5 pontos, combinados com perguntas específicas sobre a precisão do Assistente Guiado. O questionário encerra-se com perguntas abertas para capturar as percepções subjetivas sobre barreiras remanescentes de acessibilidade.
 
 \section{Resultados}
 
 \subsection{Caracterização do Repositório}
-A etapa de curadoria e extração consolidou um acervo taxonômico contendo 34 recursos basilares. A categorização demonstrou-se abrangente, abrigando tanto frameworks industriais de alcance global (como as diretrizes de acessibilidade W3C e documentações MDN) quanto ambientes lúdicos e tangíveis focados estritamente na iniciação do pensamento computacional sem monitor (a exemplo do \textit{Code Jumper} e linguagens \textit{evidence-based} como Quorum). O portal fornece interfaces que aglutinam resumos detalhados com acesso direcionado às fontes científicas originais, garantindo o embasamento teórico e legal demandado por docentes e construtores de tecnologia em uma única plataforma centralizada.
+A etapa de curadoria e extração consolidou um catálogo contendo 34 recursos fundamentais, classificados segundo a taxonomia proposta. A categorização buscou ser abrangente, incluindo tanto \textit{frameworks} de alcance global (como as diretrizes de acessibilidade W3C \cite{wcag21} e a documentação MDN \cite{mdn2024}) quanto ambientes lúdicos e tangíveis focados na iniciação do pensamento computacional sem monitor, como o Code Jumper \cite{codejumper2019} e linguagens baseadas em evidências como a Quorum \cite{stefik2019quorum}.
 
-\subsection{Funcionamento da Busca Guiada}
-A implementação estrutural da Busca Guiada confirmou, durante os ensaios técnicos, que as árvores de decisão e o sistema lógico de intersecção de \textit{tags} convergem eficazmente para resultados não vazios. O fluxo responsivo adaptou-se de forma consistente às mutações de contexto para cada um dos quatro perfis, sustentando uma leitura íntegra e sequencial por parte dos sintetizadores de voz simulados nos ambientes de teste. O arranjo visual limpo, destituído de pop-ups não anunciados, fortalece a segurança na navegação autônoma por usuários que dependem puramente de interações via teclado.
+O portal oferece interfaces que reúnem resumos detalhados com acesso direcionado às fontes científicas originais, garantindo o embasamento teórico e legal demandado por docentes e desenvolvedores de tecnologia em uma única plataforma centralizada.
+
+\subsection{Funcionamento do Assistente Guiado}
+A implementação do Assistente Guiado confirmou, durante os testes técnicos, que as árvores de decisão e o sistema de cruzamento de \textit{tags} convergem para resultados não vazios na maioria dos cenários testados. O fluxo responsivo adaptou-se de forma consistente às variações de contexto para cada um dos quatro perfis, mantendo a compatibilidade com leitores de tela nos ambientes de teste.
+
+O arranjo visual limpo, sem \textit{pop-ups} inesperados, facilita a navegação independente por usuários que dependem de interações exclusivamente via teclado.
 
 \subsection{Perfil dos Participantes}
-
+\textit{(Seção a ser preenchida após a coleta de dados.)}
 
 \subsection{Resultados da Avaliação}
-
+\textit{(Seção a ser preenchida após a aplicação dos instrumentos SUS e TAM.)}
 
 \section{Discussão}
-
+\textit{(Seção a ser preenchida após a análise dos resultados.)}
 
 \section{Conclusão}
+\textit{(Seção a ser preenchida após a conclusão da pesquisa.)}
 
 \bibliographystyle{sbc}
-\bibliography{referencias}
+\bibliography{references}
 
 \end{document}

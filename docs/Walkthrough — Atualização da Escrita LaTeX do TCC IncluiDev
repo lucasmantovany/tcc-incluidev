@@ -1,0 +1,89 @@
+# Walkthrough — Atualização da Escrita LaTeX do TCC IncluiDev
+
+Aplicamos todas as correções documentadas na análise crítica ([analise_tcc.md](file:///c:/Users/lucas/Documents/Scripts/tcc-incluidev/docs/analise_tcc.md)) ao arquivo LaTeX principal do artigo.
+
+---
+
+## 📝 Arquivo Modificado
+
+### [main.tex](file:///c:/Users/lucas/Documents/Scripts/tcc-incluidev/docs/TCC%20Lucas/main.tex)
+
+Reescrita completa do artigo com **7 categorias de correções**:
+
+---
+
+### 1. Correção do Abstract (Inglês)
+- **"VIP"** → **"BVI"** (Blind and Visually Impaired) — sigla convencional na literatura
+- Remoção da afirmação falsa *"Preliminary results indicate that..."* — os resultados ainda não existem
+- Inserção de citações: `\cite{stefik2013empirical}`, `\cite{brooke1996sus}`, `\cite{davis1989tam}`
+- Aspas corrigidas para padrão LaTeX: `''Guided Assistant''`
+
+### 2. Correção do Resumo (Português)
+- **"Assistente Guia"** → **"Assistente Guiado"** — padronização terminológica
+- Remoção da afirmação falsa sobre resultados preliminares
+- Inserção de citações correspondentes
+
+### 3. Simplificação Vocabular (todo o documento)
+
+| Antes (rebuscado) | Depois (claro) |
+|---|---|
+| *"constitui uma severa barreira pedagógica e técnica"* | *"representa uma barreira significativa para o ensino e a prática"* |
+| *"a linearidade intrínseca aos leitores de tela"* | *"a leitura sequencial dos leitores de tela"* |
+| *"suprimir as limitações inerentes aos mecanismos clássicos"* | *"superar as limitações dos mecanismos tradicionais"* |
+| *"ancorado em modelos de jornadas conversacionais adaptativas"* | *"baseado em fluxos conversacionais adaptativos"* |
+| *"desencadeia um fluxo dinâmico de interações"* | *"apresenta perguntas de múltipla escolha"* |
+| *"devolvendo recomendações precisas sem impor sobrecarga informacional"* | *"apresentando recomendações relevantes sem sobrecarregar o usuário"* |
+| *"conjugados a indagações quantitativas"* | *"combinados com perguntas específicas"* |
+| *"destituído de pop-ups não anunciados"* | *"sem pop-ups inesperados"* |
+| *"recursos basilares"* | *"recursos fundamentais"* |
+| *"acervo taxonômico"* | *"catálogo"* |
+| *"mensuração" / "aferição"* | *"avaliação" / "medição"* |
+| *"integração retroativa de atributos WAI-ARIA"* | *"incorporação nativa de atributos WAI-ARIA"* |
+| *"reduziram drasticamente"* | *"contribuíram para reduzir"* |
+| *"A categorização demonstrou-se abrangente"* | *"A categorização buscou ser abrangente"* |
+
+### 4. Inserção de Citações In-Text
+
+**15 chaves BibTeX** agora citadas ao longo de todo o texto:
+
+| Chave | Referência | Seção(ões) |
+|---|---|---|
+| `stefik2013empirical` | Stefik & Siebert (2013) — Syntax empírica | Abstract, Resumo, §2.1 |
+| `brooke1996sus` | Brooke (1996) — SUS | Abstract, Resumo, §1.2, §2.3, §3.3 |
+| `davis1989tam` | Davis (1989) — TAM | Abstract, Resumo, §1.2, §2.3, §3.3 |
+| `resnick2009scratch` | Resnick et al. (2009) — Scratch | §1, §2.1 |
+| `stefik2019quorum` | Stefik et al. (2019) — Quorum | §1, §2.2, §4.1 |
+| `codejumper2019` | APH (2019) — Code Jumper | §1, §2.1, §4.1 |
+| `seo2023coding` | Seo & Rogge (2023) — VS Code | §1, §2.2 |
+| `baker2015structjumper` | Baker et al. (2015) — StructJumper | §2.1 |
+| `baker2019educational` | Baker et al. (2019) — Educação cegos | §2.1 |
+| `wcag21` | W3C (2018) — WCAG 2.1 | §1.2, §2.2, §4.1 |
+| `waiaria12` | W3C (2023) — WAI-ARIA 1.2 | §3.1 |
+| `react2023` | Meta (2023) — React | §3.1 |
+| `vite2023` | You (2023) — Vite | §3.1 |
+| `mdn2024` | Mozilla (2024) — MDN | §4.1 |
+| `vscode_accessibility` | Microsoft (2024) — VS Code a11y | §2.2 |
+
+### 5. Padronização Terminológica
+- **"PcDVs"** → **"PcDV"** (sem plural na sigla)
+- **"Busca Guiada" / "Assistente Guia"** → **"Assistente Guiado"** (pt) / **"Guided Assistant"** (en)
+- **"repositório"** como termo principal (com uso pontual de "portal" para a interface web)
+
+### 6. Correção do `\bibliography`
+- **`\bibliography{referencias}`** → **`\bibliography{references}`** — corrigido para apontar ao arquivo BibTeX real ([references.bib](file:///c:/Users/lucas/Documents/Scripts/tcc-incluidev/docs/TCC%20Lucas/references.bib))
+
+### 7. Seções Pendentes (Placeholders)
+As seções 4.3, 4.4, 5 e 6 foram mantidas como placeholders simples:
+```latex
+\textit{(Seção a ser preenchida após a coleta de dados.)}
+```
+
+---
+
+## ✅ Validação
+
+### Verificação de Citações
+Todas as **15 chaves** `\cite{}` no `main.tex` possuem entrada correspondente no `references.bib`. Nenhuma chave órfã.
+
+### Verificação de Compilação
+O arquivo está pronto para compilação no Overleaf com o engine padrão (pdflatex + bibtex). A estrutura do template SBC foi preservada integralmente.
