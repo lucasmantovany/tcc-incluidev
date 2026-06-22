@@ -20,7 +20,7 @@ function Home() {
           Um portal centralizado que reúne metodologias, ferramentas e estudos para o ensino de programação voltado a Pessoas com Deficiência Visual (PcDV).
         </p>
         <div className="flex gap-4" style={{ justifyContent: 'center' }}>
-          <Link to="/repositorio" className="btn btn-primary" aria-label="Acessar o repositório completo">
+          <Link to="/repositorio" className="btn btn-primary" aria-label="Explorar Tudo - Acessar o repositório completo">
             Explorar Tudo
             <ArrowRight size={20} style={{ marginLeft: '0.5rem' }} aria-hidden="true"/>
           </Link>
