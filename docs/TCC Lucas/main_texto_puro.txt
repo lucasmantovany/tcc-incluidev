@@ -1,0 +1,101 @@
+Título: IncluiDev: Desenvolvimento e Avaliação de uma Plataforma Baseada em Evidências para Apoio ao Ensino de Programação para Pessoas com Deficiência Visual
+
+Autor: Lucas R. Pedro, Esteice Janaina Santos Batista
+
+Abstract:
+The inclusion of blind and visually impaired (BVI) individuals in Computer Science presents significant challenges due to the historical dependence on visual metaphors in programming languages and environments. Although studies, tools, and guidelines for accessible programming education exist, these resources are highly fragmented across literature and the web. This study aims to develop and evaluate a centralized repository, named IncluiDev, which organizes and provides these tools, methods, and scientific papers. The repository was built as an accessible web application and features a "Guided Assistant", a dynamic recommendation system based on user profiles (Students, Teachers, Developers, and Researchers). System validation will be conducted using the System Usability Scale (SUS) and the Technology Acceptance Model (TAM), along with qualitative accessibility evaluations.
+
+Resumo:
+A inclusão de Pessoas com Deficiência Visual (PcDV) no campo da Ciência da Computação apresenta desafios significativos devido à histórica dependência de metáforas visuais em linguagens e ambientes de programação. Apesar da existência de estudos, ferramentas e diretrizes voltadas para a acessibilidade no ensino de programação, esses recursos encontram-se dispersos na literatura e na web. O objetivo deste estudo é desenvolver e avaliar um repositório centralizado, denominado IncluiDev, que organiza e disponibiliza essas ferramentas, métodos e artigos científicos. O repositório foi construído como uma aplicação web acessível e incorpora um "Assistente Guiado", um sistema de recomendação dinâmico baseado em perfis de usuário (Estudantes, Professores, Desenvolvedores e Pesquisadores). A validação do sistema será conduzida utilizando as escalas System Usability Scale (SUS) e o Technology Acceptance Model (TAM), juntamente com avaliações qualitativas de acessibilidade.
+
+1. Introdução
+
+A inclusão digital de Pessoas com Deficiência Visual (PcDV) nas áreas de Ciência da Computação e Tecnologia da Informação (TI) tem se mostrado cada vez mais essencial em uma sociedade fortemente impulsionada pela tecnologia. O ensino de programação tradicionalmente exige a compreensão de metáforas visuais complexas, como diagramas de fluxo, código em blocos coloridos e a própria indentação textual, criando barreiras significativas de aprendizagem para estudantes cegos ou com baixa visão.
+
+A comunidade acadêmica e de desenvolvimento tem respondido a essas barreiras por meio da criação de linguagens baseadas em evidências, como a Quorum Language, ambientes tangíveis como o Code Jumper, e a adaptação de leitores de tela em IDEs de mercado. No entanto, o desenvolvimento dessas soluções, por si só, não garante o acesso ao usuário final.
+
+1.1 Problema de Pesquisa
+Apesar do crescente número de estudos sobre o ensino de programação para PcDV, os recursos encontram-se dispersos, dificultando sua localização e utilização prática por diferentes públicos. Professores em busca de metodologias de ensino, desenvolvedores buscando diretrizes de acessibilidade e os próprios estudantes enfrentam a tarefa de buscar soluções fragmentadas em diversas fontes. Diante desse cenário, este trabalho busca responder à seguinte questão de pesquisa: como centralizar, classificar e recomendar de forma acessível metodologias, ferramentas e pesquisas sobre o ensino de programação para PcDV?
+
+1.2 Objetivos
+O objetivo geral deste trabalho é construir e avaliar um portal web dinâmico e centralizado que funcione como um repositório interativo de práticas, ferramentas e estudos voltados ao ensino de programação para PcDV.
+
+Para alcançar este propósito, foram definidos os seguintes objetivos específicos:
+- Organizar os recursos identificados na literatura acadêmica e na indústria em uma taxonomia coerente;
+- Desenvolver um repositório web que respeite as diretrizes de acessibilidade WCAG 2.1 nível AA;
+- Implementar um sistema de recomendações ("Assistente Guiado") baseado em jornadas de perfis (Estudante, Professor, Pesquisador e Desenvolvedor);
+- Avaliar a usabilidade, a aceitação e a acessibilidade do sistema utilizando métodos empíricos e escalas padronizadas.
+
+1.3 Organização do artigo
+O restante deste artigo está organizado da seguinte forma: a Seção 2 apresenta o Referencial Teórico sobre o ensino acessível e os métodos de avaliação. A Seção 3 detalha os Métodos aplicados na construção do repositório e os procedimentos de validação. A Seção 4 reporta os Resultados alcançados, enquanto a Seção 5 discute as implicações desses achados. Finalmente, a Seção 6 traz a Conclusão e os trabalhos futuros.
+
+2. Referencial Teórico
+
+2.1 Ensino de Programação para Pessoas com Deficiência Visual
+A compreensão de lógicas algorítmicas por indivíduos videntes frequentemente se apoia em recursos visuais como diagramas de bloco, pseudocódigos formatados e interfaces baseadas em interações de arrastar e soltar, a exemplo do Scratch. Para PcDV, a dependência quase exclusiva desses artefatos representa uma barreira significativa para o ensino e a prática de programação.
+
+Estudos na área apontam que a principal dificuldade reside na sobrecarga cognitiva imposta pela leitura sequencial dos leitores de tela. Um programador vidente visualiza a estrutura de um laço de repetição ou de uma estrutura condicional de forma global por meio da indentação espacial. Em contrapartida, um usuário de leitor de tela necessita memorizar a estrutura lógica enquanto escuta o código linha por linha.
+
+Para mitigar tais desafios, diferentes estratégias educacionais e tecnologias assistivas têm sido propostas. Abordagens baseadas em áudio e sonificação de código — onde blocos e erros emitem sons característicos em um ambiente acústico — e ambientes tangíveis, como a programação física utilizando hardwares modulares conectáveis, são exemplos de intervenções com eficácia demonstrada no ensino inclusivo.
+
+2.2 Recursos e Tecnologias para Inclusão
+Duas estratégias distintas emergem na literatura: a adaptação de ferramentas já consolidadas e o desenvolvimento de novos ambientes e linguagens projetados desde a origem para acessibilidade. Ferramentas consolidadas no mercado, como o Visual Studio Code, implementaram modos de acessibilidade e atalhos otimizados, facilitando a navegação com leitores de tela. Paralelamente, linguagens de programação concebidas sob a perspectiva de evidências de usabilidade, como a linguagem Quorum, contribuíram para reduzir a dependência de caracteres especiais complexos, otimizando a leitura fonética realizada por softwares de síntese de voz.
+
+Apesar da crescente disponibilidade tecnológica, a aplicabilidade efetiva dessas ferramentas depende da curadoria da informação e do acesso a guias e diretrizes atualizadas, como as Diretrizes de Acessibilidade para Conteúdo Web (WCAG). A organização sistemática desses materiais em repositórios qualificados é essencial para que os educadores não precisem criar adaptações pedagógicas a partir do zero, promovendo o reuso e a padronização das intervenções de acessibilidade digital.
+
+2.3 Avaliação de Sistemas Educacionais
+A validação de portais e repositórios educacionais exige o uso de instrumentos confiáveis de avaliação. A System Usability Scale (SUS) é um questionário de dez itens, padronizado internacionalmente, amplamente adotado para medir de forma rápida e quantitativa a usabilidade global de uma interface tecnológica.
+
+De maneira complementar, o Technology Acceptance Model (TAM) é utilizado para avaliar a utilidade percebida e a facilidade de uso percebida, fatores que determinam a intenção comportamental e a adoção do sistema pelo usuário.
+
+No contexto da acessibilidade digital, esses modelos quantitativos, quando complementados por questões qualitativas abertas, fornecem um conjunto robusto de evidências sobre as barreiras enfrentadas durante a interação e o nível de satisfação do usuário.
+
+3. Método
+
+A presente pesquisa caracteriza-se como um estudo de natureza aplicada, conduzido sob uma abordagem de métodos mistos (quantitativa e qualitativa). O escopo do desenvolvimento foi estruturado com base nos achados de uma Revisão de Literatura preliminar, a qual identificou e catalogou diretrizes metodológicas, ferramentas de software, aplicações lúdicas educacionais e estudos empíricos centrados na interseção entre o ensino de programação e a deficiência visual.
+
+3.1 Desenvolvimento do Repositório
+O repositório digital, nomeado IncluiDev, foi projetado segundo a arquitetura de Single Page Application (SPA), utilizando a biblioteca React juntamente com o empacotador Vite e o ambiente Node.js.
+
+A concepção arquitetural priorizou o desenvolvimento de componentes funcionais acessíveis, garantindo a incorporação nativa de atributos WAI-ARIA, como as propriedades aria-live para atualizações dinâmicas e aria-labelledby para estruturação semântica.
+
+O processo contínuo de catalogação do estado da arte gerou uma taxonomia bidimensional, na qual cada recurso levantado é mapeado e indexado em função do Nível de Ensino (Básico, Técnico, Superior) e do Público-Alvo primário.
+
+3.2 Construção do Assistente Guiado
+Para superar as limitações dos mecanismos tradicionais de filtragem e pesquisa em tabela, foi proposto o "Assistente Guiado": um sistema de recomendação guiado por perfil de usuário.
+
+Diferentemente de uma listagem estática de filtros, o sistema orienta o usuário a uma autoidentificação com base em quatro perfis identificados na literatura: Estudante, Professor, Desenvolvedor e Pesquisador.
+
+A partir do perfil selecionado, a aplicação apresenta perguntas de múltipla escolha focadas no objetivo pedagógico ou técnico principal (por exemplo, exploração de ferramentas baseadas em áudio ou obtenção de referências de revisões sistemáticas). o sistema compara as respostas do usuário com as tags dos conteúdos cadastrados, apresentando recomendações relevantes sem sobrecarregar o usuário de tecnologias assistivas.
+
+O fluxograma completo das árvores de decisão encontra-se referenciado nos anexos deste trabalho.
+
+3.3 Avaliação do Sistema
+O protocolo de validação do repositório abrangerá um grupo representativo de participantes, submetidos a testes de navegação e busca de conteúdo na plataforma.
+
+A coleta de dados será realizada por meio de um formulário eletrônico dividido em seções. Os procedimentos iniciarão pelo mapeamento do perfil tecnológico dos participantes (frequência de uso de leitores de tela e experiência com linguagens de programação).
+
+Os instrumentos centrais de avaliação incluem o SUS e o TAM, ambos avaliados em escala Likert de 5 pontos, combinados com perguntas específicas sobre a precisão do Assistente Guiado. O questionário encerra-se com perguntas abertas para capturar as percepções subjetivas sobre barreiras remanescentes de acessibilidade.
+
+4. Resultados
+
+4.1 Caracterização do Repositório
+A etapa de curadoria e extração consolidou um catálogo contendo 34 recursos fundamentais, classificados segundo a taxonomia proposta. A categorização buscou ser abrangente, incluindo tanto frameworks de alcance global (como as diretrizes de acessibilidade W3C e a documentação MDN) quanto ambientes lúdicos e tangíveis focados na iniciação do pensamento computacional sem monitor, como o Code Jumper e linguagens baseadas em evidências como a Quorum.
+
+O portal oferece interfaces que reúnem resumos detalhados com acesso direcionado às fontes científicas originais, para que professores e desenvolvedores encontrem referências técnicas e legais em um único lugar.
+
+4.2 Funcionamento do Assistente Guiado
+A implementação do Assistente Guiado confirmou, durante os testes técnicos, que as árvores de decisão e o sistema de cruzamento de tags retornam ao menos uma recomendação em todos os cenários cobertos pelo acervo atual. O fluxo responsivo adaptou-se de forma consistente às variações de contexto para cada um dos quatro perfis, mantendo a compatibilidade com leitores de tela nos ambientes de teste.
+
+O arranjo visual limpo, sem pop-ups inesperados, facilita a navegação independente por usuários que dependem de interações exclusivamente via teclado.
+
+4.3 Perfil dos Participantes
+
+
+4.4 Resultados da Avaliação
+
+
+5. Discussão
+
+
+6. Conclusão
