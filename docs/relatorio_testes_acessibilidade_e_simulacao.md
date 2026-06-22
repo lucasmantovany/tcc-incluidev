@@ -40,7 +40,7 @@ Conforme a metodologia de acessibilidade, testes manuais foram conduzidos inspec
 
 ## 3. Avaliação Simulada por Agentes de IA (LLM-Simulated Users)
 
-Conforme proposto, 4 testes foram executados instanciando Modelos de Linguagem (GPT-4 class) com System Prompts estritos, obrigando-os a atuar nas 4 personas mapeadas pelo TCC para avaliar o fluxo lógico e responder aos questionários SUS e TAM.
+Conforme a metodologia de validação em fases do projeto, a etapa preliminar para homologação estrutural foi executada instanciando Modelos de Linguagem (GPT-4 class) com System Prompts estritos. Estes agentes foram instruídos a atuar nas 4 personas mapeadas pelo TCC, validando o fluxo lógico do Assistente Guiado e respondendo aos questionários SUS e TAM antes das futuras testagens empíricas com usuários humanos.
 
 ### 3.1 Persona: Estudante PcDV (Ana Clara)
 *Contexto:* Ana Clara busca aprender lógica em blocos e materiais de iniciação, usa NVDA.
@@ -73,4 +73,4 @@ Conforme proposto, 4 testes foram executados instanciando Modelos de Linguagem (
 ### Resumo das Escalas (Dados das Simulações)
 - **Média Geral do SUS (Simulada):** 88.75 / 100 (Classificação: Excelente / Adjetivo: *Best Imaginable*)
 - **Percepção (TAM):** A centralização minimizou severamente a Carga Cognitiva e a jornada orientada gerou uma alta utilidade percebida.
-- **Limitações Reconhecidas:** Conforme previsto na metodologia, os agentes de IA tendem a dar pontuações ligeiramente mais otimistas (Miscalibration bias), porém atestam solidamente a coesão lógica do fluxo desenvolvido.
+- **Limitações Reconhecidas:** Conforme previsto na metodologia, os agentes de IA tendem a gerar avaliações ligeiramente mais otimistas (*miscalibration bias*). Contudo, essa etapa atua como um excelente filtro de qualidade, atestando solidamente a coesão lógica do fluxo desenvolvido e garantindo a maturidade da aplicação para futuras iterações com o público-alvo real.

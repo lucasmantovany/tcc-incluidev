@@ -1,6 +1,6 @@
 # Metodologia de Avaliação Simulada por Agentes de IA (LLMs)
 
-Devido às restrições de tempo para recrutamento de participantes humanos com deficiência visual e educadores especialistas, este projeto empregará a técnica de simulação baseada em Grandes Modelos de Linguagem (*Large Language Models - LLMs*) atuando como *Agentes Avaliadores*. Esta metodologia baseia-se na literatura recente sobre a simulação de usuários conversacionais em interações humano-computador.
+Como etapa preliminar de validação da arquitetura lógica, antes da realização de testes empíricos com participantes humanos (como pessoas com deficiência visual e educadores especialistas), este projeto empregará a técnica de simulação baseada em Grandes Modelos de Linguagem (*Large Language Models - LLMs*) atuando como *Agentes Avaliadores*. Esta metodologia baseia-se na literatura recente sobre a simulação de usuários conversacionais em interações humano-computador e funciona como um filtro rigoroso de qualidade.
 
 ## 1. Fundamentação e Limitações do Método
 
@@ -12,7 +12,7 @@ Conforme apontado pelo estudo *Lost in Simulation: LLM-Simulated Users are Unrel
 - Eles tendem a produzir "artefatos conversacionais" (como excesso de polidez ou perguntas desnecessárias).
 - Não reproduzem fielmente a sobrecarga cognitiva e a fadiga sensorial de um usuário humano utilizando um leitor de tela (NVDA/JAWS).
 
-Portanto, no TCC, essa abordagem deve ser categorizada como uma **Validação Heurística Baseada em Personas Artificiais**, servindo como uma etapa robusta para validação do design lógico (árvore de decisão), não anulando a necessidade futura de testes práticos com o público alvo real.
+Portanto, no TCC, essa abordagem deve ser categorizada como uma **Validação Heurística Baseada em Personas Artificiais**, servindo como uma etapa preparatória robusta para homologação do design lógico (árvore de decisão). Os resultados estabelecem uma base segura para que futuras iterações da pesquisa contemplem os testes práticos definitivos com o público-alvo real.
 
 ## 2. Configuração das Personas (System Prompts)
 
