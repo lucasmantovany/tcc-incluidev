@@ -56,16 +56,16 @@ Conforme a metodologia de validação em fases do projeto, a etapa preliminar pa
 - **Escore TAM Simulado:** Muito Alto
 - **Justificativa da IA:** "Como educador, o repositório centralizado salvou horas de pesquisa em bases como Google Scholar. O caminho foi fluido."
 
-### 3.3 Persona: Pesquisador (Lúcia)
-*Contexto:* Mestranda fazendo RSL sobre acessibilidade, precisa de estado da arte.
-- **Interação:** Escolheu "Pesquisador", precisava de "Revisões sistemáticas". A árvore filtrou apenas \textit{papers} revisados por pares e artigos sobre heurísticas.
+### 3.3 Persona: Pesquisadora (Mariana Souza)
+*Contexto:* Pesquisadora fazendo revisão de literatura sobre acessibilidade, precisa de estado da arte.
+- **Interação:** Escolheu "Pesquisador", precisava de "Revisões de literatura". A árvore filtrou apenas revisões sistemáticas e artigos de mapeamento.
 - **Escore SUS Simulado:** 85.0
 - **Escore TAM Simulado:** Alto
 - **Justificativa da IA:** "A busca em 3 cliques foi mais eficaz do que queries booleanas longas em bases digitais. O formulário é amigável."
 
-### 3.4 Persona: Desenvolvedor (Felipe)
-*Contexto:* Analista de Sistemas focado em conformidade WCAG e desenvolvimento de código.
-- **Interação:** Escolheu "Desenvolvedor", focado em "Normas, WCAG e Boas Práticas".
+### 3.4 Persona: Desenvolvedor (Rafael Martins)
+*Contexto:* Desenvolvedor de Software focado em conformidade WCAG e desenvolvimento de código.
+- **Interação:** Escolheu "Desenvolvedor de tecnologia assistiva", focado em "Diretrizes de acessibilidade".
 - **Escore SUS Simulado:** 90.0
 - **Escore TAM Simulado:** Alto
 - **Justificativa da IA:** "A arquitetura e marcações técnicas estavam todas lá. Interface limpa sem ruído desnecessário."
