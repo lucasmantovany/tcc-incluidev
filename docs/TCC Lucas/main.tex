@@ -77,7 +77,7 @@ No contexto da acessibilidade digital, esses modelos quantitativos, quando compl
 A presente pesquisa caracteriza-se como um estudo de natureza aplicada, conduzido sob uma abordagem de métodos mistos (quantitativa e qualitativa). O escopo do desenvolvimento foi estruturado com base nos achados de uma Revisão de Literatura preliminar, a qual identificou e catalogou diretrizes metodológicas, ferramentas de software, aplicações lúdicas educacionais e estudos empíricos centrados na interseção entre o ensino de programação e a deficiência visual.
 
 \subsection{Desenvolvimento do Repositório}
-O repositório digital, nomeado \textit{IncluiDev}, foi projetado segundo a arquitetura de \textit{Single Page Application} (SPA), utilizando a biblioteca React \cite{react2023} juntamente com o empacotador Vite \cite{vite2023} e o ambiente Node.js. A versão de produção da plataforma pode ser acessada através do endereço \url{https://tcc-incluidev.vercel.app/}.
+O repositório digital, nomeado \textit{IncluiDev}, foi projetado segundo a arquitetura de \textit{Single Page Application} (SPA), utilizando a biblioteca React \cite{react2023} juntamente com o empacotador Vite \cite{vite2023} e o ambiente Node.js. A versão de produção da plataforma pode ser acessada através do endereço \url{https://incluidev-portal.vercel.app/}.
 
 A concepção arquitetural priorizou o desenvolvimento de componentes funcionais acessíveis, garantindo a incorporação nativa de atributos WAI-ARIA \cite{waiaria12}, como as propriedades \textit{aria-live} para atualizações dinâmicas e \textit{aria-labelledby} para estruturação semântica.
 
@@ -120,20 +120,57 @@ A etapa de curadoria e extração consolidou um catálogo contendo 34 recursos f
 
 O portal oferece interfaces que reúnem resumos detalhados com acesso direcionado às fontes científicas originais, para que professores e desenvolvedores encontrem referências técnicas e legais em um único lugar.
 
+O código-fonte completo do sistema, bem como os artefatos de validação descritos nas seções seguintes, estão disponíveis no repositório público do projeto: \url{https://github.com/lucasmantovany/incluidev-portal}.
+
+Para ilustrar a interface da aplicação, a Figura~\ref{fig:print_home} apresenta a tela inicial do portal, destacando o acesso rápido por perfis e níveis de ensino. A Figura~\ref{fig:print_repositorio} demonstra a tela do repositório com o Assistente Guiado e a listagem de recursos.
+
+\begin{figure}[htpb]
+  \centering
+  \includegraphics[width=1\textwidth]{print_home.png}
+  \caption{Tela Inicial do Portal IncluiDev}
+  \label{fig:print_home}
+\end{figure}
+
+\begin{figure}[htpb]
+  \centering
+  \includegraphics[width=1\textwidth]{print_repositorio.png}
+  \caption{Tela do Repositório e Filtros do Assistente}
+  \label{fig:print_repositorio}
+\end{figure}
+
 \subsection{Funcionamento do Assistente Guiado}
 A implementação do Assistente Guiado confirmou, durante os testes técnicos, que as árvores de decisão e o sistema de cruzamento de \textit{tags} retornam ao menos uma recomendação em todos os cenários cobertos pelo acervo atual. O fluxo responsivo adaptou-se de forma consistente às variações de contexto para cada um dos quatro perfis, mantendo a compatibilidade com leitores de tela nos ambientes de teste.
 
 O arranjo visual limpo, sem \textit{pop-ups} inesperados, facilita a navegação independente por usuários que dependem de interações exclusivamente via teclado.
 
 \subsection{Avaliação de Acessibilidade}
-Para avaliar o cumprimento das diretrizes de acessibilidade WCAG 2.1 (Nível AA), foram realizadas auditorias mistas. A avaliação automatizada com o Google Lighthouse apontou alta conformidade, com escores de 96/100 na versão desktop e 95/100 na versão móvel. A ferramenta WAVE confirmou a ausência de erros estruturais, indicando apenas alertas pontuais de contraste de cores em elementos secundários.
+Para avaliar o cumprimento das diretrizes de acessibilidade WCAG 2.1 (Nível AA), foram realizadas auditorias mistas. A avaliação automatizada com o Google Lighthouse apontou alta conformidade, e a ferramenta WAVE confirmou a ausência de erros estruturais, indicando apenas alertas pontuais de contraste de cores em elementos secundários. A síntese dos escores obtidos é apresentada na Tabela~\ref{tab:acessibilidade}.
+
+\begin{table}[htpb]
+  \centering
+  \caption{Resultados das auditorias automatizadas de acessibilidade}
+  \label{tab:acessibilidade}
+  \begin{tabular}{lcc}
+    \hline
+    \textbf{Ferramenta / Métrica} & \textbf{Desktop} & \textbf{Móvel} \\
+    \hline
+    Google Lighthouse (escore de Acessibilidade) & 96/100 & 95/100 \\
+    WAVE -- Erros estruturais & 0 & 0 \\
+    WAVE -- Alertas de contraste (elementos secundários) & Pontuais & Pontuais \\
+    \hline
+  \end{tabular}
+\end{table}
+
+Cabe ressaltar uma limitação importante deste processo: ferramentas automatizadas são capazes de detectar, em média, apenas cerca de 40\% dos erros de acessibilidade em uma interface web. Por esta razão, a auditoria manual, conduzida individualmente pelo pesquisador utilizando leitores de tela e navegação estrita por teclado, desempenhou papel fundamental.
 
 Na auditoria manual, verificou-se o funcionamento adequado da navegação por teclado, sem a ocorrência de armadilhas de foco (\textit{keyboard traps}). Além disso, a aplicação utiliza regiões dinâmicas (\texttt{aria-live="assertive"}) de forma correta, garantindo que as mudanças de tela do Assistente Guiado sejam lidas imediatamente por leitores de tela como o NVDA, o que evita a desorientação do usuário.
 
 \subsection{Validação Simulatória por Agentes de IA}
-Como etapa preliminar de validação estrutural e lógica da interface, a avaliação de usabilidade foi conduzida utilizando a simulação por Agentes de IA (\textit{LLM-Simulated Users}), uma abordagem apoiada por estudos recentes na área de interação humano-computador. Esta etapa inicial visa assegurar a coesão do fluxo de navegação antes de submeter a plataforma a testes empíricos com usuários reais. Para isso, foram elaborados \textit{prompts} de sistema simulando as quatro personas do projeto: Estudante, Professor, Pesquisador e Desenvolvedor.
+Como etapa preliminar de validação estrutural e lógica da interface, a avaliação de usabilidade foi conduzida utilizando a simulação por Agentes de IA (\textit{LLM-Simulated Users}), uma abordagem apoiada por estudos recentes na área de interação humano-computador. Esta etapa inicial visa assegurar a coesão do fluxo de navegação antes de submeter a plataforma a testes empíricos com usuários reais. Para isso, foram elaborados \textit{prompts} de sistema simulando as quatro personas do projeto: Estudante, Professor, Pesquisador e Desenvolvedor. O registro completo desse processo --- os \textit{prompts} utilizados e as respostas geradas pelos quatro agentes --- está disponível para consulta no repositório público do projeto, garantindo a transparência metodológica desta etapa.
 
-A interação simulada das quatro personas com o Assistente Guiado resultou em respostas consistentemente favoráveis aos itens do SUS e do TAM, sem que nenhuma das personas reportasse obstáculos estruturais de navegação ou de compreensão do fluxo. As justificativas dissertativas geradas pelos agentes apontaram, de forma qualitativa, baixa carga percebida de leitura sequencial e alta utilidade percebida na recomendação direcionada por perfil --- por exemplo, a persona de Estudante destacou a redução do número de links a percorrer, e a persona de Pesquisador comparou favoravelmente a busca guiada a consultas booleanas tradicionais.
+A interação simulada das quatro personas com o Assistente Guiado resultou em respostas consistentemente favoráveis aos itens do SUS e do TAM, sem que nenhuma das personas reportasse obstáculos estruturais de navegação ou de compreensão do fluxo. As justificativas dissertativas geradas pelos agentes apontaram, de forma qualitativa, baixa carga percebida de leitura sequencial e alta utilidade percebida na recomendação direcionada por perfil --- a persona de Estudante, por exemplo, registrou: \textit{``A interface fez perguntas objetivas. Não tive que ler centenas de links de pesquisa, o que aliviou minha fadiga com o NVDA''} --- e a persona de Pesquisador comparou favoravelmente a busca guiada a consultas booleanas tradicionais.
+
+Uma análise temática das quatro respostas revela um padrão recorrente entre os perfis de Estudante, Professor e Pesquisador: todos destacaram a redução do esforço de busca e leitura sequencial como o principal benefício percebido, contrastando a experiência guiada com a navegação tradicional por mecanismos de busca genéricos ou bases bibliográficas extensas. Já a persona de Desenvolvedor enfatizou um eixo distinto, voltado à completude técnica e à ausência de ruído informacional na apresentação dos recursos. Essa diferença sugere que, embora o Assistente Guiado atenda de forma consistente à necessidade central de reduzir a sobrecarga de navegação, futuras iterações do sistema poderiam explorar critérios de relevância específicos por perfil --- por exemplo, priorizando profundidade técnica para Desenvolvedores e amplitude de fontes para Pesquisadores. Tais padrões, contudo, derivam de uma simulação textual e devem ser interpretados como hipóteses a confirmar com usuários reais, e não como conclusões definitivas sobre o comportamento do público-alvo.
 
 É importante destacar que esses resultados não substituem uma medição psicométrica real: por se tratar de uma simulação textual, os valores eventualmente atribuídos pelos agentes às escalas SUS e TAM não possuem o mesmo lastro de validade que escores coletados com usuários humanos. Eles são reportados aqui apenas como sinalização heurística de que a arquitetura lógica do sistema não apresenta inconsistências graves nos quatro fluxos avaliados, servindo de base para a etapa de validação empírica planejada como trabalho futuro (Seção 6).
 
@@ -145,7 +182,9 @@ A inclusão de Pessoas com Deficiência Visual no ensino de programação é um 
 
 Os resultados das auditorias técnicas atestaram que a ferramenta atinge altos padrões de acessibilidade, cumprindo rigorosamente as diretrizes da WCAG 2.1. Adicionalmente, a etapa preliminar de validação lógica, conduzida por meio da simulação com Agentes de IA, indicou que o ``Assistente Guiado'' apresenta excelente usabilidade e eficácia em recomendar soluções precisas para Estudantes, Professores, Pesquisadores e Desenvolvedores. A arquitetura proposta mostrou-se capaz de reduzir a carga cognitiva exigida durante a navegação via leitores de tela.
 
-Como discutido na Seção 5, a principal limitação desta fase é a natureza preliminar da validação por agentes de IA, que não substitui a experiência de usuários reais. Por isso, como trabalho futuro, planeja-se a execução de testes empíricos com grupos representativos de participantes (pessoas com deficiência visual e educadores). Além disso, a expansão contínua da base de dados catalogada e o aprimoramento das heurísticas de recomendação constituem os próximos passos para consolidar o \textit{IncluiDev} como uma ferramenta de referência no ecossistema de educação inclusiva.
+Como discutido na Seção 5, as principais limitações deste estudo decorrem da natureza preliminar da validação por agentes de IA --- que não substitui a experiência de usuários reais --- e da ausência de testes empíricos com participantes humanos, motivada pelo prazo hábil da pesquisa para submissão. Soma-se a isso o fato de que ferramentas automatizadas de acessibilidade, como discutido na Seção 4.3, capturam apenas uma fração dos problemas reais de interação da interface. Por isso, como trabalhos futuros, torna-se essencial a execução de testes empíricos com grupos representativos de participantes, em especial pessoas com deficiência visual --- tanto discentes quanto docentes desse público, que poderão utilizar o sistema com frequência ---, bem como a comparação dos resultados simulados de SUS/TAM com avaliações conduzidas com usuários reais.
+
+Espera-se que o portal \textit{IncluiDev} gere um impacto positivo imediato ao facilitar o encontro de ferramentas e metodologias de programação inclusiva, reduzindo o tempo de pesquisa de educadores e estudantes. Com isso, o projeto busca contribuir para a pesquisa tecnológica educacional e para o fomento de um ensino de computação mais inclusivo e estruturado. Adicionalmente, a expansão contínua da base de dados catalogada e o aprimoramento das heurísticas de recomendação constituem os próximos passos para consolidar o IncluiDev como ferramenta de referência nesse ecossistema.
 
 \bibliographystyle{sbc}
 \bibliography{references}
