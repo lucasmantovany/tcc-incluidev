@@ -1,0 +1,145 @@
+\documentclass [aspectratio=169]{beamer}
+\beamertemplatenavigationsymbolsempty
+\usetheme{Boadilla}
+\usepackage{textpos} % pacote para posicionamento
+\usepackage[]{graphicx}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{algorithm,algpseudocode}
+\usepackage[export]{adjustbox}
+\usepackage{tikz}
+\usepackage[square,numbers]{natbib}
+\usepackage[byname]{smartref}
+\usepackage[brazilian]{babel}
+\usepackage[square,numbers]{natbib}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows, shapes, decorations, automata, backgrounds, fit, petri, calc}
+\newcommand*{\logofont}{\fontfamily{phv}\selectfont}
+\definecolor{ufmsblue}{RGB}{70,130,180}
+\title[]{\vspace{60pt} \\
+Estatística Básica:Princípios da Lógica Frequentista}
+%\subtitle{n}
+\author[]{Rafael D. Guariento}
+\institute[]{Laboratório de Ecologia\\
+             Instituto de Biociências - Inbio\\
+             Universidade Federal de Mato Grosso do Sul}
+\date{} %\date{\today}
+
+% Notações matemáticas
+\newtheorem{thm}{Teorema}[section]
+\newtheorem{lem}[thm]{Lema}
+\newtheorem{defn}[thm]{Definição}
+\newtheorem{eg}[thm]{Exemplo}
+\newtheorem{ex}[thm]{Exercício}
+\newtheorem{conj}[thm]{Conjectura}
+\newtheorem{cor}[thm]{Corolário}
+\newtheorem{claim}[thm]{Afirmação}
+\newtheorem{rmk}[thm]{Observação}
+\newcommand{\ie}{\emph{isto é} }
+\newcommand{\cf}{\emph{cf.} }
+\newcommand{\into}{\hookrightarrow}
+\newcommand{\dirac}{\slashed{\partial}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\LieT}{\mathfrak{t}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\A}{\mathds{A}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\Var}{\text{Var}}
+\newcommand\equalhat{%
+\let\savearraystretch\arraystretch
+\renewcommand\arraystretch{0.3}
+\begin{array}{c}
+\stretchto{
+    \scalerel*[\widthof{=}]{\wedge}
+    {\rule{1ex}{3ex}}%
+}{0.5ex}\\ 
+=%
+\end{array}
+\let\arraystretch\savearraystretch
+}
+% definir cores
+\setbeamercolor{title in head/foot}{bg=white}
+\setbeamercolor{author in head/foot}{bg=white}
+\setbeamercolor{date in head/foot}{fg=ufmsblue}
+\setbeamercolor{date in head/foot}{bg=white}
+\setbeamercolor{title}{fg=ufmsblue}
+\setbeamerfont{title}{series=\bfseries}
+\setbeamercolor{frametitle}{fg=ufmsblue}
+\setbeamerfont{frametitle}{series=\bfseries}
+\setbeamercolor{block title}{bg=ufmsblue!30,fg=black}
+\setbeamercolor{item}{fg=ufmsblue}
+\setbeamercolor{caption name}{fg=ufmsblue!70!}
+% definir logo nas páginas não-título
+\logo{\includegraphics[height=0.8cm]{ufms.png}\vspace*{-.025\paperheight}\hspace*{0.82\paperwidth}}
+
+\begin{document}
+{
+\setbeamertemplate{logo}{}
+\begin{frame}
+    \titlepage
+    \begin{textblock*}{4cm}(0.5cm,-7.3cm)
+        \includegraphics[width=4cm]{ufms.png}
+    \end{textblock*}
+    \begin{textblock*}{8cm}(5.0cm,-7.0cm)
+        \huge \color{ufmsblue}{$\Bigr\rvert$ \hspace{0.15cm} \textbf{Aula 1}}
+    \end{textblock*}
+\end{frame}
+}
+
+% Slide 2: Introdução
+
+\begin{frame}{Introdução} % Frame title
+    \begin{block}{Conceitos Fundamentais} % Block title
+        \begin{itemize}
+            \item A ciência busca construir explicações úteis sobre a natureza.
+            \item A investigação científica utiliza estratégias indutivas e dedutivas complementares.
+            \item A inferência estatística é crucial para tirar conclusões de dados variáveis e incertos.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+% Slide 3: Ciência e Metodologias de Investigação
+
+\begin{frame}{Ciência e Metodologias de Investigação}
+    \begin{block}{Definições}
+        \begin{itemize}
+            \item \textbf{Ciência:} Atividade sistemática de construir explicações para a natureza, utilizando métodos testáveis e reproduzíveis.
+            \item \textbf{Estratégia Indutiva:} Busca por padrões em observações para propor explicações *a posteriori*.
+            \item \textbf{Estratégia Dedutiva:} Parte de explicações *a priori* para testar predições experimentalmente.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+% ... (Continue this pattern for the remaining slides)
+
+% Slide 12: Resumo do Capítulo
+
+\begin{frame}{Variabilidade}
+    \begin{block}{Pontos Principais}
+        \begin{itemize}
+            \item Amostragens vs populações.
+            \item Reprodutibilidade de Experimentos.
+            \item Necessidade de uma metodologia.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Variabilidade}
+
+        \begin{itemize}
+            \item Amostragens vs populações.
+            \item Reprodutibilidade de Experimentos.
+            \item Necessidade de uma metodologia.
+        \end{itemize}
+
+\end{frame}
+
+\end{document}

@@ -1,0 +1,440 @@
+% =============================================================================
+% Apresentação de Defesa de TCC — IncluiDev
+% Modelo UFMS / FACOM — Beamer 16:9
+% Lucas R. Pedro — Orientadora: Esteice Janaina Santos Batista
+% =============================================================================
+
+\documentclass[aspectratio=169]{beamer}
+\beamertemplatenavigationsymbolsempty
+\usetheme{Boadilla}
+
+% --- Pacotes ---
+\usepackage{textpos}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[export]{adjustbox}
+\usepackage{tikz}
+\usepackage[brazilian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fontenc}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usetikzlibrary{positioning, arrows, shapes, decorations, automata, backgrounds, fit, calc}
+
+% --- Cores UFMS ---
+\definecolor{ufmsblue}{RGB}{70,130,180}
+\definecolor{ufmsdark}{RGB}{30,60,100}
+\definecolor{accentgreen}{RGB}{46,139,87}
+\definecolor{alertred}{RGB}{178,34,34}
+\definecolor{lightbg}{RGB}{240,245,250}
+
+% --- Configurações de cores do Beamer ---
+\setbeamercolor{title in head/foot}{bg=white}
+\setbeamercolor{author in head/foot}{bg=white}
+\setbeamercolor{date in head/foot}{fg=ufmsblue, bg=white}
+\setbeamercolor{title}{fg=ufmsblue}
+\setbeamerfont{title}{series=\bfseries}
+\setbeamercolor{frametitle}{fg=ufmsblue}
+\setbeamerfont{frametitle}{series=\bfseries}
+\setbeamercolor{block title}{bg=ufmsblue!30, fg=black}
+\setbeamercolor{block body}{bg=ufmsblue!5}
+\setbeamercolor{block title alerted}{bg=alertred!30, fg=black}
+\setbeamercolor{block body alerted}{bg=alertred!5}
+\setbeamercolor{block title example}{bg=accentgreen!30, fg=black}
+\setbeamercolor{block body example}{bg=accentgreen!5}
+\setbeamercolor{item}{fg=ufmsblue}
+\setbeamercolor{caption name}{fg=ufmsblue!70!}
+\setbeamercolor{structure}{fg=ufmsblue}
+
+% --- Logo nas páginas (exceto título) ---
+\logo{\includegraphics[height=0.6cm]{ufms.png}\hspace{0.15cm}\includegraphics[height=0.6cm]{grafo_facom.png}\vspace*{-.025\paperheight}\hspace*{0.80\paperwidth}}
+
+% --- Informações ---
+\title[]{\vspace{50pt} \\
+IncluiDev: Desenvolvimento e Avaliação de uma Plataforma Baseada em Evidências para Apoio ao Ensino de Programação para Pessoas com Deficiência Visual}
+\author[Lucas Rodrigues Pedro]{Lucas Rodrigues Pedro \\ {\small Orientadora: Profa. Esteice Janaina Santos Batista}}
+\institute[UFMS]{Faculdade de Computação -- FACOM \\
+                  Universidade Federal de Mato Grosso do Sul}
+\date{Junho de 2026}
+
+% =============================================================================
+\begin{document}
+
+% ---- SLIDE 1: CAPA ----
+{
+\setbeamertemplate{logo}{}
+\begin{frame}
+    \titlepage
+    \begin{textblock*}{8cm}(0.5cm,-7.3cm)
+        \includegraphics[height=1.2cm]{ufms.png}\hspace{0.3cm}%
+        \includegraphics[height=1.2cm]{grafo_facom.png}
+    \end{textblock*}
+    \begin{textblock*}{12cm}(5.5cm,-7.0cm)
+        \huge \color{ufmsblue}{$\Bigr\rvert$ \hspace{0.15cm} \textbf{Defesa de TCC}}
+    \end{textblock*}
+\end{frame}
+}
+
+% ---- SLIDE 2: AGENDA ----
+\begin{frame}{Agenda}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Parte I}
+                \begin{enumerate}
+                    \item Contexto e Motivação
+                    \item Problema e Objetivos
+                    \item Referencial Teórico
+                \end{enumerate}
+            \end{block}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Parte II}
+                \begin{enumerate}
+                    \setcounter{enumi}{3}
+                    \item Método
+                    \item O Portal IncluiDev
+                    \item Resultados
+                    \item Discussão e Conclusão
+                \end{enumerate}
+            \end{block}
+        \end{column}
+    \end{columns}
+    \vfill
+    \centering
+    {\small \color{gray}{Tempo estimado: 15--20 minutos}}
+
+    \note{``A apresentação segue sete blocos: o contexto e o problema de pesquisa, o referencial teórico, o método, uma visão geral do sistema, os resultados --- incluindo acessibilidade e validação --- e a discussão com conclusão.''}
+\end{frame}
+
+% ---- SLIDE 3: CONTEXTO E MOTIVAÇÃO ----
+\begin{frame}{Contexto e Motivação}
+    \begin{block}{O Desafio}
+        O ensino de programação depende fortemente de \textbf{metáforas visuais} (diagramas, blocos coloridos, indentação), dificultando o aprendizado de pessoas com deficiência visual.
+    \end{block}
+
+    \begin{alertblock}{Barreira para PcDV}
+        Com leitores de tela, o estudante precisa \textbf{memorizar a estrutura lógica} do código enquanto o ouve \textbf{linha por linha}, gerando sobrecarga cognitiva severa.
+    \end{alertblock}
+
+    \begin{exampleblock}{Soluções Fragmentadas}
+        Tecnologias como a linguagem Quorum e leitores integrados existem, mas estão \textbf{dispersas pela web}, dificultando o acesso unificado para estudantes e educadores.
+    \end{exampleblock}
+
+    \note{``O ensino de programação depende fortemente de metáforas visuais: diagramas de fluxo, blocos coloridos, indentação espacial. Para uma pessoa com deficiência visual usando leitor de tela, isso significa memorizar a estrutura lógica do código enquanto ouve linha por linha --- uma sobrecarga cognitiva real, documentada na literatura. Soluções como a linguagem Quorum e o Code Jumper existem, mas estão fragmentadas pela web, sem um ponto central de acesso.''}
+\end{frame}
+
+% ---- SLIDE 4: PROBLEMA E OBJETIVOS ----
+\begin{frame}{Problema de Pesquisa e Objetivos}
+    \begin{block}{Questão de Pesquisa}
+        \textit{Como centralizar, classificar e recomendar de forma acessível metodologias, ferramentas e pesquisas sobre o ensino de programação para PcDV?}
+    \end{block}
+
+    \vspace{0.15cm}
+
+    \textbf{Objetivo Geral:} Construir e avaliar um portal web dinâmico e centralizado como repositório interativo.
+
+    \vspace{0.15cm}
+
+    \textbf{Objetivos Específicos:}
+    \begin{enumerate}\small
+        \item Organizar os recursos em uma \textbf{taxonomia coerente}
+        \item Garantir conformidade com as diretrizes \textbf{WCAG 2.1 nível AA}
+        \item Implementar o \textbf{Assistente Guiado} para recomendação por perfil
+        \item Avaliar a usabilidade e a acessibilidade através do \textbf{SUS} e \textbf{TAM}
+    \end{enumerate}
+
+    \note{``Isso nos leva à pergunta central: como centralizar, classificar e recomendar de forma acessível metodologias, ferramentas e pesquisas? O objetivo geral foi construir e avaliar um portal que funcione como repositório interativo. Os objetivos específicos foram quatro: taxonomia, WCAG 2.1 AA, Assistente Guiado por perfil, e avaliação com SUS e TAM.''}
+\end{frame}
+
+% ---- SLIDE 5: REFERENCIAL TEÓRICO ----
+\begin{frame}{Referencial Teórico}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Adaptação de Ferramentas}
+                \begin{itemize}\small
+                    \item Leitores de tela no VS Code
+                    \item Modos de acessibilidade em IDEs
+                    \item Atalhos otimizados de navegação
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Criação de Ambientes}
+                \begin{itemize}\small
+                    \item \textbf{Quorum}: baseada em evidências
+                    \item \textbf{Code Jumper}: tangível
+                    \item Sonificação de fluxo de código
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+
+    \vspace{0.15cm}
+
+    \begin{block}{Instrumentos de Avaliação}
+        \begin{itemize}\small
+            \item \textbf{SUS} (Brooke, 1996): mede usabilidade geral através de escala Likert
+            \item \textbf{TAM} (Davis, 1989): foca na utilidade percebida e facilidade de uso
+            \item \textbf{WCAG 2.1} (W3C, 2018): padrão global de acessibilidade web (A, AA, AAA)
+        \end{itemize}
+    \end{block}
+
+    \note{``A literatura converge em duas estratégias: adaptar ferramentas consolidadas, como o VS Code, ou criar ambientes desde a origem pensando em acessibilidade, como a Quorum e o Code Jumper. Essas referências, junto com as diretrizes WCAG e os instrumentos SUS e TAM, formaram a base teórica do projeto.''}
+\end{frame}
+
+% ---- SLIDE 6: MÉTODO ----
+\begin{frame}{Método}
+    \begin{block}{Natureza da Pesquisa}
+        Pesquisa \textbf{aplicada} com abordagem de \textbf{métodos mistos} (quantitativa e qualitativa).
+    \end{block}
+
+    \vspace{0.15cm}
+
+    \begin{columns}[T]
+        \begin{column}{0.31\textwidth}
+            \begin{block}{\small 1. Repositório}
+                \begin{itemize}\footnotesize
+                    \item React + Vite + Node.js
+                    \item WAI-ARIA nativo
+                    \item Taxonomia de recursos
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.33\textwidth}
+            \begin{block}{\small 2. Assistente Guiado}
+                \begin{itemize}\footnotesize
+                    \item Fluxo por perfis
+                    \item Cruzamento de tags semânticas
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.31\textwidth}
+            \begin{block}{\small 3. Avaliação}
+                \begin{itemize}\footnotesize
+                    \item Lighthouse / WAVE
+                    \item Teclado e NVDA
+                    \item Validação com IA
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+
+    \note{``A pesquisa é de natureza aplicada, com métodos mistos. Ela se estruturou em três fases: o desenvolvimento do repositório em si, a construção do Assistente Guiado, e a avaliação do sistema --- que combinou auditorias automatizadas, verificação manual e, como etapa preliminar, uma simulação com agentes de IA antes dos testes empíricos futuros com usuários reais.''}
+\end{frame}
+
+% ---- SLIDE 7: O PORTAL IncluiDev ----
+\begin{frame}{O Portal IncluiDev}
+    \begin{block}{Características da Plataforma}
+        \begin{itemize}
+            \item \textbf{Repositório Centralizado}: 34 recursos catalogados entre ferramentas, artigos e guias.
+            \item \textbf{Taxonomia Organizada}: Categorização cruzada (Nível de Ensino $\times$ Público-Alvo).
+            \item \textbf{Acessibilidade Nativa}: Desenvolvido com semântica HTML5 e atributos WAI-ARIA.
+            \item \textbf{Navegação Teclado}: Atalhos consistentes e ausência de barreiras de foco para leitores.
+        \end{itemize}
+    \end{block}
+
+    \vspace{0.4cm}
+    \centering
+    {\large \url{https://incluidev-portal.vercel.app/}}
+
+    \note{``Esta é a visão geral do portal. Construído como uma Single Page Application em React e Vite, ele consolidou 34 recursos --- entre ferramentas, artigos e guias --- organizados em uma taxonomia de duas dimensões: nível de ensino e público-alvo. A acessibilidade foi parte da concepção desde o início, com atributos WAI-ARIA nativos, não adicionados depois.''}
+\end{frame}
+
+% ---- SLIDE 8: ASSISTENTE GUIADO ----
+\begin{frame}{O Assistente Guiado}
+    \begin{block}{Fluxo Conversacional}
+        Em vez de filtros complexos, o usuário interage através de um fluxo intuitivo:
+        \begin{enumerate}
+            \item \textbf{Autoidentificação}: Escolha do perfil (Estudante, Professor, Pesquisador ou Desenvolvedor)
+            \item \textbf{Perguntas Direcionadas}: Respostas simplificadas sobre os objetivos da busca
+            \item \textbf{Resultado Personalizado}: Recomendação direta de recursos pertinentes ao perfil
+        \end{enumerate}
+    \end{block}
+
+    \vspace{0.2cm}
+
+    \begin{exampleblock}{Diferencial de Acessibilidade}
+        O sistema processa o cruzamento das tags semânticas de forma transparente, reduzindo o número de links e menus suspensos a serem navegados por leitores de tela.
+    \end{exampleblock}
+
+    \note{``Em vez de uma listagem estática de filtros, o usuário se autoidentifica entre quatro perfis, responde a perguntas direcionadas ao seu objetivo, e o sistema compara essas respostas com as tags dos conteúdos cadastrados, devolvendo recomendações sem sobrecarregar quem depende de tecnologia assistiva.''}
+\end{frame}
+
+% ---- SLIDE 9: RESULTADOS — ACESSIBILIDADE ----
+\begin{frame}{Resultados: Acessibilidade}
+    \begin{columns}[T]
+        \begin{column}{0.52\textwidth}
+            \begin{block}{Auditoria Automatizada}
+                \centering
+                \small
+                \begin{tabular}{lc}
+                    \toprule
+                    \textbf{Ferramenta} & \textbf{Resultado} \\
+                    \midrule
+                    Lighthouse (Desktop) & \textbf{96}/100 \\
+                    Lighthouse (Mobile) & \textbf{95}/100 \\
+                    WAVE & 0 erros \\
+                    \bottomrule
+                \end{tabular}
+            \end{block}
+
+            \vspace{0.15cm}
+
+            \begin{alertblock}{Ressalva Importante}
+                \small
+                Ferramentas automáticas identificam, em média, apenas \textbf{$\sim$40\%} das barreiras reais.
+            \end{alertblock}
+        \end{column}
+        \begin{column}{0.46\textwidth}
+            \begin{block}{Auditoria Manual}
+                \begin{itemize}\small
+                    \item[$\checkmark$] Teclado sem armadilhas de foco
+                    \item[$\checkmark$] \texttt{aria-live} funcional no NVDA
+                    \item[$\checkmark$] Transições de tela faladas
+                    \item[$\checkmark$] Ausência de pop-ups intrusivos
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+
+    \note{``Nas auditorias automatizadas, o Lighthouse apontou 96/100 no desktop e 95 no mobile; o WAVE não encontrou erros estruturais. Mas é importante frisar: ferramentas automatizadas capturam, em média, só cerca de 40\% dos erros reais de acessibilidade. Por isso a auditoria manual --- navegação por teclado, leitura com NVDA, verificação de aria-live --- foi essencial.''}
+\end{frame}
+
+% ---- SLIDE 10: RESULTADOS — VALIDAÇÃO COM IA ----
+\begin{frame}{Resultados: Validação com Agentes de IA}
+    \begin{block}{Etapa Preliminar}
+        Simulação das \textbf{4 personas} com agentes de IA respondendo ao SUS e TAM em formato \textbf{dissertativo}.
+    \end{block}
+
+    \vspace{0.10cm}
+
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Padrões Identificados}
+                \begin{itemize}\small
+                    \item \textbf{Estudante}: redução de links a percorrer
+                    \item \textbf{Professor}: facilidade para achar métodos
+                    \item \textbf{Pesquisador}: busca guiada intuitiva
+                    \item \textbf{Desenvolvedor}: dados técnicos completos
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{alertblock}{Limitações Declaradas}
+                \begin{itemize}\small
+                    \item IA como \textit{proxy} (não substitui humanos)
+                    \item Ausência de fadiga sensorial real
+                    \item Tendência a avaliações otimistas
+                    \item Resultados são heurísticos, não psicométricos
+                \end{itemize}
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+
+    \note{``Simulamos as quatro personas com agentes de IA, que responderam de forma qualitativa aos itens do SUS e do TAM. Um padrão interessante emergiu: Estudante, Professor e Pesquisador destacaram, de formas diferentes, a redução do esforço de busca; já o Desenvolvedor valorizou mais a completude técnica. Isso é tratado como indicador heurístico, não como medida psicométrica.''}
+\end{frame}
+
+% ---- SLIDE 11: DISCUSSÃO ----
+\begin{frame}{Discussão}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Indicativos dos Resultados}
+                \begin{itemize}\small
+                    \item Arquitetura lógica do portal \textbf{coesa}
+                    \item Perfil \textbf{reduz esforço de busca}
+                    \item WCAG 2.1 AA \textbf{verificada}
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{alertblock}{Ressalvas do Uso de IA}
+                \begin{itemize}\small
+                    \item \textbf{Não substitui} testes com humanos
+                    \item LLMs são otimistas e sem fadiga
+                    \item Filtro de qualidade preparatório
+                \end{itemize}
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+
+    \vspace{0.15cm}
+
+    \begin{exampleblock}{Posição do Trabalho}
+        A validação por IA foi uma etapa preparatória transparente; os testes empíricos com usuários reais (PcDV) são o próximo passo natural e necessário da pesquisa.
+    \end{exampleblock}
+
+    \note{``Em conjunto, os resultados indicam que a arquitetura lógica do IncluiDev é coesa e que a navegação por perfil reduz o esforço de busca - mas essa validação preliminar não substitui a experiência humana real. Ela serviu como um filtro de qualidade antes da etapa empírica.''}
+\end{frame}
+
+% ---- SLIDE 12: CONCLUSÃO ----
+\begin{frame}{Conclusão}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Contribuições}
+                \begin{itemize}\small
+                    \item \textbf{Centralização}: repositório acessível e unificado de recursos
+                    \item \textbf{Assistente Guiado}: alternativa eficaz aos filtros tradicionais
+                    \item \textbf{Taxonomia}: organização clara de ensino e público
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{alertblock}{Limitações}
+                \begin{itemize}\small
+                    \item Sem testes empíricos com \textbf{usuários reais} devido ao prazo da pesquisa
+                    \item Ferramentas automatizadas capturam fração das barreiras
+                \end{itemize}
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+
+    \vspace{0.15cm}
+
+    \begin{exampleblock}{Trabalhos Futuros}
+        Realização de testes empíricos com PcDV e docentes, cruzamento dos dados da IA com dados orgânicos (SUS/TAM) e contínua expansão do acervo de recursos do portal.
+    \end{exampleblock}
+
+    \note{``O IncluiDev demonstra que é possível centralizar recursos hoje dispersos pela web. As principais limitações são a ausência de testes com usuários reais --- pelo prazo --- e a cobertura parcial das ferramentas automatizadas. O trabalho futuro mais importante é testar com pessoas reais, especialmente PcDV.''}
+\end{frame}
+
+% ---- SLIDE 13: ENCERRAMENTO ----
+{
+\setbeamertemplate{logo}{}
+\begin{frame}{}
+    \vfill
+    \centering
+    {\Huge \color{ufmsblue}{\textbf{Obrigado!}}}
+
+    \vspace{0.8cm}
+
+    {\large Lucas R. Pedro}
+
+    \vspace{0.3cm}
+
+    {\small
+    \begin{tabular}{rl}
+        Portal: & \url{https://incluidev-portal.vercel.app/} \\
+        GitHub: & \url{https://github.com/lucasmantovany/incluidev-portal} \\
+        E-mail: & \href{mailto:lucas.pedro@ufms.br}{lucas.pedro@ufms.br}
+    \end{tabular}
+    }
+
+    \vspace{0.8cm}
+
+    {\footnotesize \color{gray}{Código-fonte, artefatos de validação e sistema em produção disponíveis nos links acima.}}
+
+    \vfill
+
+    \begin{textblock*}{6cm}(0.5cm,0.5cm)
+        \includegraphics[height=1.0cm]{ufms.png}\hspace{0.25cm}%
+        \includegraphics[height=1.0cm]{grafo_facom.png}
+    \end{textblock*}
+
+    \note{``Obrigado pela atenção. O código-fonte, os artefatos de validação e o sistema em produção estão linkados aqui. Fico à disposição para as perguntas.''}
+\end{frame}
+}
+
+\end{document}
